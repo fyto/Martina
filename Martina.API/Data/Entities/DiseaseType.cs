@@ -11,10 +11,11 @@ namespace Martina.API.Data.Entities
         public int Id { get; set; }
 
         [Display(Name = "Tipo enfermedad")]
-        [MaxLength(30, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
 
+        [Display(Name = "Estado")]
         public bool State { get; set; }
     }
 }
