@@ -1,4 +1,6 @@
 ﻿using Martina.API.Data.Entities;
+using Martina.API.Helpers;
+using Martina.Common.Enums;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,12 +11,12 @@ namespace Martina.API.Data
     public class SeedDb
     {
         private readonly DataContext _context;
-        //private readonly IUserHelper _userHelper;
+        private readonly IUserHelper _userHelper;
 
-        public SeedDb(DataContext context) //, IUserHelper userHelper)
+        public SeedDb(DataContext context, IUserHelper userHelper)
         {
             _context = context;
-            //_userHelper = userHelper;
+            _userHelper = userHelper;
         }
 
         public async Task SeedAsync()
@@ -24,15 +26,46 @@ namespace Martina.API.Data
 
             await CheckCaresAsync();
             await CheckDiseaseTypeAsync();
-            //await CheckBrandsAsync();
-            //await CheckDocumentTypesAsync();
-            //await CheckProceduresAsync();
-            //await CheckRolesAsycn();
 
-            //await CheckUserAsync("1010", "Luis", "Salazar", "luis@yopmail.com", "311 322 4620", "Calle Luna Calle Sol", UserType.Admin);
-            //await CheckUserAsync("2020", "Juan", "Zuluaga", "zulu@yopmail.com", "311 322 4620", "Calle Luna Calle Sol", UserType.User);
-            //await CheckUserAsync("3030", "Ledys", "Bedoya", "ledys@yopmail.com", "311 322 4620", "Calle Luna Calle Sol", UserType.User);
-            //await CheckUserAsync("4040", "Sandra", "Lopera", "sandra@yopmail.com", "311 322 4620", "Calle Luna Calle Sol", UserType.Admin);
+            await CheckRolesAsync();
+
+            await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", UserType.Admin);
+            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", UserType.Apoderado);
+            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", UserType.AdultoMayor);
+            await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", UserType.Cuidador);
+
+        }
+
+        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
+        {
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                user = new User
+                {
+                    Address = address,
+                    Email = email,
+                    FirstName = firstName,
+                    LastName = lastName,
+                    PhoneNumber = phoneNumber,
+                    UserName = email,
+                    UserType = userType
+                };
+
+                await _userHelper.AddUserAsync(user, "123456");
+                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+
+                //string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                //await _userHelper.ConfirmEmailAsync(user, token);
+            }
+        }
+
+        private async Task CheckRolesAsync()
+        {
+            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
+            await _userHelper.CheckRoleAsync(UserType.Apoderado.ToString());
+            await _userHelper.CheckRoleAsync(UserType.AdultoMayor.ToString());
+            await _userHelper.CheckRoleAsync(UserType.Cuidador.ToString());
         }
 
         private async Task CheckCaresAsync()
