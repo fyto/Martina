@@ -19,53 +19,49 @@ namespace Martina.API.Controllers
             _context = context;
         }
 
-        // GET: DiseaseTypes
         public async Task<IActionResult> Index()
         {
             return View(await _context.DeseaseTypes.ToListAsync());
         }
 
-        // GET: DiseaseTypes/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var diseaseType = await _context.DeseaseTypes
-                .FirstOrDefaultAsync(m => m.Id == id);
-            if (diseaseType == null)
-            {
-                return NotFound();
-            }
-
-            return View(diseaseType);
-        }
-
-        // GET: DiseaseTypes/Create
-        public IActionResult Create()
+       public IActionResult Create()
         {
             return View();
         }
 
-        // POST: DiseaseTypes/Create
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,Description,State")] DiseaseType diseaseType)
+        public async Task<IActionResult> Create(DiseaseType diseaseType)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(diseaseType);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
+                try
+                {
+                    _context.Add(diseaseType);
+                    await _context.SaveChangesAsync();
+                    return RedirectToAction(nameof(Index));
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de enfermedad, verifique el nombre y vuelva a intentarlo.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
             }
             return View(diseaseType);
         }
 
-        // GET: DiseaseTypes/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -81,12 +77,9 @@ namespace Martina.API.Controllers
             return View(diseaseType);
         }
 
-        // POST: DiseaseTypes/Edit/5
-        // To protect from overposting attacks, enable the specific properties you want to bind to.
-        // For more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,Description,State")] DiseaseType diseaseType)
+        public async Task<IActionResult> Edit(int id,  DiseaseType diseaseType)
         {
             if (id != diseaseType.Id)
             {
@@ -116,7 +109,6 @@ namespace Martina.API.Controllers
             return View(diseaseType);
         }
 
-        // GET: DiseaseTypes/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -126,24 +118,17 @@ namespace Martina.API.Controllers
 
             var diseaseType = await _context.DeseaseTypes
                 .FirstOrDefaultAsync(m => m.Id == id);
+
             if (diseaseType == null)
             {
                 return NotFound();
             }
 
-            return View(diseaseType);
-        }
-
-        // POST: DiseaseTypes/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var diseaseType = await _context.DeseaseTypes.FindAsync(id);
             _context.DeseaseTypes.Remove(diseaseType);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
+
 
         private bool DiseaseTypeExists(int id)
         {
