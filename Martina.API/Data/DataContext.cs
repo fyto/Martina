@@ -14,15 +14,16 @@ namespace Martina.API.Data
 
         }
 
+        public DbSet<Care> Cares { get; set; }
         public DbSet<DiseaseType> DeseaseTypes { get; set; }
+     
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-
-            //modelBuilder.Entity<Brand>().HasIndex(x => x.Description).IsUnique();
+           
             modelBuilder.Entity<DiseaseType>().HasIndex(x => x.Description).IsUnique();
-            //modelBuilder.Entity<Procedure>().HasIndex(x => x.Description).IsUnique();
+            modelBuilder.Entity<Care>().HasIndex(x => x.Description).IsUnique();
             //modelBuilder.Entity<Vehicle>().HasIndex(x => x.Plaque).IsUnique();
             //modelBuilder.Entity<VehicleType>().HasIndex(x => x.Description).IsUnique();
         }

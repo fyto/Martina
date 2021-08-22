@@ -1,43 +1,41 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using Martina.API.Data;
+using Martina.API.Data.Entities;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Linq;
 using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Mvc.Rendering;
-using Microsoft.EntityFrameworkCore;
-using Martina.API.Data;
-using Martina.API.Data.Entities;
 
 namespace Martina.API.Controllers
 {
-    public class DiseaseTypesController : Controller
+    public class CaresController : Controller
     {
         private readonly DataContext _context;
 
-        public DiseaseTypesController(DataContext context)
+        public CaresController(DataContext context)
         {
             _context = context;
         }
 
         public async Task<IActionResult> Index()
         {
-            return View(await _context.DeseaseTypes.ToListAsync());
+            return View(await _context.Cares.ToListAsync());
         }
 
-       public IActionResult Create()
+        public IActionResult Create()
         {
             return View();
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DiseaseType diseaseType)
+        public async Task<IActionResult> Create(Care care)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(diseaseType);
+                    _context.Add(care);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -45,7 +43,7 @@ namespace Martina.API.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de enfermedad, verifique el nombre y vuelva a intentarlo.");
+                        ModelState.AddModelError(string.Empty, "Ya existe este cuidado, verifique el nombre y vuelva a intentarlo.");
                     }
                     else
                     {
@@ -59,7 +57,7 @@ namespace Martina.API.Controllers
                 }
 
             }
-            return View(diseaseType);
+            return View(care);
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -69,19 +67,19 @@ namespace Martina.API.Controllers
                 return NotFound();
             }
 
-            var diseaseType = await _context.DeseaseTypes.FindAsync(id);
-            if (diseaseType == null)
+            var care = await _context.Cares.FindAsync(id);
+            if (care == null)
             {
                 return NotFound();
             }
-            return View(diseaseType);
+            return View(care);
         }
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id,  DiseaseType diseaseType)
+        public async Task<IActionResult> Edit(int id, Care care)
         {
-            if (id != diseaseType.Id)
+            if (id != care.Id)
             {
                 return NotFound();
             }
@@ -90,7 +88,7 @@ namespace Martina.API.Controllers
             {
                 try
                 {
-                    _context.Update(diseaseType);
+                    _context.Update(care);
                     await _context.SaveChangesAsync();
                     return RedirectToAction(nameof(Index));
                 }
@@ -98,7 +96,7 @@ namespace Martina.API.Controllers
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe este tipo de enfermedad.");
+                        ModelState.AddModelError(string.Empty, "Ya existe este cuidado.");
                     }
                     else
                     {
@@ -110,7 +108,7 @@ namespace Martina.API.Controllers
                     ModelState.AddModelError(string.Empty, exception.Message);
                 }
             }
-            return View(diseaseType);
+            return View(care);
         }
 
         public async Task<IActionResult> Delete(int? id)
@@ -120,23 +118,24 @@ namespace Martina.API.Controllers
                 return NotFound();
             }
 
-            var diseaseType = await _context.DeseaseTypes
+            var care = await _context.Cares
                 .FirstOrDefaultAsync(m => m.Id == id);
 
-            if (diseaseType == null)
+            if (care == null)
             {
                 return NotFound();
             }
 
-            _context.DeseaseTypes.Remove(diseaseType);
+            _context.Cares.Remove(care);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-
-        private bool DiseaseTypeExists(int id)
+        private bool CareExists(int id)
         {
-            return _context.DeseaseTypes.Any(e => e.Id == id);
+            return _context.Cares.Any(e => e.Id == id);
         }
+
+
     }
 }

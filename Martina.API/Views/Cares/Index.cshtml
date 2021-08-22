@@ -1,32 +1,29 @@
-﻿@model IEnumerable<Martina.API.Data.Entities.DiseaseType>
+﻿@model IEnumerable<Martina.API.Data.Entities.Care>
 
 @{
-    ViewData["Title"] = "Tipos de enfemerdad";
+    ViewData["Title"] = "Cuidados";
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
 
 <p>
-    <a asp-action="Create" class="btn btn-primary">Crear tipo</a>
+    <a asp-action="Create" class="btn btn-primary">Crear cuidado</a>
 </p>
 
 <div class="row">
     <div class="col-md-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <h3 class="panel-title">Tipos de enfermedad</h3>
+                <h3 class="panel-title">Cuidados</h3>
                 </br>
             </div>
             <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="TableDisease">
+                <table class="table table-hover table-responsive table-striped" id="TableCares">
                     <thead>
                         <tr>
                             <th>
                                 @Html.DisplayNameFor(model => model.Description)
                             </th>
-                            @*<th>
-                                @Html.DisplayNameFor(model => model.State)
-                            </th>*@
                             <th></th>
                         </tr>
                     </thead>
@@ -37,9 +34,6 @@
                                 <td>
                                     @Html.DisplayFor(modelItem => item.Description)
                                 </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.State)
-                                </td>*@
                                 <td>
                                     <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
                                     <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
@@ -64,7 +58,7 @@
 
     <script type="text/javascript">
         $(document).ready(function () {
-            $('#TableDisease').DataTable({
+            $('#TableCares').DataTable({
                 "language": {
                     "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
                 },
@@ -74,7 +68,7 @@
                 ]
             });
             // Delete item
-            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/DiseaseTypes/Delete/', false);
+            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Cares/Delete/', false);
         });
     </script>
 }
