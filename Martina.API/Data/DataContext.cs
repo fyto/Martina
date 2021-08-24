@@ -16,17 +16,25 @@ namespace Martina.API.Data
         }
 
         public DbSet<Care> Cares { get; set; }
+
+        public DbSet<Disease> Deseases { get; set; }
+
         public DbSet<DiseaseType> DeseaseTypes { get; set; }
-     
+
+        public DbSet<Detail> Details { get; set; }
+
+        public DbSet<History> Histories { get; set; }
+
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-           
+
+            modelBuilder.Entity<Care>().HasIndex(x => x.Description).IsUnique();    
+            modelBuilder.Entity<Disease>().HasIndex(x => x.Description).IsUnique();
             modelBuilder.Entity<DiseaseType>().HasIndex(x => x.Description).IsUnique();
-            modelBuilder.Entity<Care>().HasIndex(x => x.Description).IsUnique();
-            //modelBuilder.Entity<Vehicle>().HasIndex(x => x.Plaque).IsUnique();
-            //modelBuilder.Entity<VehicleType>().HasIndex(x => x.Description).IsUnique();
         }
 
     }

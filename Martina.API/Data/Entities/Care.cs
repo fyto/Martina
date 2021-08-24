@@ -14,5 +14,12 @@ namespace Martina.API.Data.Entities
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
+
+        public ICollection<History> Histories { get; set; }
+
+        [Display(Name = "# Historias")]
+        public int HistoriesCount => Histories == null ? 0 : Histories.Count;
+
+        public ICollection<Detail> Details { get; set; }
     }
 }
