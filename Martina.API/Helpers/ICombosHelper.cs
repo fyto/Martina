@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Martina.Common.Enums;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -9,6 +10,8 @@ namespace Martina.API.Helpers
     public interface ICombosHelper
     {
         IEnumerable<SelectListItem> GetComboDeseases();
+
+        IEnumerable<SelectListItem> GetComboUserTypes();
 
         //IEnumerable<SelectListItem> GetComboProcedures();
 

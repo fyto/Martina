@@ -1,5 +1,6 @@
 ﻿using Martina.Common.Enums;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -40,7 +41,6 @@ namespace Martina.API.Data.Entities
         public string FullName => $"{FirstName} {LastName}";
 
         public ICollection<Disease> Diseases { get; set; }
-
 
 
     }
