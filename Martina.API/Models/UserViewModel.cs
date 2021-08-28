@@ -44,8 +44,8 @@ namespace Martina.API.Models
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }
 
-        [Display(Name = "Tipo de documento")]
-        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un tipo de documento.")]
+        [Display(Name = "Tipo de Usuario")]
+        [Range(1, int.MaxValue, ErrorMessage = "Debes seleccionar un tipo de usuario.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int UserTypeId { get; set; }
 

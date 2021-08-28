@@ -41,9 +41,23 @@ namespace Martina.API.Helpers
         {
             List<SelectListItem> list = _context.Roles.Select(x => new SelectListItem
             {
+
                 Text = x.Name.ToString(),
-                Value = x.Id.ToString()
+                Value = x.Name.ToString()
             }).ToList();
+
+            foreach (var item in list)
+            {
+                if (item.Text == "Admin")
+                {
+                    item.Text = "Administrador";
+                }
+
+                if (item.Text == "AdultoMayor")
+                {
+                    item.Text = "Adulto mayor";
+                }
+            }
 
             list.Insert(0, new SelectListItem
             {
