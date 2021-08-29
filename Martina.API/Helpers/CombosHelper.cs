@@ -67,5 +67,25 @@ namespace Martina.API.Helpers
 
             return list;
         }
+
+        public IEnumerable<SelectListItem> GetComboDiseaseTypes()
+        {
+            List<SelectListItem> list = _context.DeseaseTypes.Select(x => new SelectListItem
+            {
+
+                Text = x.Description.ToString(),
+                Value = x.Id.ToString()
+
+            }).ToList();
+
+
+            list.Insert(0, new SelectListItem
+            {
+                Text = "[Seleccione un tipo de usuario...]",
+                Value = "0"
+            });
+
+            return list;
+        }
     }
 }

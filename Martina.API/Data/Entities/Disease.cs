@@ -11,7 +11,7 @@ namespace Martina.API.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Tipo de vehículo")]
+        [Display(Name = "Tipo de enfermedad")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DiseaseType DiseaseType { get; set; }
 

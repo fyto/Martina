@@ -13,7 +13,7 @@ namespace Martina.API.Helpers
 
         IEnumerable<SelectListItem> GetComboUserTypes();
 
-        //IEnumerable<SelectListItem> GetComboProcedures();
+        IEnumerable<SelectListItem> GetComboDiseaseTypes();
 
         //IEnumerable<SelectListItem> GetComboVehicleTypes();
 
