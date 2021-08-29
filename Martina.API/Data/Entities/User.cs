@@ -31,8 +31,8 @@ namespace Martina.API.Data.Entities
         // TODO: Fix the images path
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-          ? $"https://localhost:44361/images/noimage.png"
-          : $"https://localhost:44361/users/{ImageId}";
+          ? $"https://martina.blob.core.windows.net/users/noimage.png"
+           : $"https://martina.blob.core.windows.net/users/{ImageId}";
         
         [Display(Name = "Tipo de usuario")]
         public UserType UserType { get; set; }

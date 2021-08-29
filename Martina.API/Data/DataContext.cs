@@ -26,8 +26,6 @@ namespace Martina.API.Data
         public DbSet<History> Histories { get; set; }
 
 
-
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
