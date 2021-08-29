@@ -2,12 +2,9 @@
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
-using Martina.Common.Enums;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
@@ -98,11 +95,8 @@ namespace Martina.API.Controllers
                 return NotFound();
             }
 
-            //var userType = await _userHelper.(user.UserType.ToString());
+            UserViewModel model = await _converterHelper.ToUserViewModel(user);
 
-            //var userType = await _userHelper.GetUserAsync();
-
-            UserViewModel model = _converterHelper.ToUserViewModel(user);
             return View(model);
         }
 
@@ -127,6 +121,49 @@ namespace Martina.API.Controllers
             model.UserTypes = _combosHelper.GetComboUserTypes();
             return View(model);
         }
+
+
+        public async Task<IActionResult> Details(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            User user = await _context.Users
+                .Include(x => x.Diseases)
+                .ThenInclude(x => x.DiseaseType)
+                .FirstOrDefaultAsync(x => x.Id == id);
+
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View(user);
+        }
+
+
+        public async Task<IActionResult> Delete(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(Guid.Parse(id));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            await _blobHelper.DeleteBlobAsync(user.ImageId, "users");
+            await _userHelper.DeleteUserAsync(user);
+            return RedirectToAction(nameof(Index));
+        }
+
+
+
 
 
     }

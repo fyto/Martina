@@ -47,10 +47,9 @@ namespace Martina.API.Models
 
         public IEnumerable<SelectListItem> UserTypes { get; set; }
 
-
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty
-            ? $"https://martina.azurewebsites.net/images/noimage.png"
+            ? $"https://martina.blob.core.windows.net/users/noimage.png"
             : $"https://martina.blob.core.windows.net/users/{ImageId}";
     }
 }

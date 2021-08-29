@@ -26,8 +26,6 @@ namespace Martina.API.Helpers
             return new User
             {
                 Address = model.Address,
-                //Document = model.Document,
-                //DocumentType = await _context.DocumentTypes.FindAsync(model.DocumentTypeId),
                 Email = model.Email,
                 FirstName = model.FirstName,
                 Id = isNew ? Guid.NewGuid().ToString() : model.Id,
@@ -39,14 +37,11 @@ namespace Martina.API.Helpers
             };
         }
 
-        public UserViewModel ToUserViewModel(User user)
+        public async Task<UserViewModel> ToUserViewModel(User user)
         {
             return new UserViewModel
             {
                 Address = user.Address,
-                //Document = user.Document,
-                //DocumentTypeId = user.DocumentType.Id,
-                //DocumentTypes = _combosHelper.GetComboDocumentTypes(),
                 Email = user.Email,
                 FirstName = user.FirstName,
                 Id = user.Id,

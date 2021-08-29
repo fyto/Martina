@@ -31,7 +31,9 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.UserType)
                             </th>
-
+                            <th>
+                                @Html.DisplayNameFor(model => model.DiseasesCount)
+                            </th>
                             <th>
                                 @Html.DisplayNameFor(model => model.ImageFullPath)
                             </th>
@@ -54,15 +56,17 @@
                             <th>
                                 @Html.DisplayFor(modelItem => item.UserType)
                             </th>
+                            <th>
+                                @Html.DisplayFor(modelItem => item.DiseasesCount)
+                            </th>
                             <td>
                                 <img src="@item.ImageFullPath" style="width: 100px; height: 100px; border-radius: 150px;" />
                             </td>
                             <td>
                                 <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                @if (item.Diseases.Count > 0)
-                                {
-                                    <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Enfermedades</a>
-                                }
+
+                                <a asp-action="Details" asp-route-id="@item.Id" class="btn btn-info">Enfermedades</a>
+
                                 <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
                             </td>
                         </tr>

@@ -16,6 +16,8 @@ namespace Martina.API.Helpers
 
         Task<IdentityResult> UpdateUserAsync(User user);
 
+        Task<IdentityResult> DeleteUserAsync(User user);
+
         Task<IdentityResult> AddUserAsync(User user, string password);
 
         Task CheckRoleAsync(string roleName);

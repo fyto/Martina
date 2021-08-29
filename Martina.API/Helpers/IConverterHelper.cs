@@ -11,7 +11,7 @@ namespace Martina.API.Helpers
     {
         Task<User> ToUserAsync(UserViewModel model, Guid imageId, bool isNew);
 
-        UserViewModel ToUserViewModel(User user);
+        Task<UserViewModel> ToUserViewModel(User user);
 
     }
 }

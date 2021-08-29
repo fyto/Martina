@@ -46,6 +46,11 @@ namespace Martina.API.Helpers
             }
         }
 
+        public async Task<IdentityResult> DeleteUserAsync(User user)
+        {
+            return await _userManager.DeleteAsync(user);
+        }
+
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users
@@ -86,13 +91,6 @@ namespace Martina.API.Helpers
             currentUser.PhoneNumber = user.PhoneNumber;
             return await _userManager.UpdateAsync(currentUser);
         }
-
-     
-        //public async Task<string> GetIdRolByRolName(string rolName)
-        //{
-        //    return await _context.Roles.Select(x => x.Id).FirstOrDefaultAsync(x => x.n == id.ToString()); ;
-                         
-        //}
 
 
     }
