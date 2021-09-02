@@ -30,7 +30,7 @@ namespace Martina.API.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione una tipo de enfermedad...]",
+                Text = "[Seleccione una enfermedad...]",
                 Value = "0"
             });
 
@@ -81,7 +81,7 @@ namespace Martina.API.Helpers
 
             list.Insert(0, new SelectListItem
             {
-                Text = "[Seleccione un tipo de usuario...]",
+                Text = "[Seleccione un tipo de enfermedad...]",
                 Value = "0"
             });
 

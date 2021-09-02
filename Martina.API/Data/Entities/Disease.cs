@@ -16,8 +16,6 @@ namespace Martina.API.Data.Entities
         public DiseaseType DiseaseType { get; set; }
 
         [Display(Name = "Adulto mayor")]
-        //[JsonIgnore]
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public User User { get; set; }
 
         [Display(Name = "Tipo enfermedad")]
@@ -25,19 +23,7 @@ namespace Martina.API.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
 
-        //[Display(Name = "Observación")]
-        //[DataType(DataType.MultilineText)]
-        //public string Remarks { get; set; }
-
-        //public ICollection<VehiclePhoto> VehiclePhotos { get; set; }
-
-        //[Display(Name = "# Fotos")]
-        //public int VehiclePhotosCount => VehiclePhotos == null ? 0 : VehiclePhotos.Count;
-
-        //[Display(Name = "Foto")]
-        //public string ImageFullPath => VehiclePhotos == null || VehiclePhotos.Count == 0
-        //    ? $"https://localhost:44345/images/noimage.png"
-        //    : VehiclePhotos.FirstOrDefault().ImageFullPath;
+       
 
     
     }

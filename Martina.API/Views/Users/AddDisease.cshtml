@@ -1,0 +1,51 @@
+﻿@model Martina.API.Models.AddDiseaseViewModel
+
+
+@{
+    ViewData["Title"] = "Crear";
+}
+
+
+<script src="/js/Users/AddDisease.js"></script>
+
+<h2>Crear</h2>
+
+<h4>Enfermedad</h4>
+<hr />
+<div class="row">
+    <div class="col-md-12">
+        <form asp-action="AddDisease" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+
+            <div class="form-group">
+                <label asp-for="DiseaseTypeId" class="control-label"></label>
+                <select asp-for="DiseaseTypeId" id="disease-types" asp-items="Model.DiseaseTypes" class="form-control"></select>
+                <span id="span-disease-types" class="text-danger">El campo tipo de enfermedad es obligatorio</span>
+            </div>
+
+            <div class="form-group" id="first-name">
+                <label asp-for="Description" class="control-label"></label>
+                <input asp-for="Description" id="first-name-input" class="form-control" />
+                <span asp-validation-for="Description" class="text-danger"></span>
+            </div>
+
+            <div class="form-group" id="div-button">
+                <input type="submit" value="Crear" class="btn btn-primary" />
+                <a asp-action="Index" class="btn btn-success">Regresar</a>
+            </div>
+
+
+
+        </form>
+
+    </div>
+</div>
+
+
+@section Scripts {
+
+
+
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}

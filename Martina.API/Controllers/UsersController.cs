@@ -122,6 +122,25 @@ namespace Martina.API.Controllers
             return View(model);
         }
 
+        [HttpPost]
+        public async Task<IActionResult> AddDisease(AddDiseaseViewModel model)
+        {
+          
+
+            return View(model);
+        }
+
+      
+        public async Task<IActionResult> AddDisease()
+        {
+            AddDiseaseViewModel model = new AddDiseaseViewModel
+            {
+                DiseaseTypes = _combosHelper.GetComboDiseaseTypes()
+            };
+
+            return View(model);
+        }
+
 
         public async Task<IActionResult> Details(string id)
         {
@@ -144,29 +163,6 @@ namespace Martina.API.Controllers
         }
 
 
-        public async Task<IActionResult> AddDisease(string id)
-        {
-            if (string.IsNullOrEmpty(id))
-            {
-                return NotFound();
-            }
-
-            User user = await _context.Users
-                .Include(x => x.Diseases)
-                .FirstOrDefaultAsync(x => x.Id == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
-
-            DiseaseViewModel model = new DiseaseViewModel
-            {
-                DiseaseTypes = _combosHelper.GetComboDiseaseTypes(),
-                UserId = user.Id
-            };
-
-            return PartialView("_addDisease", model);
-        }
 
 
         public async Task<IActionResult> Delete(string id)

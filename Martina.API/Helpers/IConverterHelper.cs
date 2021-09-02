@@ -13,9 +13,9 @@ namespace Martina.API.Helpers
 
         Task<UserViewModel> ToUserViewModel(User user);
 
-        Task<Disease> ToDiseaseAsync(DiseaseViewModel model, bool isNew);
+        //Task<Disease> ToDiseaseAsync(DiseaseViewModel model, bool isNew);
 
-        DiseaseViewModel ToDiseaseViewModel(Disease disease);
+        //DiseaseViewModel ToDiseaseViewModel(Disease disease);
 
     }
 }

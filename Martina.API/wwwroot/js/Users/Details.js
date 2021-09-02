@@ -2,19 +2,22 @@
 
 $(document).ready(async function () {
 
-    var PlaceHolderElement = $('#PlaceHolderHere');
+    // Levanta el modal
+    //$('#addDisease').click(function ()
+    //{
+    //    var url = '@Url.Action("AddDisease", "Users")';
 
-    $('button[data-toggle="ajax-modal"]').click(function (event) {
+    //    console.log(data);
 
-        var url = $(this).data('url');
-
-        $.get(url).done(function (data)
-        {
-            PlaceHolderElement.html(data),
-            PlaceHolderElement.find('modal').modal('show');
-        })
-
-    })
+    //    $.ajax({
+    //        url: url,
+    //        type: 'post',
+    //        data: { "id": $("#Text1").val() },
+    //        success: function (data) {
+    //            $('#popup').html(data);
+    //        }
+    //    });
+    //})
    
 
 });

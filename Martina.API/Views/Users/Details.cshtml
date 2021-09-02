@@ -5,11 +5,11 @@
 }
 
 <link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
-<script src="~/js/Users/Details.js"> </script>
+<script src="~/js/Users/Details.js"></script>
 
 <h2>Enfermedades</h2>
 
-<div id="PlaceHolderHere"></div>
+@*<div id="PlaceHolderHere"></div>*@
 
 <div>
     <h4>Usuario</h4>
@@ -24,17 +24,17 @@
                     @Html.DisplayFor(model => model.FullName)
                 </dd>
                 @*<dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.DocumentType.Description)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.DocumentType.Description)
-                </dd>
-                <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.Document)
-                </dt>
-                <dd class="col-sm-9">
-                    @Html.DisplayFor(model => model.Document)
-                </dd>*@
+                        @Html.DisplayNameFor(model => model.DocumentType.Description)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.DocumentType.Description)
+                    </dd>
+                    <dt class="col-sm-3">
+                        @Html.DisplayNameFor(model => model.Document)
+                    </dt>
+                    <dd class="col-sm-9">
+                        @Html.DisplayFor(model => model.Document)
+                    </dd>*@
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.Email)
                 </dt>
@@ -61,7 +61,12 @@
     </div>
 </div>
 <div>
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#Details" data-url="@Url.Action($"AddDisease/{Model.Id}")">Adicionar enfermedad</button>
+    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addDisease" asp-route-id="@Model.Id">Adicionar enfermedad</button>
+
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DiseaseModal" id="addDisease" asp-route-id="@Model.Id" data-url="@Url.Action($"AddDisease/{@Model.Id}")">Open Modal</button>
+
+    <a asp-action="AddDisease" asp-route-id="@Model.Id" class="btn btn-warning">Asociar enfermedades</a>
+
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar Usuario</a>
     <a asp-action="Index" class="btn btn-success">Regresar</a>
 </div>
@@ -83,27 +88,27 @@
                             <th>
                                 @Html.DisplayNameFor(model => model.Diseases.FirstOrDefault().DiseaseType)
                             </th>
-          
+
                             <th></th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model.Diseases)
                         {
-                        <tr>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.Description)
-                            </td>
-                            <td>
-                                @Html.DisplayFor(modelItem => item.DiseaseType)
-                            </td>
-                         
-                            <td>
-                                <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                <a asp-action="DetailsVehicle" asp-route-id="@item.Id" class="btn btn-info">Historias<i class="glyphicon glyphicon-align-justify"></i></a>
-                                <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DiseaseType)
+                                </td>
+
+                                <td>
+                                    <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <a asp-action="DetailsVehicle" asp-route-id="@item.Id" class="btn btn-info">Historias<i class="glyphicon glyphicon-align-justify"></i></a>
+                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
+                                </td>
+                            </tr>
                         }
                     </tbody>
                 </table>
@@ -113,6 +118,11 @@
 </div>
 
 <partial name="_DeleteDialog" />
+
+@*<partial name="_addDisease" />*@
+
+
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
@@ -134,4 +144,36 @@
             sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/DeleteVehicle/', false);
         });
     </script>
+
+
+    <script>
+             $('#addDisease').click(function () {
+                 var url = '@Url.Action("AddDisease", "Users")';
+                $.ajax({
+                    url: url,
+                    type: 'post',
+                    data: { "id": '@Model.Id' },
+                    success: function (data)
+                    {
+                        $('#popup').html(data);
+                    }
+                });
+            })
+
+            $('#submitModal').click(function () {
+                        var url = '@Url.Action("GetData", "Users")';
+                        $.ajax({
+                            url: url,
+                            type: 'post',
+                            data: { "data": $("input[name='data']").val() },
+                            success: function () {
+                                $("#Text1").val("");
+                                alert("pass successfully!");
+
+                            }
+                        });
+                    });
+    </script>
+
+
 }
