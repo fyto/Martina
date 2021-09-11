@@ -123,8 +123,20 @@ namespace Martina.API.Controllers
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDisease(AddDiseaseViewModel model)
         {
+            if(ModelState.IsValid)
+            {
+                //User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.User.Id);
+
+                Disease disease = await _converterHelper.ToDiseaseAsync(model, true);
+
+                _context.Deseases.Add(disease);
+                await _context.SaveChangesAsync();
+            }
+
+            model.DiseaseTypes = _combosHelper.GetComboDiseaseTypes();
           
 
             return View(model);

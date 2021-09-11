@@ -19,14 +19,15 @@ namespace Martina.API.Helpers
             _combosHelper = combosHelper;
         }
 
-        //public async Task<Disease> ToDiseaseAsync(DiseaseViewModel model, bool isNew)
-        //{
-        //    return new Disease
-        //    {
-        //        Description = model.Description,                
-        //        //DiseaseType = await _context.DeseaseTypes.FindAsync(model.DiseaseTypeId)
-        //    };
-        //}
+        public async Task<Disease> ToDiseaseAsync(AddDiseaseViewModel model, bool isNew)
+        {
+            return new Disease
+            {
+                //Id = isNew ? 0 : model.Id,
+                Description = model.Description,
+                DiseaseType = await _context.DeseaseTypes.FindAsync(model.DiseaseTypeId)
+            };
+        }
 
         //public DiseaseViewModel ToDiseaseViewModel(Disease disease)
         //{
@@ -36,7 +37,7 @@ namespace Martina.API.Helpers
         //        Description = disease.Description,
         //        //DiseaseTypeId = disease.DiseaseType.Id,
         //        //DiseaseTypes = _combosHelper.GetComboDiseaseTypes()
-               
+
         //    };
         //}
 
