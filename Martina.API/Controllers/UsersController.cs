@@ -1,4 +1,5 @@
-﻿using Martina.API.Data;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
@@ -18,7 +19,11 @@ namespace Martina.API.Controllers
         private readonly IBlobHelper _blobHelper;
         //private readonly IMailHelper _mailHelper;
 
-        public UsersController(DataContext context, IUserHelper userHelper, ICombosHelper combosHelper, IConverterHelper converterHelper, IBlobHelper blobHelper)
+        private readonly INotyfService _notyf;
+
+        public UsersController(DataContext context, IUserHelper userHelper, 
+                               ICombosHelper combosHelper, IConverterHelper converterHelper,
+                               IBlobHelper blobHelper, INotyfService notyf)
         {
             _context = context;
             _userHelper = userHelper;
@@ -26,6 +31,8 @@ namespace Martina.API.Controllers
             _converterHelper = converterHelper;
             _blobHelper = blobHelper;
             //_mailHelper = mailHelper;
+
+            _notyf = notyf;
         }
 
         public async Task<IActionResult> Index()
@@ -128,12 +135,31 @@ namespace Martina.API.Controllers
         {
             if(ModelState.IsValid)
             {
-                //User user = await _context.Users.FirstOrDefaultAsync(x => x.Id == model.User.Id);
-
                 Disease disease = await _converterHelper.ToDiseaseAsync(model, true);
 
-                _context.Deseases.Add(disease);
-                await _context.SaveChangesAsync();
+                try
+                {
+                    _context.Deseases.Add(disease);
+                    await _context.SaveChangesAsync();
+
+                    _notyf.Success("Enfermedad creada correctamente");
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe una enfermedad con ese nombre.");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                }
+
             }
 
             model.DiseaseTypes = _combosHelper.GetComboDiseaseTypes();

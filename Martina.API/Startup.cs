@@ -1,3 +1,4 @@
+using AspNetCoreHero.ToastNotification;
 using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
@@ -27,6 +28,15 @@ namespace Martina.API
 
         public void ConfigureServices(IServiceCollection services)
         {
+
+            services.AddNotyf(config =>
+            {
+                config.DurationInSeconds = 10;
+                config.IsDismissable = true;
+                config.Position = NotyfPosition.TopRight;
+
+            });
+
             services.AddControllersWithViews();
 
             services.AddIdentity<User, IdentityRole>(x =>
