@@ -16,6 +16,7 @@ namespace Martina.API.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string Description { get; set; }
 
+
         [Display(Name = "Tipo de enfermedad")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DiseaseType DiseaseType { get; set; }

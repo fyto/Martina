@@ -6,6 +6,8 @@ using Martina.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
@@ -51,7 +53,6 @@ namespace Martina.API.Controllers
 
             return View(model);
         }
-
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -107,6 +108,7 @@ namespace Martina.API.Controllers
             return View(model);
         }
 
+      
 
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -129,12 +131,41 @@ namespace Martina.API.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> AddDisease()
+        {
+            Collection<Disease> collection = new Collection<Disease>();
+
+            var DeseasesList = await _context.Deseases.Include(x => x.DiseaseType).ToListAsync();
+
+            foreach (var item in DeseasesList)
+            {
+                collection.Add(item);
+            }
+
+            AddDiseaseViewModel model = new AddDiseaseViewModel
+            {
+                DiseaseTypes = _combosHelper.GetComboDiseaseTypes(),
+                Diseases = collection
+            };
+
+            return View(model);
+        }
+
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> AddDisease(AddDiseaseViewModel model)
         {
             if(ModelState.IsValid)
             {
+                //User user = await _context.Users
+                //                   .Include(x => x.Diseases)
+                //                   .FirstOrDefaultAsync(x => x.Id == model.UserId);
+
+                //if (user == null)
+                //{
+                //    return NotFound();
+                //}
+
                 Disease disease = await _converterHelper.ToDiseaseAsync(model, true);
 
                 try
@@ -142,13 +173,17 @@ namespace Martina.API.Controllers
                     _context.Deseases.Add(disease);
                     await _context.SaveChangesAsync();
 
-                    _notyf.Success("Enfermedad creada correctamente");
+                    _notyf.Custom("Enfermedad creada correctamente.", 3, "green", "fa fa-user-md");
+
+                    return RedirectToAction(nameof(AddDisease));
+
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe una enfermedad con ese nombre.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe una enfermedad con ese nombre.");
+                        _notyf.Error("Ya existe una enfermedad con ese nombre.", 3);
                     }
                     else
                     {
@@ -167,18 +202,8 @@ namespace Martina.API.Controllers
 
             return View(model);
         }
-
       
-        public async Task<IActionResult> AddDisease()
-        {
-            AddDiseaseViewModel model = new AddDiseaseViewModel
-            {
-                DiseaseTypes = _combosHelper.GetComboDiseaseTypes()
-            };
-
-            return View(model);
-        }
-
+     
 
         public async Task<IActionResult> Details(string id)
         {
@@ -200,9 +225,6 @@ namespace Martina.API.Controllers
             return View(user);
         }
 
-
-
-
         public async Task<IActionResult> Delete(string id)
         {
             if (string.IsNullOrEmpty(id))
@@ -221,6 +243,22 @@ namespace Martina.API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
+
+        public async Task<IActionResult> AssociateDisease(string id)
+        {
+            if (string.IsNullOrEmpty(id))
+            {
+                return NotFound();
+            }
+
+            User user = await _userHelper.GetUserAsync(Guid.Parse(id));
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            return View();
+        }
 
 
 

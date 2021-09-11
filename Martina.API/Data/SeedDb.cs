@@ -1,6 +1,7 @@
 ﻿using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.Common.Enums;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -26,6 +27,7 @@ namespace Martina.API.Data
 
             await CheckCaresAsync();
             await CheckDiseaseTypeAsync();
+            await CheckDiseasesAsync();
 
             await CheckRolesAsync();
 
@@ -95,6 +97,102 @@ namespace Martina.API.Data
                 _context.DeseaseTypes.Add(new DiseaseType { Description = "Endocrinas" });
                 _context.DeseaseTypes.Add(new DiseaseType { Description = "Trastornos mentales y del comportamiento" });
                 _context.DeseaseTypes.Add(new DiseaseType { Description = "Del sistema nervioso" });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckDiseasesAsync()
+        {
+            if (!_context.Deseases.Any())
+            {
+
+                var TranstornoMentalList = await _context.DeseaseTypes.Where(x => x.Description.Equals("Trastornos mentales y del comportamiento")).ToListAsync();
+                var TranstornoMental = TranstornoMentalList.FirstOrDefault();
+
+                var OncologicaList = await _context.DeseaseTypes.Where(x => x.Description.Equals("Oncológicas")).ToListAsync();
+                var Oncologica = OncologicaList.FirstOrDefault();
+
+                var DeLaSangreList = await _context.DeseaseTypes.Where(x => x.Description.Equals("De la sangre")).ToListAsync();
+                var DeLaSangre = OncologicaList.FirstOrDefault();
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Alzheimer",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(TranstornoMental.Id)     
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Demencia senil",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(TranstornoMental.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Parkinson",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(TranstornoMental.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Ictus",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(TranstornoMental.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Amiloidosis",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Cáncer",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Cáncer ampular",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Cáncer de boca",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Cáncer de huesos",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Cáncer de próstata",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(Oncologica.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Leucemia",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(DeLaSangre.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Hemocromatosis",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(DeLaSangre.Id)
+                });
+
+                _context.Deseases.Add(new Disease
+                {
+                    Description = "Hemofilia",
+                    DiseaseType = await _context.DeseaseTypes.FindAsync(DeLaSangre.Id)
+                });
 
                 await _context.SaveChangesAsync();
             }

@@ -23,18 +23,6 @@
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.FullName)
                 </dd>
-                @*<dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.DocumentType.Description)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.DocumentType.Description)
-                    </dd>
-                    <dt class="col-sm-3">
-                        @Html.DisplayNameFor(model => model.Document)
-                    </dt>
-                    <dd class="col-sm-9">
-                        @Html.DisplayFor(model => model.Document)
-                    </dd>*@
                 <dt class="col-sm-3">
                     @Html.DisplayNameFor(model => model.Email)
                 </dt>
@@ -48,7 +36,7 @@
                     @Html.DisplayFor(model => model.Address)
                 </dd>
                 <dt class="col-sm-3">
-                    @Html.DisplayNameFor(model => model.PhoneNumber)
+                    Telefono
                 </dt>
                 <dd class="col-sm-9">
                     @Html.DisplayFor(model => model.PhoneNumber)
@@ -60,17 +48,20 @@
         </div>
     </div>
 </div>
+
 <div>
-    <button type="button" class="btn btn-primary" data-toggle="ajax-modal" data-target="#addDisease" asp-route-id="@Model.Id">Adicionar enfermedad</button>
-
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#DiseaseModal" id="addDisease" asp-route-id="@Model.Id" data-url="@Url.Action($"AddDisease/{@Model.Id}")">Open Modal</button>
-
-    <a asp-action="AddDisease" asp-route-id="@Model.Id" class="btn btn-warning">Asociar enfermedades</a>
+    <a asp-action="AddDisease" asp-route-id="@Model.Id" class="btn btn-success">Crear enfermedades</a>
 
     <a asp-action="Edit" asp-route-id="@Model.Id" class="btn btn-warning">Editar Usuario</a>
-    <a asp-action="Index" class="btn btn-success">Regresar</a>
+
+    <a asp-action="Disease" asp-route-id="@Model.Id" class="btn btn-info">Asociar enfermedades</a>
+
 </div>
 <br />
+<div>
+    <a asp-action="Index" class="btn btn-primary">Regresar</a>
+</div>
+<hr />
 
 <div class="row">
     <div class="col-md-12">

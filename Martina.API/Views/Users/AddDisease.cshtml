@@ -9,7 +9,6 @@
 <script src="/js/Users/AddDisease.js"></script>
 
 <h2>Crear</h2>
-
 <h4>Enfermedad</h4>
 <hr />
 <div class="row">
@@ -21,7 +20,7 @@
             <div class="form-group">
                 <label asp-for="DiseaseTypeId" class="control-label"></label>
                 <select asp-for="DiseaseTypeId" id="disease-types" asp-items="Model.DiseaseTypes" class="form-control"></select>
-                <span id="span-disease-types" class="text-danger">El campo tipo de enfermedad es obligatorio</span>
+                @*<span id="span-disease-types" class="text-danger">El campo tipo de enfermedad es obligatorio</span>*@
             </div>
 
             <div class="form-group" id="first-name">
@@ -41,9 +40,71 @@
 </div>
 
 
+<div class="row">
+    <div class="col-md-12">
+        <div class="panel panel-default">
+            <div class="panel-heading">
+                <h3 class="panel-title">Enfermedades</h3>
+            </div>
+            <div class="panel-body">
+                <table class="table table-hover table-responsive table-striped" id="MyTableDiseases">
+                    <thead>
+                        <tr>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Diseases.FirstOrDefault().Description)
+                            </th>
+                            <th>
+                                @Html.DisplayNameFor(model => model.Diseases.FirstOrDefault().DiseaseType.Description)
+                            </th>
+
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model.Diseases)
+                        {
+                            <tr>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.Description)
+                                </td>
+                                <td>
+                                    @Html.DisplayFor(modelItem => item.DiseaseType.Description)
+                                </td>
+                                <td nowrap="nowrap">
+                                    <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
+                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
 @section Scripts {
 
+    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
+    @*<script src="/js/deleteDialog.js"></script>*@
 
+    <script type="text/javascript">
+        $(document).ready(function () {
+            $('#MyTableDiseases').DataTable({
+                "language": {
+                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
+                },
+                "aLengthMenu": [
+                    [25, 50, 100, 200, -1],
+                    [25, 50, 100, 200, "Todos"]
+                ]
+            });
+            // Delete item
+            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/DeleteVehicle/', false);
+        });
+    </script>
 
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
 }

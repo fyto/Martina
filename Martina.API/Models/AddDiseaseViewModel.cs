@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc.Rendering;
+﻿using Martina.API.Data.Entities;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
@@ -17,6 +18,10 @@ namespace Martina.API.Models
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public int? DiseaseTypeId { get; set; }
 
+        public string UserId { get; set; }
+
         public IEnumerable<SelectListItem> DiseaseTypes { get; set; }
+
+        public ICollection<Disease> Diseases { get; set; }
     }
 }
