@@ -4,6 +4,10 @@
     ViewData["Title"] = "Crear";
 }
 
+<script src="~/js/Cares/Create.js"></script>
+<script src="~/lib/jquery/dist/jquery.js"></script>
+<link href="~/css/LoadingPopup.css" rel="stylesheet" />
+
 <h1>Crear</h1>
 
 <h4>Cuidado</h4>
@@ -19,6 +23,7 @@
             </div>
             <div class="form-group">
                 <input type="submit" value="Crear" class="btn btn-primary" />
+                <input type="button" value="Prueba modal" id="btnCreate" />
             </div>
         </form>
     </div>
@@ -27,6 +32,15 @@
 <div>
     <a asp-action="Index" class="btn btn-success">Regresar</a>
 </div>
+
+
+<div id="fade-area" class="overlay">
+</div>
+
+<div id="myModal" class="popup">
+    @Html.Partial("~/Views/Shared/_LoadingPopup.cshtml")
+</div>
+
 
 @section Scripts {
     @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
