@@ -4,42 +4,58 @@
     ViewData["Title"] = "Crear";
 }
 
-<script src="~/js/Cares/Create.js"></script>
-<script src="~/lib/jquery/dist/jquery.js"></script>
-<link href="~/css/LoadingPopup.css" rel="stylesheet" />
+<html>
 
-<h1>Crear</h1>
+    <head>
 
-<h4>Cuidado</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="Create">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label class="control-label">Nombre</label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
+        <script src="~/js/Cares/Create.js"></script>
+        <script src="~/lib/jquery/dist/jquery.js"></script>
+        <link href="~/css/LoadingPopup.css" rel="stylesheet" />
+        <link href="~/toastr/toastr.min.css" rel="stylesheet" />
+    </head>
+
+
+    <body>
+        <script src="~/toastr/toastr.min.js"></script>
+
+        <h1>Crear</h1>
+
+        <h4>Cuidado</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-4">
+                <form asp-action="Create">
+                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+                    <div class="form-group">
+                        <label class="control-label">Nombre</label>
+                        <input asp-for="Description" id="care-name" class="form-control" />
+                        <span asp-validation-for="Description" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Crear" class="btn btn-primary" />
+                        <input type="button" value="Prueba modal" id="btnCreate" />
+                    </div>
+                </form>
             </div>
-            <div class="form-group">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-                <input type="button" value="Prueba modal" id="btnCreate" />
-            </div>
-        </form>
-    </div>
-</div>
+        </div>
 
-<div>
-    <a asp-action="Index" class="btn btn-success">Regresar</a>
-</div>
+        <div>
+            <a asp-action="Index" class="btn btn-success">Regresar</a>
+        </div>
 
 
-<div id="fade-area" class="overlay">
-</div>
+        <div id="fade-area" class="overlay">
+        </div>
 
-<div id="myModal" class="popup">
-    @Html.Partial("~/Views/Shared/_LoadingPopup.cshtml")
-</div>
+        <div id="myModal" class="popup">
+            @Html.Partial("~/Views/Shared/_LoadingPopup.cshtml")
+        </div>
+
+    </body>
+
+</html>
+
+
 
 
 @section Scripts {

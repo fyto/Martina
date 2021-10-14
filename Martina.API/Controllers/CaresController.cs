@@ -28,37 +28,83 @@ namespace Martina.API.Controllers
         }
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(Care care)
+        public async Task<JsonResult> Create(string care)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(care);
+                    var careNew = new Care
+                    {
+                        Description = care
+                    };
+
+                    _context.Add(careNew);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    //return RedirectToAction(nameof(Index));
+                    return Json("Success");
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
-                        ModelState.AddModelError(string.Empty, "Ya existe este cuidado, verifique el nombre y vuelva a intentarlo.");
+                        //ModelState.AddModelError(string.Empty, "Ya existe este cuidado, verifique el nombre y vuelva a intentarlo.");
+                        return Json("Duplicate");
                     }
                     else
                     {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        //ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        return Json(dbUpdateException.InnerException.Message);
                     }
 
                 }
                 catch (Exception exception)
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
+                    return Json(exception.Message);
                 }
 
             }
-            return View(care);
+            //return View(care);
+            return Json("Failed");
         }
+
+
+
+
+
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public async Task<IActionResult> Create(Care care)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        try
+        //        {
+        //            _context.Add(care);
+        //            await _context.SaveChangesAsync();
+        //            return RedirectToAction(nameof(Index));
+        //        }
+        //        catch (DbUpdateException dbUpdateException)
+        //        {
+        //            if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+        //            {
+        //                ModelState.AddModelError(string.Empty, "Ya existe este cuidado, verifique el nombre y vuelva a intentarlo.");
+        //            }
+        //            else
+        //            {
+        //                ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+        //            }
+
+        //        }
+        //        catch (Exception exception)
+        //        {
+        //            ModelState.AddModelError(string.Empty, exception.Message);
+        //        }
+
+        //    }
+        //    return View(care);
+        //}
 
         public async Task<IActionResult> Edit(int? id)
         {

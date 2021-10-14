@@ -5,9 +5,22 @@ $(document).ready(async function () {
 
     $("#btnCreate").click(function ()
     {
-        $(".ovelay, .popup").fadeIn();
+        var careName = $("#care-name").val();
+        console.log(careName);
 
-        CallActionCreate();
+        if (careName != '' && careName != null)
+        {
+            //$(".ovelay, .popup").fadeIn();
+
+            CallActionCreate(careName);
+        }
+        else
+        {
+            alert('debe asignar un valor');
+        }
+
+
+      
     });
 
     function LoadingBar()
@@ -17,20 +30,39 @@ $(document).ready(async function () {
     }
 
 
-    function CallActionCreate()
+    function CallActionCreate(careName)
     {
-        $.ajax({
-            type: "POST",
-            url: '@Url.Action("Cares","Create")',
-            success: function () {
-                console.log("success modal");
-                setTimeout(function () { LoadingBar() }, 5000);
-            },
-            error: function () {
-                console.log("error modal");
-                setTimeout(function () { LoadingBar() }, 5000);
-            }
-        });
+       
+            $.ajax({
+                type: "POST",
+                url: "/Cares/Create",
+                data: { care: careName },
+                success: function (msg)
+                {
+                    console.log("Suceess operation");
+                    console.log(msg);
+
+                    if (msg == 'Success')
+                    {
+                        toastr.success("Cuidado guardado correctamente", "Exíto");
+                    }
+                    if (msg == 'Duplicate')
+                    {
+                        toastr.warning("Success", "Success");
+                    }
+                    else
+                    {
+                        toastr.error("Success", "Success");
+                    }
+                },
+                error: function (req, status, error)
+                {
+
+                    console.log("Error operation");
+                    alert(error);
+                }
+            });
+       
 
     }
 
