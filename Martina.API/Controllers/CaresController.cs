@@ -1,5 +1,6 @@
 ﻿using Martina.API.Data;
 using Martina.API.Data.Entities;
+using Martina.API.Helpers;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -11,21 +12,27 @@ namespace Martina.API.Controllers
     public class CaresController : Controller
     {
         private readonly DataContext _context;
+        private readonly IUserHelper _userHelper;
 
-        public CaresController(DataContext context)
+
+        public CaresController(DataContext context, IUserHelper userHelper)
         {
             _context = context;
+            _userHelper = userHelper;           
         }
 
-        public async Task<IActionResult> Index()
+        [HttpPost]
+        public async Task<JsonResult> GetCares()
         {
-            return View(await _context.Cares.ToListAsync());
+            return Json(await _context.Cares.ToListAsync());
         }
 
         public IActionResult Create()
-        {
+        {  
             return View();
         }
+
+       
 
         [HttpPost]
         public async Task<JsonResult> Create(string care)
@@ -34,9 +41,16 @@ namespace Martina.API.Controllers
             {
                 try
                 {
+                    var userEmail = User.Identity.Name;
+
+                    var user = await _userHelper.GetUserAsync(userEmail);
+
                     var careNew = new Care
                     {
-                        Description = care
+                        Description = care,
+                        CreationDate = DateTime.Now,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName
                     };
 
                     _context.Add(careNew);

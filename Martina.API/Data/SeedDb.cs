@@ -74,13 +74,34 @@ namespace Martina.API.Data
         {
             if (!_context.Cares.Any())
             {
-                _context.Cares.Add(new Care { Description = "Aseo personal" });
-                _context.Cares.Add(new Care { Description = "Beber 2 litros de agua" });
-                _context.Cares.Add(new Care { Description = "Alimentación saludable" });
-                _context.Cares.Add(new Care { Description = "Cuidados de la piel" });
-                _context.Cares.Add(new Care { Description = "Usar ropa de algodón" });
-                _context.Cares.Add(new Care { Description = "Utilizar bastón o andador" });
-                _context.Cares.Add(new Care { Description = "Estimulación" });
+                _context.Cares.Add(new Care { Description = "Aseo personal",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado" });
+                _context.Cares.Add(new Care { Description = "Beber 2 litros de agua",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado" });
+                _context.Cares.Add(new Care { Description = "Alimentación saludable" ,
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado"});
+                _context.Cares.Add(new Care { Description = "Cuidados de la piel",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado"});
+                _context.Cares.Add(new Care { Description = "Usar ropa de algodón",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado"});
+                _context.Cares.Add(new Care { Description = "Utilizar bastón o andador",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado"});
+                _context.Cares.Add(new Care { Description = "Estimulación",
+                                              CreationDate = DateTime.Now,
+                                              FirstName = "Cristofher",
+                                              LastName = "Ambiado"});
 
                 await _context.SaveChangesAsync();
             }

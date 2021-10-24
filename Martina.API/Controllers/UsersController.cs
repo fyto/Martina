@@ -106,9 +106,7 @@ namespace Martina.API.Controllers
             UserViewModel model = await _converterHelper.ToUserViewModel(user);
 
             return View(model);
-        }
-
-      
+        }      
 
         [HttpPost]
         [ValidateAntiForgeryToken]

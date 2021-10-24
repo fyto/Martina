@@ -1,0 +1,17 @@
+﻿
+.table thead {
+    background-color: #d4e2f2;
+}
+
+.tr-operation{
+    display:flex;
+    justify-content:center;
+}
+
+.edit-button{
+    margin-right:4px;
+}
+
+.btn-primary:hover {
+    background-color: #1a5276;
+}

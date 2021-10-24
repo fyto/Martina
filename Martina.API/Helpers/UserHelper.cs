@@ -31,7 +31,6 @@ namespace Martina.API.Helpers
             return await _userManager.CreateAsync(user, password);
         }
 
-
         public async Task AddUserToRoleAsync(User user, string roleName)
         {
             await _userManager.AddToRoleAsync(user, roleName);
@@ -50,7 +49,6 @@ namespace Martina.API.Helpers
         {
             return await _userManager.DeleteAsync(user);
         }
-
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users

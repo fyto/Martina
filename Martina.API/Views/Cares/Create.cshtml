@@ -1,63 +1,105 @@
-﻿@model Martina.API.Data.Entities.Care
-
+﻿
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Cuidados";
 }
 
 <html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-    <head>
+   
 
-        <script src="~/js/Cares/Create.js"></script>
-        <script src="~/lib/jquery/dist/jquery.js"></script>
-        <link href="~/css/LoadingPopup.css" rel="stylesheet" />
-        <link href="~/toastr/toastr.min.css" rel="stylesheet" />
-    </head>
+    <!--DataTable JS-->
+    <script type="text/javascript" src="~/js/dataTable/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/dataTables.responsive.min.js"></script>
+    <!-- Toastr notification Js -->
+    <script src="~/toastr/toastr.min.js"></script>
 
+    <script src="~/js/Cares/Create.js"></script>
+    <link href="~/css/Cares/Create.css" rel="stylesheet" />
 
-    <body>
-        <script src="~/toastr/toastr.min.js"></script>
+    <!-- Toastr notification Css -->
+    <link href="~/toastr/toastr.min.css" rel="stylesheet" />
 
-        <h1>Crear</h1>
+    <!--DataTable Css-->
+    <link href="~/css/dataTable/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/dataTable/responsive.dataTables.min.css" rel="stylesheet" />
 
-        <h4>Cuidado</h4>
-        <hr />
-        <div class="row">
-            <div class="col-md-4">
-                <form asp-action="Create">
-                    <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+</head>
+<body>  
+    <!-- Bootstrap Js-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <h2>Crear cuidado</h2>
+    <hr />
+    <div class="row">
+        <div class="form-group col-md-6">
+            <input id="care-name" class="form-control" placeholder="Ingrese nombre del cuidado" />
+        </div>
+
+        <div class="col-md-3">
+            <button class="btn btn-primary" id="btnCreate"><i class="fa fa-floppy-o"></i> Crear cuidado</button>
+        </div>
+    </div>
+
+    <br />
+
+    <h2>Listado de cuidados</h2>
+    <hr />
+
+    <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableCares">
+        <thead>
+            <tr>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Creador
+                </th>
+                <th>
+                    Fecha creación
+                </th>
+                <th>
+                    Operaciones
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+    <!-- MODAL DE EDICIÓN -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
                     <div class="form-group">
-                        <label class="control-label">Nombre</label>
-                        <input asp-for="Description" id="care-name" class="form-control" />
-                        <span asp-validation-for="Description" class="text-danger"></span>
+                        <label for="">Nombre del cuidado</label>
+                        <input class="form-control" id="care-name-modal" placeholder="Ingrese nombre del cuidado">
+                        <input type="hidden" id="care-id-modal">
                     </div>
-                    <div class="form-group">
-                        <input type="submit" value="Crear" class="btn btn-primary" />
-                        <input type="button" value="Prueba modal" id="btnCreate" />
-                    </div>
-                </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnEditModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
             </div>
         </div>
-
-        <div>
-            <a asp-action="Index" class="btn btn-success">Regresar</a>
-        </div>
+    </div>
 
 
-        <div id="fade-area" class="overlay">
-        </div>
-
-        <div id="myModal" class="popup">
-            @Html.Partial("~/Views/Shared/_LoadingPopup.cshtml")
-        </div>
-
-    </body>
-
+</body>
 </html>
 
 
 
-
 @section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}  
+
 }

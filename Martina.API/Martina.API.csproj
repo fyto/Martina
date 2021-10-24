@@ -21,4 +21,8 @@
     <ProjectReference Include="..\Martina.Common\Martina.Common.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="wwwroot\css\images\" />
+  </ItemGroup>
+
 </Project>
