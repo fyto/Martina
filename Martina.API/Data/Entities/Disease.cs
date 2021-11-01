@@ -21,6 +21,15 @@ namespace Martina.API.Data.Entities
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public DiseaseType DiseaseType { get; set; }
 
+        [Display(Name = "Nombre Tipo enfermedad")]
+        [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string DescriptionDeseaseType { get; set; }
+
+        public int DiseaseTypeId { get; set; }
+
+
+
 
     }
 }

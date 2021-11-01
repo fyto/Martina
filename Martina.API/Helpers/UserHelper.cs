@@ -57,8 +57,7 @@ namespace Martina.API.Helpers
 
         public async Task<User> GetUserAsync(Guid id)
         {
-            return await _context.Users
-                .Include(x => x.Diseases)
+            return await _context.Users                
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 

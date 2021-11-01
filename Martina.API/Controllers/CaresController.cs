@@ -31,7 +31,6 @@ namespace Martina.API.Controllers
         {  
             return View();
         }
-
        
 
         [HttpPost]
@@ -55,7 +54,7 @@ namespace Martina.API.Controllers
 
                     _context.Add(careNew);
                     await _context.SaveChangesAsync();
-                    //return RedirectToAction(nameof(Index));
+                  
                     return Json("Success");
                 }
                 catch (DbUpdateException dbUpdateException)
@@ -79,47 +78,53 @@ namespace Martina.API.Controllers
                 }
 
             }
-            //return View(care);
+        
             return Json("Failed");
         }
 
 
+        [HttpPost]
+        public async Task<JsonResult> Edit([FromBody]Care care)
+        {
+            //if (id != care.Id)
+            //{
+            //    return NotFound();
+            //}
 
+            if (ModelState.IsValid)
+            {
+                try
+                {                
 
+                    _context.Update(care);
+                    await _context.SaveChangesAsync();
+                 
+                    return Json("Success");
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
+                    {
+                        ModelState.AddModelError(string.Empty, "Ya existe este cuidado.");
+                        return Json("Duplicate");
+                    }
+                    else
+                    {
+                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        return Json(dbUpdateException.InnerException.Message);
+                    }
+                }
+                catch (Exception exception)
+                {
+                    ModelState.AddModelError(string.Empty, exception.Message);
+                    return Json(exception.Message);
+                }
+            }
+            return Json("Failed");
 
-        //[HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public async Task<IActionResult> Create(Care care)
-        //{
-        //    if (ModelState.IsValid)
-        //    {
-        //        try
-        //        {
-        //            _context.Add(care);
-        //            await _context.SaveChangesAsync();
-        //            return RedirectToAction(nameof(Index));
-        //        }
-        //        catch (DbUpdateException dbUpdateException)
-        //        {
-        //            if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-        //            {
-        //                ModelState.AddModelError(string.Empty, "Ya existe este cuidado, verifique el nombre y vuelva a intentarlo.");
-        //            }
-        //            else
-        //            {
-        //                ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-        //            }
+           
 
-        //        }
-        //        catch (Exception exception)
-        //        {
-        //            ModelState.AddModelError(string.Empty, exception.Message);
-        //        }
-
-        //    }
-        //    return View(care);
-        //}
-
+        }
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -134,48 +139,14 @@ namespace Martina.API.Controllers
             }
             return View(care);
         }
+     
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, Care care)
-        {
-            if (id != care.Id)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(care);
-                    await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
-                }
-                catch (DbUpdateException dbUpdateException)
-                {
-                    if (dbUpdateException.InnerException.Message.Contains("duplicate"))
-                    {
-                        ModelState.AddModelError(string.Empty, "Ya existe este cuidado.");
-                    }
-                    else
-                    {
-                        ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
-                    }
-                }
-                catch (Exception exception)
-                {
-                    ModelState.AddModelError(string.Empty, exception.Message);
-                }
-            }
-            return View(care);
-        }
-
-        public async Task<IActionResult> Delete(int? id)
+        public async Task<JsonResult> Delete(int? id)
         {
             if (id == null)
             {
-                return NotFound();
+                return Json("Error");
             }
 
             var care = await _context.Cares
@@ -183,19 +154,16 @@ namespace Martina.API.Controllers
 
             if (care == null)
             {
-                return NotFound();
+                return Json("NoExist");
             }
 
             _context.Cares.Remove(care);
             await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
+           
+            return Json("Success");
         }
 
-        private bool CareExists(int id)
-        {
-            return _context.Cares.Any(e => e.Id == id);
-        }
-
+    
 
     }
 }

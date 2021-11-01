@@ -10,8 +10,8 @@ namespace Martina.API.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Cuidado")]
-         public Care Care { get; set; }
+        //[Display(Name = "Cuidado")]
+        // public Care Care { get; set; }
 
         [Display(Name = "Fecha")]
         [DisplayFormat(DataFormatString = "{0:yyyy/MM/dd hh:mm tt}")]

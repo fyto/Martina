@@ -6,8 +6,7 @@
     <title>@ViewData["Title"] - App</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-    @*Script Jquery*@
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
 </head>
 <body>
     <header>
@@ -22,19 +21,22 @@
                     <ul class="navbar-nav flex-grow-1">
                         @if (User.Identity.IsAuthenticated && User.IsInRole("Admin"))
                         {
-                            @*<li class="nav-item">
-                                <a class="nav-link text-dark" asp-area="" asp-controller="DiseaseTypes" asp-action="Index">Tipos de enfermedades</a>
-                            </li>*@
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
+                            </li>
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="#" id="navbardrop" data-toggle="dropdown">
+                                <a class="nav-link dropdown-toggle text-dark" href="#" id="navbardrop" data-toggle="dropdown">
                                     Mantenedores
                                 </a>
-                                <div class="dropdown-menu">
+                                <div class="dropdown-menu" id="drop">
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Cares" asp-action="Create">Cuidados</a>
                                     <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="Index">Usuarios</a>
-                                    <a class="nav-link text-dark" asp-area="" asp-controller="DiseaseTypes" asp-action="Index">Tipos de enfermedades</a>                                   
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="DiseaseTypes" asp-action="Index">Tipos de enfermedades</a>
+                                    <a class="nav-link text-dark" asp-area="" asp-controller="Users" asp-action="AddDisease">Enfermedades</a>
                                 </div>
                             </li>
+
+
                         }
                     </ul>
                     <ul class="nav navbar-nav navbar-right">
@@ -73,7 +75,7 @@
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @* Notificaciones Toast Backend *@
-    @await Component.InvokeAsync("Notyf") 
+    @await Component.InvokeAsync("Notyf")
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

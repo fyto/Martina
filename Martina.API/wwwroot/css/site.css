@@ -1,4 +1,33 @@
-﻿/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
+﻿/* Estilos generales personalizados */
+
+.table thead {
+    background-color: #d4e2f2;
+}
+
+.tr-operation {
+    display: flex;
+    justify-content: center;
+}
+
+.edit-button {
+    margin-right: 4px;
+}
+
+.user-desease-button {
+    margin-right: 4px;
+}
+
+
+
+.h2-title {
+    letter-spacing: 1px;
+    font-style: normal;
+    font-family: Arial;
+    color: #090808;
+}
+
+
+/* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */
 
 a.navbar-brand {
@@ -17,6 +46,13 @@ a {
   background-color: #1b6ec2;
   border-color: #1861ac;
 }
+
+.btn-primary:hover {
+  color: #fff;
+  background-color: #1a5276;
+  border-color: #104071;
+}
+
 
 .nav-pills .nav-link.active, .nav-pills .show > .nav-link {
   color: #fff;

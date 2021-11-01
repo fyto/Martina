@@ -40,10 +40,14 @@ namespace Martina.API.Data.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
-        public ICollection<Disease> Diseases { get; set; }
+        [Display(Name = "Nombre tipo usuario")]
+        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        public string NameTypeUser { get; set; }
 
-        [Display(Name = "# Enfermedades")]
-        public int DiseasesCount => Diseases == null ? 0 : Diseases.Count;
+        //public ICollection<Disease> Diseases { get; set; }
+
+        //[Display(Name = "# Enfermedades")]
+        //public int DiseasesCount => Diseases == null ? 0 : Diseases.Count;
 
 
     }

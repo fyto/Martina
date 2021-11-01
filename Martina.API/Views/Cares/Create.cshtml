@@ -8,12 +8,11 @@
     <meta http-equiv="Content-type" content="text/html; charset=utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-   
-
     <!--DataTable JS-->
-    <script type="text/javascript" src="~/js/dataTable/jquery-3.5.1.js"></script>
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
     <script type="text/javascript" src="~/js/dataTable/jquery.dataTables.min.js"></script>
     <script type="text/javascript" src="~/js/dataTable/dataTables.responsive.min.js"></script>
+
     <!-- Toastr notification Js -->
     <script src="~/toastr/toastr.min.js"></script>
 
@@ -27,31 +26,35 @@
     <link href="~/css/dataTable/jquery.dataTables.min.css" rel="stylesheet" />
     <link href="~/css/dataTable/responsive.dataTables.min.css" rel="stylesheet" />
 
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 </head>
-<body>  
+<body>
     <!-- Bootstrap Js-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <h2>Crear cuidado</h2>
+    <h2 class="h2-title">Crear cuidado</h2>
     <hr />
     <div class="row">
-        <div class="form-group col-md-6">
-            <input id="care-name" class="form-control" placeholder="Ingrese nombre del cuidado" />
-        </div>
-
-        <div class="col-md-3">
-            <button class="btn btn-primary" id="btnCreate"><i class="fa fa-floppy-o"></i> Crear cuidado</button>
+        <div class="input-group col-md-6">
+            <input type="text" class="form-control" id="care-name" placeholder="Ingrese nombre del cuidado">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="btnCreate" data-toggle="tooltip" data-placement="top" title="Crear un cuidado"><i class="fa fa-floppy-o"></i> Crear cuidado</button>
+            </div>
         </div>
     </div>
 
     <br />
 
-    <h2>Listado de cuidados</h2>
+    <h2 class="h2-title">Listado de cuidados</h2>
     <hr />
 
     <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableCares">
         <thead>
             <tr>
+                <th>
+                    Id
+                </th>
                 <th>
                     Nombre
                 </th>
@@ -83,6 +86,9 @@
                         <label for="">Nombre del cuidado</label>
                         <input class="form-control" id="care-name-modal" placeholder="Ingrese nombre del cuidado">
                         <input type="hidden" id="care-id-modal">
+                        <input type="hidden" id="care-creation-date-modal">
+                        <input type="hidden" id="care-first-name-modal">
+                        <input type="hidden" id="care-last-name-modal">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -94,12 +100,34 @@
     </div>
 
 
+
+    <!-- MODAL DE ELIMINACIÓN -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delete-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @*<label for="">¿Seguro desea borrar el registro?</label>*@
+                        <label id="label-delete"></label>
+                        <input type="hidden" id="care-id-modal-delete">
+                        <input type="hidden" id="care-name-modal-delete">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDeleteModal" class="btn btn-danger"><i class="fa fa-trash-o"></i> Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
 </body>
 </html>
 
-
-
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}  
-
-}

@@ -35,11 +35,11 @@ namespace Martina.API.Data.Entities
         public string FullName => $"{FirstName} {LastName}";
 
 
-        public ICollection<History> Histories { get; set; }
+        //public ICollection<History> Histories { get; set; }
 
-        [Display(Name = "# Historias")]
-        public int HistoriesCount => Histories == null ? 0 : Histories.Count;
+        //[Display(Name = "# Historias")]
+        //public int HistoriesCount => Histories == null ? 0 : Histories.Count;
 
-        public ICollection<Detail> Details { get; set; }
+        //public ICollection<Detail> Details { get; set; }
     }
 }

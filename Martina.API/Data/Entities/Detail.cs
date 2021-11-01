@@ -10,13 +10,13 @@ namespace Martina.API.Data.Entities
     {
         public int Id { get; set; }
 
-        [Display(Name = "Historia")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public History History { get; set; }
+        //[Display(Name = "Historia")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        //public History History { get; set; }
 
-        [Display(Name = "Procedimiento")]
-        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        public Care Care { get; set; }
+        //[Display(Name = "Procedimiento")]
+        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        //public Care Care { get; set; }
 
         //[Display(Name = "Precio Mano de Obra")]
         //[DisplayFormat(DataFormatString = "{0:C2}")]

@@ -19,47 +19,71 @@ namespace Martina.API.Controllers
             _context = context;
         }
 
+
+        [HttpPost]
+        public async Task<JsonResult> GetDiseaseTypes()
+        {
+            return Json(await _context.DeseaseTypes.ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.DeseaseTypes.ToListAsync());
         }
 
-       public IActionResult Create()
+        [HttpPost]
+        public async Task<JsonResult> GetDiseaseWithTypes()
         {
-            return View();
+            return Json(await _context.Deseases.ToListAsync());
         }
 
+        public IActionResult Create()
+       {
+            return View();
+       }
+
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(DiseaseType diseaseType)
+        public async Task<JsonResult> CreateDisease(int id, string nameDisease)
         {
             if (ModelState.IsValid)
             {
                 try
                 {
-                    _context.Add(diseaseType);
+                    var diseaseType = _context.DeseaseTypes.Where(i => i.Id == id).FirstOrDefault();
+
+                    var disease = new Disease
+                    {                      
+                        Description = nameDisease,
+                        DiseaseType = diseaseType                        
+                    };
+
+                    _context.Add(disease);
                     await _context.SaveChangesAsync();
-                    return RedirectToAction(nameof(Index));
+                    //return RedirectToAction(nameof(Index));
+                    return Json("Success");
                 }
                 catch (DbUpdateException dbUpdateException)
                 {
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
                         ModelState.AddModelError(string.Empty, "Ya existe este tipo de enfermedad, verifique el nombre y vuelva a intentarlo.");
+                        return Json("Duplicate");
                     }
                     else
                     {
                         ModelState.AddModelError(string.Empty, dbUpdateException.InnerException.Message);
+                        return Json(dbUpdateException.InnerException.Message);
                     }
 
                 }
                 catch (Exception exception)
                 {
                     ModelState.AddModelError(string.Empty, exception.Message);
+                    return Json("Error");
                 }
 
             }
-            return View(diseaseType);
+            return Json("Failed");
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -132,7 +156,6 @@ namespace Martina.API.Controllers
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
-
 
         private bool DiseaseTypeExists(int id)
         {

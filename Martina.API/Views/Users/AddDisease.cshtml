@@ -1,110 +1,91 @@
-﻿@model Martina.API.Models.AddDiseaseViewModel
-
-
+﻿
 @{
-    ViewData["Title"] = "Crear";
+    ViewData["Title"] = "Enfermedades";
 }
 
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-<script src="/js/Users/AddDisease.js"></script>
+    <!--DataTable JS-->
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/dataTables.responsive.min.js"></script>
 
-<h2>Crear</h2>
-<h4>Enfermedad</h4>
-<hr />
-<div class="row">
-    <div class="col-md-12">
-        <form asp-action="AddDisease" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+    <!-- Toastr notification Js -->
+    <script src="~/toastr/toastr.min.js"></script>
 
+    <link href="~/css/Users/AddDisease.css" rel="stylesheet" />
+    <script src="/js/Users/AddDisease.js"></script>
 
-            <div class="form-group">
-                <label asp-for="DiseaseTypeId" class="control-label"></label>
-                <select asp-for="DiseaseTypeId" id="disease-types" asp-items="Model.DiseaseTypes" class="form-control"></select>
-                <span id="span-disease-types" class="text-danger">El campo tipo de enfermedad es obligatorio</span>
-            </div>
+    <!-- Toastr notification Css -->
+    <link href="~/toastr/toastr.min.css" rel="stylesheet" />
 
-            <div class="form-group" id="first-name">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" id="first-name-input" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
+    <!--DataTable Css-->
+    <link href="~/css/dataTable/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/dataTable/responsive.dataTables.min.css" rel="stylesheet" />
 
-            <div class="form-group" id="div-button">
-                <input type="submit" value="Crear" class="btn btn-primary" />
-                <a asp-action="Index" class="btn btn-success">Regresar</a>
-            </div>
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
 
-        </form>
+</head>
+<body>
+    <!-- Bootstrap Js-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    </div>
-</div>
+    <h2 class="h2-title">Crear enfermedad</h2>
+    <hr />
+    <div class="row">
+        <div class="col-md-12">
 
+            <form>
+                <div class="form-row">
+                    <div class="col-md-6">
+                        <label class="control-label">Tipo / categoria</label>
+                        <select class="form-control" id="disease-types">
+                        </select>
+                    </div>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Enfermedades</h3>
-            </div>
-            <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="MyTableDiseases">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Diseases.FirstOrDefault().Description)
-                            </th>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Diseases.FirstOrDefault().DiseaseType.Description)
-                            </th>
+                    <div class="col-md-6">
+                        <label class="control-label">Nombre</label>
+                        <input type="text" class="form-control" id="disease-name" placeholder="Ingrese nombre enfermedad">
+                    </div>
 
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model.Diseases)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.DiseaseType.Description)
-                                </td>
-                                <td nowrap="nowrap">
-                                    <a asp-action="EditVehicle" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
+                    <div class="col-md-12">
+                        <button type="button" id="btnCreate" class="btn btn-primary btn-form-horizontal"> <i class="fa fa-floppy-o"></i> Crear enfermedad</button>
+                    </div>
+                </div>
+            </form>
+
         </div>
     </div>
-</div>
+
+    <br />
+
+    <h2 class="h2-title">Listado de enfermedades</h2>
+    <hr />
+
+    <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableDiseases">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>
+                <th>
+                    Tipo enfermedad
+                </th>               
+                <th>
+                    Operaciones
+                </th>
+            </tr>
+        </thead>
+    </table>
 
 
+</body>
+</html>
 
-@section Scripts {
-
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    @*<script src="/js/deleteDialog.js"></script>*@
-
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#MyTableDiseases').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                },
-                "aLengthMenu": [
-                    [25, 50, 100, 200, -1],
-                    [25, 50, 100, 200, "Todos"]
-                ]
-            });
-            // Delete item
-            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/Users/DeleteVehicle/', false);
-        });
-    </script>
-
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}

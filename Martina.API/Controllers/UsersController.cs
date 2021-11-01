@@ -37,10 +37,41 @@ namespace Martina.API.Controllers
             _notyf = notyf;
         }
 
+
+        [HttpPost]
+        public async Task<JsonResult> GetUsers()
+        {
+            var users = await _context.Users.ToListAsync();
+
+            foreach (var user in users)
+            {
+                if (user.UserType == 0)
+                {
+                    user.NameTypeUser = "Administrador" ;
+                }
+
+                if (Convert.ToInt32(user.UserType) == 1)
+                {
+                    user.NameTypeUser = "Apoderado";
+                }
+
+                if (Convert.ToInt32(user.UserType) == 2)
+                {
+                    user.NameTypeUser = "Adulto mayor";
+                }
+
+                if (Convert.ToInt32(user.UserType) == 3)
+                {
+                    user.NameTypeUser = "Cuidador";
+                }
+            }
+
+            return Json(await _context.Users.ToListAsync());
+        }
+
         public async Task<IActionResult> Index()
         {
             return View(await _context.Users
-                                .Include(x => x.Diseases)
                                 .ToListAsync());
         }
 
@@ -211,8 +242,6 @@ namespace Martina.API.Controllers
             }
 
             User user = await _context.Users
-                .Include(x => x.Diseases)
-                .ThenInclude(x => x.DiseaseType)
                 .FirstOrDefaultAsync(x => x.Id == id);
 
             if (user == null)
