@@ -40,7 +40,8 @@ $(document).ready(async function () {
                 //}
                
 
-                return "<div class='tr-operation'> <button type='button' class='edit-button btn btn-warning'><i class='fa fa-pencil-square-o'></i></button> 	<button type='button' class='delete-button btn btn-danger'><i class='fa fa-trash-o'></i></button> </div>";
+                return "<div class='tr-operation'> <button type='button' class='edit-button btn btn-warning'><i class='fa fa-pencil-square-o'></i></button>" + 
+                                                  "<button type = 'button' class='delete-button btn btn-danger' > <i class='fa fa-trash-o'></i></button > </div> ";
             }
         }],
         fixedColumns: {
