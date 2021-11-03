@@ -21,9 +21,7 @@ namespace Martina.API.Data
 
         public DbSet<DiseaseType> DeseaseTypes { get; set; }
 
-        public DbSet<Detail> Details { get; set; }
-
-        //public DbSet<History> Histories { get; set; }
+     
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

@@ -26,21 +26,21 @@ namespace Martina.API.Controllers
             return Json(await _context.DeseaseTypes.ToListAsync());
         }
 
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.DeseaseTypes.ToListAsync());
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> GetDiseaseWithTypes()
-        {
-            return Json(await _context.Deseases.ToListAsync());
-        }
-
-        public IActionResult Create()
-       {
             return View();
-       }
+        }
+
+        //[HttpPost]
+        //public async Task<JsonResult> GetDiseaseWithTypes()
+        //{
+        //    return Json(await _context.Deseases.ToListAsync());
+        //}
+
+        //public IActionResult Create()
+        //{
+        //    return View();
+        //}
 
         [HttpPost]
         public async Task<JsonResult> CreateDisease(int id, string nameDisease)
@@ -157,9 +157,9 @@ namespace Martina.API.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        private bool DiseaseTypeExists(int id)
-        {
-            return _context.DeseaseTypes.Any(e => e.Id == id);
-        }
+        //private bool DiseaseTypeExists(int id)
+        //{
+        //    return _context.DeseaseTypes.Any(e => e.Id == id);
+        //}
     }
 }

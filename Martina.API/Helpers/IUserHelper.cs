@@ -12,6 +12,8 @@ namespace Martina.API.Helpers
     {
         Task<User> GetUserAsync(string email);
 
+        Task<IdentityRole> GetUserTypeAsync(string description);
+
         Task<User> GetUserAsync(Guid id);
 
         Task<IdentityResult> UpdateUserAsync(User user);
@@ -21,9 +23,7 @@ namespace Martina.API.Helpers
         Task<IdentityResult> AddUserAsync(User user, string password);
 
         Task CheckRoleAsync(string roleName);
-
-        //Task<string> GetIdRolByRolName(string nameRol);
-
+            
         Task AddUserToRoleAsync(User user, string roleName);
 
         Task<bool> IsUserInRoleAsync(User user, string roleName);

@@ -1,5 +1,4 @@
-﻿using Martina.Common.Enums;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -35,14 +34,10 @@ namespace Martina.API.Data.Entities
            : $"https://martina.blob.core.windows.net/users/{ImageId}";
         
         [Display(Name = "Tipo de usuario")]
-        public UserType UserType { get; set; }
+        public string UserType { get; set; }
 
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
-
-        [Display(Name = "Nombre tipo usuario")]
-        [MaxLength(100, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
-        public string NameTypeUser { get; set; }
 
         //public ICollection<Disease> Diseases { get; set; }
 

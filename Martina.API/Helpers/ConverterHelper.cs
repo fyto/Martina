@@ -53,7 +53,7 @@ namespace Martina.API.Helpers
                 LastName = model.LastName,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Email,
-             
+                UserType = model.UserType
             };
         }
 
@@ -68,8 +68,6 @@ namespace Martina.API.Helpers
                 ImageId = user.ImageId,
                 LastName = user.LastName,
                 PhoneNumber = user.PhoneNumber,
-                UserType = user.UserType,
-                UserTypes = _combosHelper.GetComboUserTypes()
             };
         }
 

@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
@@ -41,31 +42,6 @@ namespace Martina.API.Controllers
         [HttpPost]
         public async Task<JsonResult> GetUsers()
         {
-            var users = await _context.Users.ToListAsync();
-
-            foreach (var user in users)
-            {
-                if (user.UserType == 0)
-                {
-                    user.NameTypeUser = "Administrador" ;
-                }
-
-                if (Convert.ToInt32(user.UserType) == 1)
-                {
-                    user.NameTypeUser = "Apoderado";
-                }
-
-                if (Convert.ToInt32(user.UserType) == 2)
-                {
-                    user.NameTypeUser = "Adulto mayor";
-                }
-
-                if (Convert.ToInt32(user.UserType) == 3)
-                {
-                    user.NameTypeUser = "Cuidador";
-                }
-            }
-
             return Json(await _context.Users.ToListAsync());
         }
 
@@ -75,19 +51,10 @@ namespace Martina.API.Controllers
                                 .ToListAsync());
         }
 
-        public IActionResult Create()
-        {
-            UserViewModel model = new UserViewModel
-            {  
-                UserTypes = _combosHelper.GetComboUserTypes()
-            };
-
-            return View(model);
-        }
+     
 
         [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create(UserViewModel model)
+        public async Task<JsonResult> Create([FromBody] UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -114,11 +81,13 @@ namespace Martina.API.Controllers
                 //    $"Para habilitar el usuario, " +
                 //    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
 
-                return RedirectToAction(nameof(Index));
+                //return RedirectToAction(nameof(Index));
+                return Json("Success");
             }
 
             //model.UserTypes = _combosHelper.GetComboUserTypes();
-            return View(model);
+            //return View(model);
+            return Json("Error");
         }
 
         public async Task<IActionResult> Edit(string id)
@@ -156,7 +125,7 @@ namespace Martina.API.Controllers
                 return RedirectToAction(nameof(Index));
             }
 
-            model.UserTypes = _combosHelper.GetComboUserTypes();
+            //model.UserTypes = _combosHelper.GetComboUserTypes();
             return View(model);
         }
 

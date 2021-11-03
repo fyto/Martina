@@ -39,7 +39,7 @@
 
     <div class="row">
         <div class="col-md-12">
-            <button type="button" id="btnCreateModal" class="btn btn-primary btn-form-horizontal"> <i class="fa fa-floppy-o"></i> Crear usuario</button>
+            <button type="button" id="btnCallModal" class="btn btn-primary btn-form-horizontal"> <i class="fa fa-floppy-o"></i> Crear usuario</button>
         </div>
     </div>
 
@@ -81,18 +81,17 @@
                     <form>
                         <div class="form-group">
                             <label>Tipo de usuario</label>
-
                             <div>
                                 <label for="f-option" class="l-radio">
-                                    <input type="radio" id="f-option" name="selector" tabindex="1">
+                                    <input type="radio" id="f-option" name="selector" tabindex="1" value="Apoderado" checked>
                                     <span>Apoderado</span>
                                 </label>
                                 <label for="s-option" class="l-radio">
-                                    <input type="radio" id="s-option" name="selector" tabindex="2">
+                                    <input type="radio" id="s-option" name="selector" tabindex="2" value="Cuidador">
                                     <span>Cuidador</span>
                                 </label>
                                 <label for="t-option" class="l-radio">
-                                    <input type="radio" id="t-option" name="selector" tabindex="3">
+                                    <input type="radio" id="t-option" name="selector" tabindex="3" value="Adulto mayor">
                                     <span>Adulto mayor</span>
                                 </label>
                             </div>
@@ -100,47 +99,50 @@
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" class="form-control" placeholder="Ingrese un email">
+                            <input type="text" class="form-control div-margin-down" id="email" placeholder="Ingrese un email">                          
+                            <span id="email-ok"></span>
                         </div>
 
                         <div class="row">
                             <div class="col">
                                 <label>Nombre</label>
-                                <input type="text" class="form-control" placeholder="Ingrese un nombre">
+                                <input type="text" class="form-control" id="name" placeholder="Ingrese un nombre">
                             </div>
                             <div class="col">
                                 <label>Apellido</label>
-                                <input type="text" class="form-control" placeholder="Ingrese un apellido">
+                                <input type="text" class="form-control" id="last-name" placeholder="Ingrese un apellido">
                             </div>
                         </div>
 
                         <div class="row div-modal-margin-top">
                             <div class="col">
                                 <label>Dirección</label>
-                                <input type="text" class="form-control" placeholder="Ingrese una dirección">
+                                <input type="text" class="form-control" id="address" placeholder="Ingrese una dirección">
                             </div>
                             <div class="col">
                                 <label>N° Telefonico</label>
+
                                 <div class="input-group">
                                     <div class="input-group-prepend">
-                                        <span class="input-group-text" id="inputGroupPrepend2">+569</span>
+                                        <span class="input-group-text" id="inputGroup-sizing-default">+569</span>
                                     </div>
-                                    <input type="text" class="form-control" placeholder="Ingrese un número telefonico">
+                                    <input type="text" class="form-control round" id="phone-number">
                                 </div>
+                                <span id="phone-number-ok"></span>
                             </div>
                         </div>
 
                         <div class="form-group div-modal-margin-top">
                             <label>Imagen</label>
                             <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="customFileLang" lang="es">
+                                <input type="file" class="custom-file-input" id="photo" lang="es">
                                 <label class="custom-file-label" for="customFileLang">[Seleccionar archivo...]</label>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnDeleteModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Crear usuario</button>
+                    <button type="button" id="btnCreateModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Crear usuario</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
                 </div>
             </div>

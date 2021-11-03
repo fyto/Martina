@@ -138,8 +138,7 @@ namespace Martina.API.Controllers
                 return NotFound();
             }
             return View(care);
-        }
-     
+        }     
 
         [HttpPost]
         public async Task<JsonResult> Delete(int? id)
@@ -161,9 +160,7 @@ namespace Martina.API.Controllers
             await _context.SaveChangesAsync();
            
             return Json("Success");
-        }
-
-    
+        }    
 
     }
 }

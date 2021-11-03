@@ -1,5 +1,4 @@
 ﻿using Martina.API.Data;
-using Martina.Common.Enums;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;

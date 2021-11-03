@@ -1,5 +1,6 @@
-﻿using Martina.Common.Enums;
+﻿using Martina.API.Data.Entities;
 using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
@@ -40,12 +41,12 @@ namespace Martina.API.Models
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }
 
-        public UserType? UserType { get; set; }
+        public string UserType { get; set; }
 
-        [Display(Name = "Tipo de usuario")]
-        public int? UserTypeId { get; set; }
+        //[Display(Name = "Tipo de usuario")]
+        //public int? UserTypeId { get; set; }
 
-        public IEnumerable<SelectListItem> UserTypes { get; set; }
+        //public IEnumerable<SelectListItem> UserTypes { get; set; }
 
         [Display(Name = "Foto")]
         public string ImageFullPath => ImageId == Guid.Empty

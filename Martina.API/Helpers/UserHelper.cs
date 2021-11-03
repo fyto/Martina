@@ -41,7 +41,7 @@ namespace Martina.API.Helpers
             bool roleExists = await _roleManager.RoleExistsAsync(roleName);
             if (!roleExists)
             {
-                await _roleManager.CreateAsync(new IdentityRole { Name = roleName });
+                await _roleManager.CreateAsync(new IdentityRole { Name = roleName });             
             }
         }
 
@@ -59,6 +59,12 @@ namespace Martina.API.Helpers
         {
             return await _context.Users                
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
+        }
+
+        public async Task<IdentityRole> GetUserTypeAsync(string description)
+        {
+            return await _context.Roles
+                                 .FirstOrDefaultAsync(x => x.Name == description);
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)

@@ -91,8 +91,7 @@ $(document).ready(async function ()
 
         if (diseaseName != null && diseaseName != ''
             && idDiseaseTypes != 0 && diseaseTypes != '')
-        {
-            console.log("entrando en if");
+        {       
             ActionCreate(idDiseaseTypes, diseaseName);
          
         }

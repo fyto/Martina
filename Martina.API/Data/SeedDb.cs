@@ -1,9 +1,8 @@
 ﻿using Martina.API.Data.Entities;
 using Martina.API.Helpers;
-using Martina.Common.Enums;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -31,19 +30,24 @@ namespace Martina.API.Data
 
             await CheckRolesAsync();
 
-            await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", UserType.Admin);
-            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", UserType.Apoderado);
-            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", UserType.Apoderado);
-            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", UserType.AdultoMayor);
-            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", UserType.AdultoMayor);
-            await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", UserType.Cuidador);
-            await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", UserType.Cuidador);
+            await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", "Administrador");
+            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", "Apoderado");
+            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", "Apoderado");
+            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", "Adulto mayor");
+            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", "Adulto mayor");
+            await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", "Cuidador");
+            await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", "Cuidador");
 
         }
 
-        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, UserType userType)
+      
+
+        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, string userTypeDescription)
         {
             User user = await _userHelper.GetUserAsync(email);
+
+            IdentityRole userType = await _userHelper.GetUserTypeAsync(userTypeDescription);
+
             if (user == null)
             {
                 user = new User
@@ -54,11 +58,11 @@ namespace Martina.API.Data
                     LastName = lastName,
                     PhoneNumber = phoneNumber,
                     UserName = email,
-                    UserType = userType
+                    UserType = userTypeDescription
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");
-                await _userHelper.AddUserToRoleAsync(user, userType.ToString());
+                await _userHelper.AddUserToRoleAsync(user, userTypeDescription);
 
                 //string token = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
                 //await _userHelper.ConfirmEmailAsync(user, token);
@@ -67,10 +71,10 @@ namespace Martina.API.Data
 
         private async Task CheckRolesAsync()
         {
-            await _userHelper.CheckRoleAsync(UserType.Admin.ToString());
-            await _userHelper.CheckRoleAsync(UserType.Apoderado.ToString());
-            await _userHelper.CheckRoleAsync(UserType.AdultoMayor.ToString());
-            await _userHelper.CheckRoleAsync(UserType.Cuidador.ToString());
+            await _userHelper.CheckRoleAsync("Administrador");
+            await _userHelper.CheckRoleAsync("Apoderado");
+            await _userHelper.CheckRoleAsync("Cuidador");
+            await _userHelper.CheckRoleAsync("Adulto mayor");
         }
 
         private async Task CheckCaresAsync()

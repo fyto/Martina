@@ -1,80 +1,126 @@
-﻿@model IEnumerable<Martina.API.Data.Entities.DiseaseType>
-
+﻿
 @{
-    ViewData["Title"] = "Tipos de enfemerdad";
+    ViewData["Title"] = "Tipos de enfermedades";
 }
 
-<link rel="stylesheet" href="https://cdn.datatables.net/1.10.19/css/jquery.dataTables.min.css" />
+<html>
+<head>
+    <meta http-equiv="Content-type" content="text/html; charset=utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=no">
 
-<p>
-    <a asp-action="Create" class="btn btn-primary">Crear tipo</a>
-</p>
+    <!--DataTable JS-->
+    <script type="text/javascript" src="~/lib/jquery/dist/jquery.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/jquery.dataTables.min.js"></script>
+    <script type="text/javascript" src="~/js/dataTable/dataTables.responsive.min.js"></script>
 
-<div class="row">
-    <div class="col-md-12">
-        <div class="panel panel-default">
-            <div class="panel-heading">
-                <h3 class="panel-title">Tipos de enfermedad</h3>
-                </br>
-            </div>
-            <div class="panel-body">
-                <table class="table table-hover table-responsive table-striped" id="TableDisease">
-                    <thead>
-                        <tr>
-                            <th>
-                                @Html.DisplayNameFor(model => model.Description)
-                            </th>
-                            @*<th>
-                                @Html.DisplayNameFor(model => model.State)
-                            </th>*@
-                            <th></th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td>
-                                    @Html.DisplayFor(modelItem => item.Description)
-                                </td>
-                                @*<td>
-                                    @Html.DisplayFor(modelItem => item.State)
-                                </td>*@
-                                <td>
-                                    <a asp-action="Edit" asp-route-id="@item.Id" class="btn btn-warning">Editar</a>
-                                    <button data-id="@item.Id" class="btn btn-danger deleteItem" data-toggle="modal" data-target="#deleteDialog">Borrar</button>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+    <!-- Toastr notification Js -->
+    <script src="~/toastr/toastr.min.js"></script>
+
+    <script src="~/js/DiseaseTypes/Index.js"></script>
+
+    <!-- Toastr notification Css -->
+    <link href="~/toastr/toastr.min.css" rel="stylesheet" />
+
+    <!--DataTable Css-->
+    <link href="~/css/dataTable/jquery.dataTables.min.css" rel="stylesheet" />
+    <link href="~/css/dataTable/responsive.dataTables.min.css" rel="stylesheet" />
+
+    <!-- Popper JS -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+</head>
+<body>
+    <!-- Bootstrap Js-->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+
+    <h2 class="h2-title">Crear tipo de enfermedad</h2>
+    <hr />
+    <div class="row">
+        <div class="input-group col-md-6">
+            <input type="text" class="form-control" id="care-name" placeholder="Ingrese nombre del tipo de enfermedad">
+            <div class="input-group-append">
+                <button class="btn btn-primary" id="btnCreate" data-toggle="tooltip" data-placement="top" title="Crear tipo o categoria de enfermedad"><i class="fa fa-floppy-o"></i> Crear tipo</button>
             </div>
         </div>
     </div>
-</div>
+
+    <br />
+
+    <h2 class="h2-title">Listado de tipos de enfermedad</h2>
+    <hr />
+
+    <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableDiseaseTypes">
+        <thead>
+            <tr>
+                <th>
+                    Id
+                </th>
+                <th>
+                    Nombre
+                </th>                
+                <th>
+                    Operaciones
+                </th>
+            </tr>
+        </thead>
+    </table>
+
+    <!-- MODAL DE EDICIÓN -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        <label for="">Nombre del cuidado</label>
+                        <input class="form-control" id="care-name-modal" placeholder="Ingrese nombre del cuidado">
+                        <input type="hidden" id="care-id-modal">
+                        <input type="hidden" id="care-creation-date-modal">
+                        <input type="hidden" id="care-first-name-modal">
+                        <input type="hidden" id="care-last-name-modal">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnEditModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Guardar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-<partial name="_DeleteDialog" />
+
+    <!-- MODAL DE ELIMINACIÓN -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="delete-modal">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Eliminar cuidado</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="form-group">
+                        @*<label for="">¿Seguro desea borrar el registro?</label>*@
+                        <label id="label-delete"></label>
+                        <input type="hidden" id="care-id-modal-delete">
+                        <input type="hidden" id="care-name-modal-delete">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" id="btnDeleteModal" class="btn btn-danger"><i class="fa fa-trash-o"></i> Confirmar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                </div>
+            </div>
+        </div>
+    </div>
 
 
-@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    <script src="//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js"></script>
-    <script src="/js/deleteDialog.js"></script>
+</body>
+</html>
 
-    <script type="text/javascript">
-        $(document).ready(function () {
-            $('#TableDisease').DataTable({
-                "language": {
-                    "url": "//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json"
-                },
-                "aLengthMenu": [
-                    [25, 50, 100, 200, -1],
-                    [25, 50, 100, 200, "Todos"]
-                ]
-            });
-            // Delete item
-            sc_deleteDialog.openModal('deleteItem', true, 'btnYesDelete', '/DiseaseTypes/Delete/', false);
-        });
-    </script>
-}
