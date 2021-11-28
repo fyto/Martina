@@ -1,4 +1,6 @@
-﻿using Martina.API.Helpers;
+﻿using AspNetCoreHero.ToastNotification.Abstractions;
+using Martina.API.Data;
+using Martina.API.Helpers;
 using Martina.API.Models;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -11,15 +13,20 @@ namespace Martina.API.Controllers
     public class AccountController : Controller
     {
         private readonly IUserHelper _userHelper;
-        //private readonly DataContext _context;
+        private readonly DataContext _context;
+
+        private readonly INotyfService _notfy;
+
         //private readonly ICombosHelper _combosHelper;
         //private readonly IBlobHelper _blobHelper;
         //private readonly IMailHelper _mailHelper;
 
-        public AccountController(IUserHelper userHelper)
+        public AccountController(IUserHelper userHelper, DataContext context, INotyfService notfy)
         {
             _userHelper = userHelper;
-            //_context = context;
+            _context = context;
+
+            _notfy = notfy;
             //_combosHelper = combosHelper;
             //_blobHelper = blobHelper;
             //this._mailHelper = mailHelper;
@@ -36,8 +43,33 @@ namespace Martina.API.Controllers
             return View(new LoginViewModel());
         }
 
+        //[HttpPost]
+        //public async Task<IActionResult> Login(LoginViewModel model)
+        //{
+        //    if (ModelState.IsValid)
+        //    {
+        //        Microsoft.AspNetCore.Identity.SignInResult result = await _userHelper.LoginAsync(model);
+        //        if (result.Succeeded)
+        //        {
+        //            if (Request.Query.Keys.Contains("ReturnUrl"))
+        //            {
+        //                _notfy.Success("Inicio de sesión exitoso.");
+        //                return Redirect(Request.Query["ReturnUrl"].First());
+        //            }
+
+        //            _notfy.Success("Inicio de sesión exitoso.");
+        //            return RedirectToAction("Index", "Home");
+        //        }
+
+        //         _notfy.Error("Email o contraseña incorrectos.");
+        //        //ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+        //    }
+        //    return View(model);
+        //}
+
+
         [HttpPost]
-        public async Task<IActionResult> Login(LoginViewModel model)
+        public async Task<JsonResult> Login(LoginViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -46,17 +78,22 @@ namespace Martina.API.Controllers
                 {
                     if (Request.Query.Keys.Contains("ReturnUrl"))
                     {
-                        return Redirect(Request.Query["ReturnUrl"].First());
-                    }
+                        var returnUrl = Request.Query["ReturnUrl"].First();
 
-                    return RedirectToAction("Index", "Home");
+                        return Json("Hola cabros");
+                    }
+                    
+                    //return RedirectToAction("Index", "Home");
+                    return Json("Index/Home");
                 }
 
-                ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
+                return Json("Email o contraseña incorrectos");
+                //ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
             }
-
-            return View(model);
+            return Json("Model invalid");
+            //return View(model);
         }
+
 
         public async Task<IActionResult> Logout()
         {
@@ -64,6 +101,15 @@ namespace Martina.API.Controllers
             return RedirectToAction("Index", "Home");
         }
 
+        public IActionResult NotAuthorized()
+        {
+            return View();
+        }
+
+        public IActionResult Register()
+        {
+            return View();
+        }
 
 
 

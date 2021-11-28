@@ -49,6 +49,9 @@
         <thead>
             <tr>
                 <th>
+                    Foto
+                </th>
+                <th>
                     Nombre completo
                 </th>
                 <th>
@@ -67,7 +70,7 @@
         </thead>
     </table>
 
-    <!-- MODAL DE CREACIÓN -->
+    <!-- MODAL DE CREACIÓN USUARIO -->
     <div class="modal fade" tabindex="-1" role="dialog" id="create-modal">
         <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
@@ -78,7 +81,7 @@
                     </button>
                 </div>
                 <div class="modal-body">
-                    <form>
+                    <form enctype="multipart/form-data" id="create-user" action="Create">
                         <div class="form-group">
                             <label>Tipo de usuario</label>
                             <div>
@@ -99,7 +102,7 @@
                         </div>
                         <div class="form-group">
                             <label>Email</label>
-                            <input type="text" class="form-control div-margin-down" id="email" placeholder="Ingrese un email">                          
+                            <input type="text" class="form-control div-margin-down" id="email" placeholder="Ingrese un email">
                             <span id="email-ok"></span>
                         </div>
 
@@ -132,24 +135,80 @@
                             </div>
                         </div>
 
-                        <div class="form-group div-modal-margin-top">
-                            <label>Imagen</label>
-                            <div class="custom-file">
-                                <input type="file" class="custom-file-input" id="photo" lang="es">
-                                <label class="custom-file-label" for="customFileLang">[Seleccionar archivo...]</label>
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group div-modal-margin-top">
+
+                                    <label>Imagen</label>
+                                    <input type="file" class="form-control" id="photo" />
+                                    <span id="photo-ok"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="text-center">
+                                    <img src="#" class="rounded image-user" alt="Imagen usuario" id="target-image">
+                                </div>
                             </div>
                         </div>
+
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Crear usuario</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                        </div>
+
                     </form>
                 </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- MODAL DE ENFERMEDADES USUARIO -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="diseases-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Usuario:  <strong id="title-strong-diseases"></strong> </h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+
+                    <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableDiseasesUser">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                                <th>
+                                    Asociar enfermedad
+                                </th>                              
+                            </tr>
+                        </thead>
+                    </table>
+
+                </div>
                 <div class="modal-footer">
-                    <button type="button" id="btnCreateModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Crear usuario</button>
+                    <button type="button" id="btnEditModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Guardar</button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
                 </div>
             </div>
         </div>
     </div>
 
+    <div id="loading">
+        <img id="loading-image" src="~/css/images/ajax-loader.gif" alt="Loading..." />
+    </div>
+
 </body>
+
 </html>
 
 

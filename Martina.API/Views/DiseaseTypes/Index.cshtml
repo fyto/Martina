@@ -36,7 +36,7 @@
     <hr />
     <div class="row">
         <div class="input-group col-md-6">
-            <input type="text" class="form-control" id="care-name" placeholder="Ingrese nombre del tipo de enfermedad">
+            <input type="text" class="form-control" id="disease-type-name" placeholder="Ingrese nombre del tipo de enfermedad">
             <div class="input-group-append">
                 <button class="btn btn-primary" id="btnCreate" data-toggle="tooltip" data-placement="top" title="Crear tipo o categoria de enfermedad"><i class="fa fa-floppy-o"></i> Crear tipo</button>
             </div>
@@ -64,25 +64,33 @@
         </thead>
     </table>
 
-    <!-- MODAL DE EDICIÓN -->
-    <div class="modal fade" tabindex="-1" role="dialog" id="edit-modal">
-        <div class="modal-dialog" role="document">
+    <!-- MODAL DE ENFERMEDADES -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="diseases-modal">
+        <div class="modal-dialog modal-lg" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h5 class="modal-title">Editar cuidado</h5>
+                    <h5 class="modal-title">Tipo o categoría:  <strong id="title-strong"></strong> </h5>
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                         <span aria-hidden="true">&times;</span>
                     </button>
                 </div>
                 <div class="modal-body">
-                    <div class="form-group">
-                        <label for="">Nombre del cuidado</label>
-                        <input class="form-control" id="care-name-modal" placeholder="Ingrese nombre del cuidado">
-                        <input type="hidden" id="care-id-modal">
-                        <input type="hidden" id="care-creation-date-modal">
-                        <input type="hidden" id="care-first-name-modal">
-                        <input type="hidden" id="care-last-name-modal">
-                    </div>
+
+                    <table class="table table-hover dt-responsive nowrap" cellspacing="0" width="100%" id="TableDiseases">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Id
+                                </th>
+                                <th>
+                                    Nombre
+                                </th>
+                            </tr>
+                        </thead>
+                    </table>
+
+
+
                 </div>
                 <div class="modal-footer">
                     <button type="button" id="btnEditModal" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Guardar</button>

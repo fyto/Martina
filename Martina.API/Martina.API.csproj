@@ -23,6 +23,7 @@
 
   <ItemGroup>
     <Folder Include="wwwroot\css\images\" />
+    <Folder Include="wwwroot\css\DiseaseTypes\" />
   </ItemGroup>
 
 </Project>

@@ -21,7 +21,9 @@ namespace Martina.API.Data
 
         public DbSet<DiseaseType> DeseaseTypes { get; set; }
 
-     
+        public DbSet<UserDisease> UsersDiseases { get; set; }
+
+
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -31,6 +33,9 @@ namespace Martina.API.Data
             modelBuilder.Entity<Care>().HasIndex(x => x.Description).IsUnique();    
             modelBuilder.Entity<Disease>().HasIndex(x => x.Description).IsUnique();
             modelBuilder.Entity<DiseaseType>().HasIndex(x => x.Description).IsUnique();
+
+
+            modelBuilder.Entity<UserDisease>().HasKey(x => new { x.UserId, x.DiseaseId });
         }
 
     }

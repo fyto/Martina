@@ -9,7 +9,7 @@ namespace Martina.API.Data.Entities
 {
     public class Disease
     {
-        public int Id { get; set; }     
+        public int Id { get; set; }
 
         [Display(Name = "Tipo enfermedad")]
         [MaxLength(50, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
@@ -28,8 +28,6 @@ namespace Martina.API.Data.Entities
 
         public int DiseaseTypeId { get; set; }
 
-
-
-
+        public ICollection<UserDisease> UsersDiseases { get; set; }
     }
 }

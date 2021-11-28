@@ -1,6 +1,7 @@
 ﻿using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,6 +10,7 @@ using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
 {
+    
     public class CaresController : Controller
     {
         private readonly DataContext _context;

@@ -22,6 +22,8 @@ namespace Martina.API.Helpers
 
         Task<IdentityResult> AddUserAsync(User user, string password);
 
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, string userType);
+
         Task CheckRoleAsync(string roleName);
             
         Task AddUserToRoleAsync(User user, string roleName);

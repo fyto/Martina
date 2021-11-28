@@ -26,7 +26,20 @@ namespace Martina.API.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<DateTime>("CreationDate")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("Description")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("FirstName")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
+                    b.Property<string>("LastName")
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
@@ -37,31 +50,6 @@ namespace Martina.API.Migrations
                         .IsUnique();
 
                     b.ToTable("Cares");
-                });
-
-            modelBuilder.Entity("Martina.API.Data.Entities.Detail", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int>("CareId")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("HistoryId")
-                        .HasColumnType("int");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CareId");
-
-                    b.HasIndex("HistoryId");
-
-                    b.ToTable("Details");
                 });
 
             modelBuilder.Entity("Martina.API.Data.Entities.Disease", b =>
@@ -76,11 +64,13 @@ namespace Martina.API.Migrations
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)");
 
+                    b.Property<string>("DescriptionDeseaseType")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)");
+
                     b.Property<int>("DiseaseTypeId")
                         .HasColumnType("int");
-
-                    b.Property<string>("UserId")
-                        .HasColumnType("nvarchar(450)");
 
                     b.HasKey("Id");
 
@@ -88,8 +78,6 @@ namespace Martina.API.Migrations
                         .IsUnique();
 
                     b.HasIndex("DiseaseTypeId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("Deseases");
                 });
@@ -112,29 +100,6 @@ namespace Martina.API.Migrations
                         .IsUnique();
 
                     b.ToTable("DeseaseTypes");
-                });
-
-            modelBuilder.Entity("Martina.API.Data.Entities.History", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
-
-                    b.Property<int?>("CareId")
-                        .HasColumnType("int");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("Remarks")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("CareId");
-
-                    b.ToTable("Histories");
                 });
 
             modelBuilder.Entity("Martina.API.Data.Entities.User", b =>
@@ -206,8 +171,8 @@ namespace Martina.API.Migrations
                         .HasMaxLength(256)
                         .HasColumnType("nvarchar(256)");
 
-                    b.Property<int>("UserType")
-                        .HasColumnType("int");
+                    b.Property<string>("UserType")
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 
@@ -220,6 +185,35 @@ namespace Martina.API.Migrations
                         .HasFilter("[NormalizedUserName] IS NOT NULL");
 
                     b.ToTable("AspNetUsers");
+                });
+
+            modelBuilder.Entity("Martina.API.Data.Entities.UserDisease", b =>
+                {
+                    b.Property<int>("UserId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiseaseId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("DiseaseName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FirstName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("LastName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("UserId1")
+                        .HasColumnType("nvarchar(450)");
+
+                    b.HasKey("UserId", "DiseaseId");
+
+                    b.HasIndex("DiseaseId");
+
+                    b.HasIndex("UserId1");
+
+                    b.ToTable("UsersDiseases");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRole", b =>
@@ -353,23 +347,6 @@ namespace Martina.API.Migrations
                     b.ToTable("AspNetUserTokens");
                 });
 
-            modelBuilder.Entity("Martina.API.Data.Entities.Detail", b =>
-                {
-                    b.HasOne("Martina.API.Data.Entities.Care", "Care")
-                        .WithMany("Details")
-                        .HasForeignKey("CareId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.HasOne("Martina.API.Data.Entities.History", "History")
-                        .WithMany()
-                        .HasForeignKey("HistoryId");
-
-                    b.Navigation("Care");
-
-                    b.Navigation("History");
-                });
-
             modelBuilder.Entity("Martina.API.Data.Entities.Disease", b =>
                 {
                     b.HasOne("Martina.API.Data.Entities.DiseaseType", "DiseaseType")
@@ -378,20 +355,24 @@ namespace Martina.API.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Martina.API.Data.Entities.User", null)
-                        .WithMany("Diseases")
-                        .HasForeignKey("UserId");
-
                     b.Navigation("DiseaseType");
                 });
 
-            modelBuilder.Entity("Martina.API.Data.Entities.History", b =>
+            modelBuilder.Entity("Martina.API.Data.Entities.UserDisease", b =>
                 {
-                    b.HasOne("Martina.API.Data.Entities.Care", "Care")
-                        .WithMany("Histories")
-                        .HasForeignKey("CareId");
+                    b.HasOne("Martina.API.Data.Entities.Disease", "Disease")
+                        .WithMany("UsersDiseases")
+                        .HasForeignKey("DiseaseId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.Navigation("Care");
+                    b.HasOne("Martina.API.Data.Entities.User", "User")
+                        .WithMany("UsersDiseases")
+                        .HasForeignKey("UserId1");
+
+                    b.Navigation("Disease");
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
@@ -445,11 +426,9 @@ namespace Martina.API.Migrations
                         .IsRequired();
                 });
 
-            modelBuilder.Entity("Martina.API.Data.Entities.Care", b =>
+            modelBuilder.Entity("Martina.API.Data.Entities.Disease", b =>
                 {
-                    b.Navigation("Details");
-
-                    b.Navigation("Histories");
+                    b.Navigation("UsersDiseases");
                 });
 
             modelBuilder.Entity("Martina.API.Data.Entities.DiseaseType", b =>
@@ -459,7 +438,7 @@ namespace Martina.API.Migrations
 
             modelBuilder.Entity("Martina.API.Data.Entities.User", b =>
                 {
-                    b.Navigation("Diseases");
+                    b.Navigation("UsersDiseases");
                 });
 #pragma warning restore 612, 618
         }

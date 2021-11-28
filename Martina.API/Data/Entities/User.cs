@@ -39,7 +39,7 @@ namespace Martina.API.Data.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
-        //public ICollection<Disease> Diseases { get; set; }
+        public ICollection<UserDisease> UsersDiseases { get; set; }
 
         //[Display(Name = "# Enfermedades")]
         //public int DiseasesCount => Diseases == null ? 0 : Diseases.Count;

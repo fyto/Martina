@@ -27,9 +27,8 @@ namespace Martina.API.Data
             await CheckCaresAsync();
             await CheckDiseaseTypeAsync();
             await CheckDiseasesAsync();
-
-            await CheckRolesAsync();
-
+            await CheckRolesAsync();       
+           
             await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", "Administrador");
             await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", "Apoderado");
             await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", "Apoderado");
@@ -38,9 +37,40 @@ namespace Martina.API.Data
             await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", "Cuidador");
             await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", "Cuidador");
 
+            await CheckUsersDiseases();
+
         }
 
-      
+        private async Task CheckUsersDiseases()
+        {
+            var user = await  _context.Users.Where(x => x.FirstName == "Osvaldo").FirstOrDefaultAsync();
+            var diseaseAlzheimer = await _context.Deseases.Where(y => y.Description == "Alzheimer").FirstOrDefaultAsync();
+            var diseaseParkinson = await _context.Deseases.Where(y => y.Description == "Parkinson").FirstOrDefaultAsync();
+
+            var usersDiseasesAlzheimer = new UserDisease
+            {
+                UserId = user.Id,
+                DiseaseId = diseaseAlzheimer.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DiseaseName = diseaseAlzheimer.Description
+            };
+
+            var usersDiseasesParkinson = new UserDisease
+            {
+                UserId = user.Id,
+                DiseaseId = diseaseParkinson.Id,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                DiseaseName = diseaseParkinson.Description
+            };
+
+            _context.Add(usersDiseasesAlzheimer);
+            _context.Add(usersDiseasesParkinson);
+
+            _context.SaveChangesAsync();
+            
+        }
 
         private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, string userTypeDescription)
         {

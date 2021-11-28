@@ -23,7 +23,7 @@ $(document).ready(async function ()
             { "data": "id", "autoWidth": true },
             { "data": "description", "autoWidth": true },
             { "data": "fullName", "autoWidth": true },
-            { "data": "creationDate", "autoWidth": true },
+            { "data": "creationDate", "autoWidth": true, render: formatDate },
             {
                 "defaultContent": "<div class='tr-operation'> <button type='button' class='edit-button btn btn-warning'><i class='fa fa-pencil-square-o'></i></button> 	<button type='button' class='delete-button btn btn-danger'><i class='fa fa-trash-o'></i></button> </div>"
             }           
@@ -38,7 +38,7 @@ $(document).ready(async function ()
             [25, 50, 100, 200, -1],
             [25, 50, 100, 200, "Todos"]
         ]
-    });  
+    });
 
     var getDataEdit = function (tbody, table)
     {
@@ -132,8 +132,18 @@ $(document).ready(async function ()
         }
     });
 
+    function formatDate(data, type, full, meta)
+    {
+        var date = data;
+
+        if (date) {
+
+            return moment(date).format('DD-MM-YYYY');
+        }
+    }
+
     function ActionCreate(careName)
-    {       
+    {
             $.ajax({
                 type: "POST",
                 url: "/Cares/Create",
@@ -165,6 +175,7 @@ $(document).ready(async function ()
                     toastr.error(error, "Error");
                 }     
             });
+
     }
 
     function ActionEditModal(id, careName, creationDate, firstName, lastName) {
@@ -228,8 +239,6 @@ $(document).ready(async function ()
             data: { id: id },
             success: function (response)
             {
-                console.log("success");8
-
                 if (response == 'Success')
                 {
                     toastr.success(careName + ' se ha eliminado como un cuidado.', "Eliminado");

@@ -3,16 +3,19 @@ using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
+using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
 {
+    [Authorize(Roles = "Administrador")]
     public class UsersController : Controller
     {
         private readonly DataContext _context;
@@ -51,10 +54,9 @@ namespace Martina.API.Controllers
                                 .ToListAsync());
         }
 
-     
 
         [HttpPost]
-        public async Task<JsonResult> Create([FromBody] UserViewModel model)
+        public async Task<JsonResult> Create(UserViewModel model)
         {
             if (ModelState.IsValid)
             {
@@ -66,7 +68,7 @@ namespace Martina.API.Controllers
                 }
 
                 User user = await _converterHelper.ToUserAsync(model, imageId, true);
-             
+
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, user.UserType.ToString());
 
@@ -127,6 +129,95 @@ namespace Martina.API.Controllers
 
             //model.UserTypes = _combosHelper.GetComboUserTypes();
             return View(model);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AddDiseaseToUser([FromBody]DiseasesByUserViewModel diseasesByUser)
+        {
+            var userDisease = _converterHelper.ToUserDisease(diseasesByUser);
+
+            // Se elimina la asociación entre el usuario y la enfermedad
+            if (diseasesByUser.DiseasedStatus)
+            {
+                try
+                {
+                    _context.UsersDiseases.Remove(userDisease.Result);
+                  
+                    await _context.SaveChangesAsync();
+
+                    //return Json("Remove Success");
+
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    return Json(dbUpdateException.InnerException.Message);
+                }              
+            }
+            else // Se agrega la asociación entre usuario y la enfermedad
+            {
+                try
+                {
+                    _context.UsersDiseases.Add(userDisease.Result);
+                    
+                    await _context.SaveChangesAsync();
+
+                    //return Json("Add Success");
+                }
+                catch (DbUpdateException dbUpdateException)
+                {
+                    return Json(dbUpdateException.InnerException.Message);
+                }
+
+            }
+
+            List<DiseasesByUserViewModel> DiseasesByUser = new List<DiseasesByUserViewModel>();
+
+            var user = await _context.Users.Where(x => x.Id == diseasesByUser.UserId).FirstOrDefaultAsync();
+
+            var diseases = await _context.Deseases.ToListAsync();
+
+            var diseasesUser = await _context.UsersDiseases.Where(y => y.UserId == diseasesByUser.UserId).ToListAsync();
+
+            foreach (var disease in diseases)
+            {
+                bool flag = false;
+
+                foreach (var diseaseUser in diseasesUser)
+                {
+                    if (disease.Id == diseaseUser.DiseaseId)
+                    {
+                        flag = true;
+                    }
+                }
+
+                if (!flag)
+                {
+                    DiseasesByUser.Add(new DiseasesByUserViewModel()
+                    {
+                        UserId = diseasesByUser.UserId,
+                        DiseaseId = disease.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        DiseaseName = disease.Description,
+                        DiseasedStatus = false
+                    });
+                }
+                else
+                {
+                    DiseasesByUser.Add(new DiseasesByUserViewModel()
+                    {
+                        UserId = diseasesByUser.UserId,
+                        DiseaseId = disease.Id,
+                        FirstName = user.FirstName,
+                        LastName = user.LastName,
+                        DiseaseName = disease.Description,
+                        DiseasedStatus = true
+                    });
+                }
+            }
+
+            return Json(DiseasesByUser);
+
         }
 
         public async Task<IActionResult> AddDisease()
@@ -199,9 +290,7 @@ namespace Martina.API.Controllers
           
 
             return View(model);
-        }
-      
-     
+        }   
 
         public async Task<IActionResult> Details(string id)
         {

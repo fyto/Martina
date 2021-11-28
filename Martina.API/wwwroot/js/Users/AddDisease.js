@@ -11,7 +11,7 @@ $(document).ready(async function ()
         "destroy": true,
         "ajax": {
             "contentType": "application/json; charset=utf-8",
-            "url": "/DiseaseTypes/GetDiseaseWithTypes",
+            "url": "/DiseaseTypes/GetDiseases",
             "type": "POST",
             "datatype": "json",
             "dataSrc": ""
