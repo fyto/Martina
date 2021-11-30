@@ -22,7 +22,7 @@ namespace Martina.API.Helpers
 
         Task<IdentityResult> AddUserAsync(User user, string password);
 
-        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, string userType);
+        Task<User> AddUserAsync(AddUserViewModel model, Guid imageId);
 
         Task CheckRoleAsync(string roleName);
             
@@ -31,6 +31,8 @@ namespace Martina.API.Helpers
         Task<bool> IsUserInRoleAsync(User user, string roleName);
 
         Task<SignInResult> LoginAsync(LoginViewModel model);
+
+        Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword);
 
         Task LogoutAsync();
 

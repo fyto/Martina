@@ -26,7 +26,7 @@ namespace Martina.API.Helpers
             _signInManager = signInManager;
         }
 
-        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId, string userType)
+        public async Task<User> AddUserAsync(AddUserViewModel model, Guid imageId)
         {
             User user = new User
             {
@@ -37,17 +37,18 @@ namespace Martina.API.Helpers
                 ImageId = imageId,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Username,
-                UserType = userType
+                UserType = model.UserType
             };
 
             IdentityResult result = await _userManager.CreateAsync(user, model.Password);
+
             if (result != IdentityResult.Success)
             {
                 return null;
             }
 
             User newUser = await GetUserAsync(model.Username);
-            await AddUserToRoleAsync(newUser, user.UserType.ToString());
+            await AddUserToRoleAsync(newUser, model.UserType.ToString());
             return newUser;
         }
 
@@ -66,7 +67,7 @@ namespace Martina.API.Helpers
             bool roleExists = await _roleManager.RoleExistsAsync(roleName);
             if (!roleExists)
             {
-                await _roleManager.CreateAsync(new IdentityRole { Name = roleName });             
+                await _roleManager.CreateAsync(new IdentityRole { Name = roleName });
             }
         }
 
@@ -82,7 +83,7 @@ namespace Martina.API.Helpers
 
         public async Task<User> GetUserAsync(Guid id)
         {
-            return await _context.Users                
+            return await _context.Users
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
@@ -118,6 +119,11 @@ namespace Martina.API.Helpers
             currentUser.ImageId = user.ImageId;
             currentUser.PhoneNumber = user.PhoneNumber;
             return await _userManager.UpdateAsync(currentUser);
+        }
+
+        public async Task<IdentityResult> ChangePasswordAsync(User user, string oldPassword, string newPassword)
+        {
+            return await _userManager.ChangePasswordAsync(user, oldPassword, newPassword);
         }
 
 

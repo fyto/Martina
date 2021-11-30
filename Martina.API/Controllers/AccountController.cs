@@ -1,5 +1,6 @@
 ﻿using AspNetCoreHero.ToastNotification.Abstractions;
 using Martina.API.Data;
+using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
 using Microsoft.AspNetCore.Mvc;
@@ -15,26 +16,30 @@ namespace Martina.API.Controllers
         private readonly IUserHelper _userHelper;
         private readonly DataContext _context;
 
-        private readonly INotyfService _notfy;
+      
+        private readonly IBlobHelper _blobHelper;
 
         //private readonly ICombosHelper _combosHelper;
-        //private readonly IBlobHelper _blobHelper;
+
         //private readonly IMailHelper _mailHelper;
 
-        public AccountController(IUserHelper userHelper, DataContext context, INotyfService notfy)
+        public AccountController(IUserHelper userHelper, DataContext context, IBlobHelper blobHelper)
         {
             _userHelper = userHelper;
             _context = context;
+            _blobHelper = blobHelper;
 
-            _notfy = notfy;
+
             //_combosHelper = combosHelper;
-            //_blobHelper = blobHelper;
+
             //this._mailHelper = mailHelper;
         }
 
 
         public IActionResult Login()
         {
+
+
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction(nameof(Index), "Home");
@@ -61,7 +66,7 @@ namespace Martina.API.Controllers
         //            return RedirectToAction("Index", "Home");
         //        }
 
-        //         _notfy.Error("Email o contraseña incorrectos.");
+        //        _notfy.Error("Email o contraseña incorrectos.");
         //        //ModelState.AddModelError(string.Empty, "Email o contraseña incorrectos.");
         //    }
         //    return View(model);
@@ -82,7 +87,7 @@ namespace Martina.API.Controllers
 
                         return Json("Hola cabros");
                     }
-                    
+
                     //return RedirectToAction("Index", "Home");
                     return Json("Index/Home");
                 }
@@ -112,6 +117,100 @@ namespace Martina.API.Controllers
         }
 
 
+        [HttpPost]
+        public async Task<JsonResult> Register(AddUserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = Guid.Empty;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.AddUserAsync(model, imageId);
+
+                if (user == null)
+                {
+                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado por otro usuario.");
+                    //return View(model);
+                    return Json("Email repeat");
+                }
+
+                //string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                //string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                //{
+                //    userid = user.Id,
+                //    token = myToken
+                //}, protocol: HttpContext.Request.Scheme);
+
+                //Response response = _mailHelper.SendMail(model.Username, "Vehicles - Confirmación de cuenta", $"<h1>Vehicles - Confirmación de cuenta</h1>" +
+                //    $"Para habilitar el usuario, " +
+                //    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
+
+                //if (response.IsSuccess)
+                //{
+                //    ViewBag.Message = "Las instrucciones para habilitar su cuenta han sido enviadas al correo.";
+                //    return View(model);
+                //}
+
+                //ModelState.AddModelError(string.Empty, response.Message);
+
+                return Json("Success");
+            }
+
+            //model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+            return Json("Model invalid");
+        }
+
+        public async Task<IActionResult> ChangeUser()
+        {
+            User user = await _userHelper.GetUserAsync(User.Identity.Name);
+            if (user == null)
+            {
+                return NotFound();
+            }
+
+            UserViewModel model = new()
+            {
+                Address = user.Address,
+                FirstName = user.FirstName,
+                LastName = user.LastName,
+                PhoneNumber = user.PhoneNumber,
+                ImageId = user.ImageId,
+                Id = user.Id
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> ChangeUser(UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageId = imageId;
+                 await _userHelper.UpdateUserAsync(user);
+                return RedirectToAction("Index", "Home");
+            }
+
+            //model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+            return View(model);
+        }
 
     }
 }
