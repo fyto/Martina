@@ -1,4 +1,4 @@
-﻿/* Estilos generales personalizados */
+﻿/* Inicio Estilos generales personalizados */
 
 #loading {
     position: fixed;
@@ -36,7 +36,6 @@
 }
 
 
-
 .h2-title {
     letter-spacing: 1px;
     font-style: normal;
@@ -44,6 +43,7 @@
     color: #090808;
 }
 
+/* Fin Estilos generales personalizados */
 
 /* Please see documentation at https://docs.microsoft.com/aspnet/core/client-side/bundling-and-minification
 for details on configuring this project to bundle and minify static web assets. */

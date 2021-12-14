@@ -208,8 +208,6 @@ $(document).ready(async function ()
     {
         e.preventDefault();
 
-      /*  $('#loading').show();*/
-     
         var formData = new FormData(this);
         var selector = document.getElementsByName('selector');
         var valorRadio = '';
@@ -239,8 +237,6 @@ $(document).ready(async function ()
             }, 2000)
 
             validator = true;
-
-            $('#loading').hide();
         }
 
         if (name == null || name == '' || name == undefined) {
@@ -252,8 +248,6 @@ $(document).ready(async function ()
             }, 2000)
 
             validator = true;
-
-            $('#loading').hide();
         }
 
         if (lastName == null || lastName == '' || lastName == undefined) {
@@ -265,8 +259,6 @@ $(document).ready(async function ()
             }, 2000)
 
             validator = true;
-
-            $('#loading').hide();
         }
 
         if (validator == false)
@@ -291,7 +283,7 @@ $(document).ready(async function ()
                 {
                     if (data == 'Success')
                     {
-                        toastr.success('se ha creado el usuario ' + name + ' ' + lastName + ' .', "Guardado");
+                        toastr.success('se ha creado el usuario ' + name + ' ' + lastName + ' Porfavor verifique su email de confirmación.', "Guardado");
 
                         $("#create-modal").modal('hide');
                         $('#TableUsers').DataTable().ajax.reload();
@@ -342,6 +334,7 @@ $(document).ready(async function ()
         }
     });
 
+    /* MANEJO DE FOTOGRAFIA */
     document.getElementById('photo').addEventListener('input', function ()
     {
         var campo = event.target;
@@ -370,9 +363,7 @@ $(document).ready(async function ()
             $("#photo-ok").addClass("span-red");
 
             valido.innerText = "Imagen no cargada";
-        }
-
-       
+        }       
     }); 
 
     jQuery("#phone-number").on('input', function (evt)

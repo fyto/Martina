@@ -1,8 +1,8 @@
-﻿using AspNetCoreHero.ToastNotification.Abstractions;
-using Martina.API.Data;
+﻿using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
+using Martina.Common.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -10,7 +10,6 @@ using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Net.Http;
 using System.Threading.Tasks;
 
 namespace Martina.API.Controllers
@@ -23,22 +22,21 @@ namespace Martina.API.Controllers
         private readonly ICombosHelper _combosHelper;
         private readonly IConverterHelper _converterHelper;
         private readonly IBlobHelper _blobHelper;
-        //private readonly IMailHelper _mailHelper;
-
-        private readonly INotyfService _notyf;
+        private readonly IMailHelper _mailHelper;
 
         public UsersController(DataContext context, IUserHelper userHelper, 
-                               ICombosHelper combosHelper, IConverterHelper converterHelper,
-                               IBlobHelper blobHelper, INotyfService notyf)
+                               ICombosHelper combosHelper, 
+                               IConverterHelper converterHelper,
+                               IBlobHelper blobHelper,
+                               IMailHelper mailHelper)
         {
             _context = context;
             _userHelper = userHelper;
             _combosHelper = combosHelper;
             _converterHelper = converterHelper;
             _blobHelper = blobHelper;
-            //_mailHelper = mailHelper;
 
-            _notyf = notyf;
+            _mailHelper = mailHelper;
         }
 
 
@@ -46,6 +44,14 @@ namespace Martina.API.Controllers
         public async Task<JsonResult> GetUsers()
         {
             return Json(await _context.Users.ToListAsync());
+        }
+
+        [HttpPost]
+        public async Task<JsonResult> GetUser(string id)
+        {
+            var user = await _context.Users.Where(x => x.Id == id).FirstOrDefaultAsync();
+            
+            return Json(user);
         }
 
         public async Task<IActionResult> Index()
@@ -72,16 +78,16 @@ namespace Martina.API.Controllers
                 await _userHelper.AddUserAsync(user, "123456");
                 await _userHelper.AddUserToRoleAsync(user, user.UserType.ToString());
 
-                //string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
-                //string tokenLink = Url.Action("ConfirmEmail", "Account", new
-                //{
-                //    userid = user.Id,
-                //    token = myToken
-                //}, protocol: HttpContext.Request.Scheme);
+                string myToken = await _userHelper.GenerateEmailConfirmationTokenAsync(user);
+                string tokenLink = Url.Action("ConfirmEmail", "Account", new
+                {
+                    userid = user.Id,
+                    token = myToken
+                }, protocol: HttpContext.Request.Scheme);
 
-                //Response response = _mailHelper.SendMail(model.Email, "Vehicles - Confirmación de cuenta", $"<h1>Vehicles - Confirmación de cuenta</h1>" +
-                //    $"Para habilitar el usuario, " +
-                //    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
+                Response response = _mailHelper.SendMail(model.Email, "App - Confirmación de cuenta", $"<h1>App - Confirmación de cuenta</h1>" +
+                    $"Para habilitar el usuario, " +
+                    $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
 
                 //return RedirectToAction(nameof(Index));
                 return Json("Success");
@@ -262,7 +268,7 @@ namespace Martina.API.Controllers
                     _context.Deseases.Add(disease);
                     await _context.SaveChangesAsync();
 
-                    _notyf.Custom("Enfermedad creada correctamente.", 3, "green", "fa fa-user-md");
+                    //_notyf.Custom("Enfermedad creada correctamente.", 3, "green", "fa fa-user-md");
 
                     return RedirectToAction(nameof(AddDisease));
 
@@ -272,7 +278,7 @@ namespace Martina.API.Controllers
                     if (dbUpdateException.InnerException.Message.Contains("duplicate"))
                     {
                         //ModelState.AddModelError(string.Empty, "Ya existe una enfermedad con ese nombre.");
-                        _notyf.Error("Ya existe una enfermedad con ese nombre.", 3);
+                        //_notyf.Error("Ya existe una enfermedad con ese nombre.", 3);
                     }
                     else
                     {

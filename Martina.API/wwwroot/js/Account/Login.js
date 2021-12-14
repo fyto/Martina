@@ -89,6 +89,7 @@ $(document).ready(async function () {
         $("#photo").val('');
     });
 
+    /* SUBMIT REGISTER USER */
     $('#register-user').on('submit', (function (e)
     {
         e.preventDefault();
@@ -200,18 +201,19 @@ $(document).ready(async function () {
                 success: function (data)
                 {
                     console.log(data);
-                    if (data == 'Success')
+                    if (data == 'Email send')
                     {
-                        toastr.success('se ha registrado el usuario ' + email + '.', "Usuario registrado");
+                        toastr.success('se ha enviado un correo de confirmación a: ' + email + '.', "Correo enviado");
 
                         $("#register-modal").modal('hide');
                     }
                     if (data == 'Email repeat')
                     {
                         toastr.error('el correo ' + email + ' esta siendo usado por otro usuario', "Email inválido");
-
                     }
-                   
+                    if (data == 'Model invalid') {
+                        toastr.error('Ha ocurrido un problema, intente más tarde.', "Error");
+                    }                   
                 },
                 error: function (xhr, status, error) {
                     toastr.error(error, "Error");
@@ -302,12 +304,19 @@ $(document).ready(async function () {
                     console.log(data);
                    
                     if (data == 'Index/Home')
-                    {
-                        toastr.success('Inicio de sesión correcto', "Éxito");
-
-                        setTimeout(function () {
-                            window.location.href = '/Home/Index/';
-                        }, 1400)
+                    {  
+                        toastr.success(
+                            'Inicio de sesión correcto',
+                            'Éxito',
+                            {
+                                timeOut: 1000,
+                                fadeOut: 1000,
+                                onHidden: function ()
+                                {
+                                    window.location.href = '/Home/Index/';
+                                }
+                            }
+                        );
                     }
                     if (data == 'Email o contraseña incorrectos')
                     {
@@ -329,6 +338,72 @@ $(document).ready(async function () {
               
       
         
+    }));
+
+    $("#btnCallModalRecoverPassword").click(function ()
+    {
+        $("#recover-password-modal").modal();
+    });
+
+    /* SUBMIT REGISTER USER */
+    $('#recover-password').on('submit', (function (e)
+    {
+        e.preventDefault();
+
+        var validator = false;
+        var formData = new FormData(this);
+      
+        var email = $("#email-recover").val();
+    
+      
+        if (email == null || email == '' || email == undefined) {
+            toastr.error('Debe introducir un email', "Error");
+
+            $("#email-recover").addClass("input-red");
+            setTimeout(function () {
+                $("#email-recover").removeClass('input-red');
+            }, 2000)
+
+            validator = true;
+        }
+
+      
+        if (validator == false)
+        {
+            formData.append('Email', email);
+
+            $.ajax({
+                type: 'POST',
+                url: "/Account/RecoverPassword",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (data)
+                {
+                    console.log(data);
+                    if (data == "Success")
+                    {
+                        toastr.success('Las instrucciones para el cambio de contraseña han sido enviadas al email:  ' + email + '.', "Correo enviado");
+
+                        $("#recover-password-modal").modal('hide');
+                    }
+                    if (data == "Email invalid")
+                    {
+                        toastr.error('El correo ingresado no corresponde a ningún usuario.', "Email inválido");
+                    }
+                    if (data == 'Model invalid')
+                    {
+                        toastr.error('Ha ocurrido un problema, intente más tarde.', "Error");
+                    }
+                  
+                },
+                error: function (xhr, status, error) {
+                    toastr.error(error, "Error");
+                }
+            });
+
+        }
+
     }));
 
 });

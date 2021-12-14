@@ -44,11 +44,11 @@
                     <input id="password" type="password" class="form-control" />
                 </div>
 
-                <label class="custom-radio-checkbox">   
+                <label class="custom-radio-checkbox">
                     <input class="custom-radio-checkbox__input" type="checkbox" name="remember" value="remember">
-   
+
                     <span class="custom-radio-checkbox__show custom-radio-checkbox__show--checkbox"></span>
-   
+
                     <span class="custom-radio-checkbox__text"> Recordarme</span>
                 </label>
 
@@ -58,125 +58,150 @@
                     <button type="button" id="btnRegisterModal" class="btn btn-primary btn-form-horizontal"> <i class="fa fa-user-plus"></i> Registrarme</button>
                     <hr />
 
-                    <a asp-action="RecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+                    <a id="btnCallModalRecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
                 </div>
             </form>
         </div>
     </div>
-   
 
 
-        <!-- MODAL DE CREACIÓN USUARIO -->
-        <div class="modal fade" tabindex="-1" role="dialog" id="register-modal">
-            <div class="modal-dialog modal-lg" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title">Registrar usuario</h5>
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                            <span aria-hidden="true">&times;</span>
-                        </button>
-                    </div>
-                    <div class="modal-body">
-                        <form enctype="multipart/form-data" id="register-user" action="Register">
-                            <div class="form-group">
-                                <label>Tipo de usuario</label>
-                                <div>
-                                    <label for="f-option" class="l-radio">
-                                        <input type="radio" id="f-option" name="selector" tabindex="1" value="Apoderado" checked>
-                                        <span>Apoderado</span>
-                                    </label>
-                                    <label for="s-option" class="l-radio">
-                                        <input type="radio" id="s-option" name="selector" tabindex="2" value="Cuidador">
-                                        <span>Cuidador</span>
-                                    </label>
-                                    <label for="t-option" class="l-radio">
-                                        <input type="radio" id="t-option" name="selector" tabindex="3" value="Adulto mayor">
-                                        <span>Adulto mayor</span>
-                                    </label>
-                                </div>
 
-                            </div>
-                            <div class="form-group">
-                                <label>Email</label>
-                                <input type="text" class="form-control div-margin-down" id="email" placeholder="Ingrese un email">
-                                <span id="email-ok"></span>
-                            </div>
-
-                            <div class="row">
-                                <div class="col">
-                                    <label>Nombre</label>
-                                    <input type="text" class="form-control" id="name" placeholder="Ingrese un nombre">
-                                </div>
-                                <div class="col">
-                                    <label>Apellido</label>
-                                    <input type="text" class="form-control" id="last-name" placeholder="Ingrese un apellido">
-                                </div>
-                            </div>
-
-                            <div class="row div-modal-margin-top">
-                                <div class="col">
-                                    <label>Dirección</label>
-                                    <input type="text" class="form-control" id="address" placeholder="Ingrese una dirección">
-                                </div>
-                                <div class="col">
-                                    <label>N° Telefonico</label>
-
-                                    <div class="input-group">
-                                        <div class="input-group-prepend">
-                                            <span class="input-group-text" id="inputGroup-sizing-default">+569</span>
-                                        </div>
-                                        <input type="text" class="form-control round" id="phone-number">
-                                    </div>
-                                    <span id="phone-number-ok"></span>
-                                </div>
-                            </div>
-
-                            <div class="row div-modal-margin-top">
-                                <div class="col">
-                                    <label>Contraseña</label>
-                                    <input type="password" class="form-control" id="password-register" placeholder="Ingrese una contraseña">
-                                </div>
-                                <div class="col">
-                                    <label>Confirmación de contraseña</label>
-                                    <input type="password" class="form-control" id="password-confirm-register" placeholder="Reingrese la contraseña">
-                                </div>
-                            </div>
-
-                            <div class="row">
-                                <div class="col-8">
-                                    <div class="form-group div-modal-margin-top">
-
-                                        <label>Imagen</label>
-                                        <input type="file" class="form-control" id="photo" />
-                                        <span id="photo-ok"></span>
-                                    </div>
-                                </div>
-
-                                <div class="col-4">
-                                    <div class="text-center">
-                                        <img src="#" class="rounded image-user" alt="Imagen usuario" id="target-image">
-                                    </div>
-                                </div>
-                            </div>
-
-                            <div class="modal-footer">
-                                <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Registrar usuario</button>
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
-                            </div>
-                        </form>
-                    </div>
-
+    <!-- MODAL DE CREACIÓN USUARIO -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="register-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar usuario</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
                 </div>
+                <div class="modal-body">
+                    <form enctype="multipart/form-data" id="register-user" action="Register">
+                        <div class="form-group">
+                            <label>Tipo de usuario</label>
+                            <div>
+                                <label for="f-option" class="l-radio">
+                                    <input type="radio" id="f-option" name="selector" tabindex="1" value="Apoderado" checked>
+                                    <span>Apoderado</span>
+                                </label>
+                                <label for="s-option" class="l-radio">
+                                    <input type="radio" id="s-option" name="selector" tabindex="2" value="Cuidador">
+                                    <span>Cuidador</span>
+                                </label>
+                                <label for="t-option" class="l-radio">
+                                    <input type="radio" id="t-option" name="selector" tabindex="3" value="Adulto mayor">
+                                    <span>Adulto mayor</span>
+                                </label>
+                            </div>
+
+                        </div>
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control div-margin-down" id="email" placeholder="Ingrese un email">
+                            <span id="email-ok"></span>
+                        </div>
+
+                        <div class="row">
+                            <div class="col">
+                                <label>Nombre</label>
+                                <input type="text" class="form-control" id="name" placeholder="Ingrese un nombre">
+                            </div>
+                            <div class="col">
+                                <label>Apellido</label>
+                                <input type="text" class="form-control" id="last-name" placeholder="Ingrese un apellido">
+                            </div>
+                        </div>
+
+                        <div class="row div-modal-margin-top">
+                            <div class="col">
+                                <label>Dirección</label>
+                                <input type="text" class="form-control" id="address" placeholder="Ingrese una dirección">
+                            </div>
+                            <div class="col">
+                                <label>N° Telefonico</label>
+
+                                <div class="input-group">
+                                    <div class="input-group-prepend">
+                                        <span class="input-group-text" id="inputGroup-sizing-default">+569</span>
+                                    </div>
+                                    <input type="text" class="form-control round" id="phone-number">
+                                </div>
+                                <span id="phone-number-ok"></span>
+                            </div>
+                        </div>
+
+                        <div class="row div-modal-margin-top">
+                            <div class="col">
+                                <label>Contraseña</label>
+                                <input type="password" class="form-control" id="password-register" placeholder="Ingrese una contraseña">
+                            </div>
+                            <div class="col">
+                                <label>Confirmación de contraseña</label>
+                                <input type="password" class="form-control" id="password-confirm-register" placeholder="Reingrese la contraseña">
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-8">
+                                <div class="form-group div-modal-margin-top">
+
+                                    <label>Imagen</label>
+                                    <input type="file" class="form-control" id="photo" />
+                                    <span id="photo-ok"></span>
+                                </div>
+                            </div>
+
+                            <div class="col-4">
+                                <div class="text-center">
+                                    <img src="#" class="rounded image-user" alt="Imagen usuario" id="target-image">
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Registrar usuario</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+
             </div>
         </div>
+    </div>
 
+
+    <!-- MODAL DE RECUPERAR CONTRASEÑA -->
+    <div class="modal fade" tabindex="-1" role="dialog" id="recover-password-modal">
+        <div class="modal-dialog modal-lg" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Recuperar contraseña</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <form id="recover-password" action="Register">                     
+                        <div class="form-group">
+                            <label>Email</label>
+                            <input type="text" class="form-control div-margin-down" id="email-recover" placeholder="Ingrese un email">
+                            <span id="email-ok"></span>
+                        </div>
+                        
+                        <div class="modal-footer">
+                            <button type="submit" class="btn btn-primary"><i class="fa fa-paper-plane-o"></i> Enviar email</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                        </div>
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
 
 
 </body>
 
 </html>
 
-
-@*@section Scripts {
-    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-}*@
