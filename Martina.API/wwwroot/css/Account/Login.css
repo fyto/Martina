@@ -1,4 +1,7 @@
-﻿.label-login 
+﻿.btn-ingresar{
+    height: 2px;
+}
+.label-login 
 {
     letter-spacing: 1px;
     margin-bottom: 5px; 
@@ -7,6 +10,23 @@
 .container-login {
     margin-top: 80px;
 }
+
+/* Scroll Modal Registro Inicio */
+
+.modal {
+    display: block !important;
+}
+
+.modal-dialog {
+    overflow-y: initial !important
+}
+
+.modal-body {
+    height: 150px;
+    overflow-y: auto;
+}
+
+/* Scroll Modal Registro Fin */
 
 /* Shake input inicio */
 

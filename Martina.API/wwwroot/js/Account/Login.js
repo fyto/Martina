@@ -2,6 +2,18 @@
 
 $(document).ready(async function () {
 
+    document.getElementById('option-1').addEventListener('click', function ()
+    {
+        $("#certificado").show();
+    });
+
+    document.getElementById('option-2').addEventListener('click', function ()
+    {
+        $("#certificado").hide();
+    });
+
+
+
     document.getElementById('email').addEventListener('input', function () {
         var campo = event.target;
         var valido = document.getElementById('email-ok');
@@ -345,7 +357,7 @@ $(document).ready(async function () {
         $("#recover-password-modal").modal();
     });
 
-    /* SUBMIT REGISTER USER */
+    /* SUBMIT RECOVER PASS USER */
     $('#recover-password').on('submit', (function (e)
     {
         e.preventDefault();

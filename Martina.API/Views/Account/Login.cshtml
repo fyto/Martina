@@ -66,9 +66,9 @@
 
 
 
-    <!-- MODAL DE CREACIÓN USUARIO -->
+    <!-- MODAL DE REGISTRO USUARIO -->
     <div class="modal fade" tabindex="-1" role="dialog" id="register-modal">
-        <div class="modal-dialog modal-lg" role="document">
+        <div class="modal-dialog modal-lg" style="overflow-y: scroll; max-height:85%;  margin-top: 50px; margin-bottom:50px;"  role="document">
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title">Registrar usuario</h5>
@@ -81,17 +81,13 @@
                         <div class="form-group">
                             <label>Tipo de usuario</label>
                             <div>
-                                <label for="f-option" class="l-radio">
-                                    <input type="radio" id="f-option" name="selector" tabindex="1" value="Apoderado" checked>
-                                    <span>Apoderado</span>
+                                <label for="option-1" class="l-radio">
+                                    <input type="radio" id="option-1" name="selector" tabindex="1" value="Cuidador" checked>
+                                    <span>Soy cuidador</span>
                                 </label>
-                                <label for="s-option" class="l-radio">
-                                    <input type="radio" id="s-option" name="selector" tabindex="2" value="Cuidador">
-                                    <span>Cuidador</span>
-                                </label>
-                                <label for="t-option" class="l-radio">
-                                    <input type="radio" id="t-option" name="selector" tabindex="3" value="Adulto mayor">
-                                    <span>Adulto mayor</span>
+                                <label for="option-2" class="l-radio">
+                                    <input type="radio" id="option-2" name="selector" tabindex="2" value="Adulto mayor">
+                                    <span>Busco cuidador</span>
                                 </label>
                             </div>
 
@@ -142,7 +138,20 @@
                             </div>
                         </div>
 
+
+                        <div class="row" id="certificado">
+                            <div class="col-12">
+                                <div class="form-group div-modal-margin-top">
+
+                                    <label>Certificado de antecedentes</label>
+                                    <input type="file" class="form-control" id="photo" />
+                                    <span id="certificado-ok"></span>
+                                </div>
+                            </div>
+                        </div>
+
                         <div class="row">
+
                             <div class="col-8">
                                 <div class="form-group div-modal-margin-top">
 
@@ -158,6 +167,7 @@
                                 </div>
                             </div>
                         </div>
+
 
                         <div class="modal-footer">
                             <button type="submit" class="btn btn-primary"><i class="fa fa-floppy-o"></i> Registrar usuario</button>

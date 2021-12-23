@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace Martina.API.Data.Entities
@@ -39,6 +40,7 @@ namespace Martina.API.Data.Entities
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 
+        [JsonIgnore]
         public ICollection<UserDisease> UsersDiseases { get; set; }
 
         //[Display(Name = "# Enfermedades")]
