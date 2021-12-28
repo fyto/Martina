@@ -34,7 +34,6 @@ namespace Martina.API.Controllers
         public IActionResult Login()
         {
 
-
             if (User.Identity.IsAuthenticated)
             {
                 return RedirectToAction(nameof(Index), "Home");

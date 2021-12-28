@@ -30,10 +30,10 @@ namespace Martina.API.Data
             await CheckRolesAsync();       
            
             await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", "Administrador");
-            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", "Apoderado");
-            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", "Apoderado");
-            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", "Adulto mayor");
-            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", "Adulto mayor");
+            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", "Cuidado");
+            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", "Cuidador");
+            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", "Cuidado");
+            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", "Cuidado");
             await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", "Cuidador");
             await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", "Cuidador");
 
@@ -102,9 +102,8 @@ namespace Martina.API.Data
         private async Task CheckRolesAsync()
         {
             await _userHelper.CheckRoleAsync("Administrador");
-            await _userHelper.CheckRoleAsync("Apoderado");
             await _userHelper.CheckRoleAsync("Cuidador");
-            await _userHelper.CheckRoleAsync("Adulto mayor");
+            await _userHelper.CheckRoleAsync("Cuidado");
         }
 
         private async Task CheckCaresAsync()

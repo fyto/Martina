@@ -1,6 +1,4 @@
-﻿.btn-ingresar{
-    height: 2px;
-}
+﻿
 .label-login 
 {
     letter-spacing: 1px;
@@ -13,7 +11,7 @@
 
 /* Scroll Modal Registro Inicio */
 
-.modal {
+/*.modal {
     display: block !important;
 }
 
@@ -24,7 +22,7 @@
 .modal-body {
     height: 150px;
     overflow-y: auto;
-}
+}*/
 
 /* Scroll Modal Registro Fin */
 
@@ -97,7 +95,6 @@
 .custom-radio-checkbox > .custom-radio-checkbox__input:checked + .custom-radio-checkbox__show--checkbox {
     background-image: url(../images/checkbox-check.png);
 }
-
 
 
 /* Inicio registro usuario */

@@ -12,24 +12,23 @@ $(document).ready(async function () {
         $("#certificado").hide();
     });
 
-
-
-    document.getElementById('email').addEventListener('input', function () {
+    document.getElementById('email-register').addEventListener('input', function ()
+    {
         var campo = event.target;
-        var valido = document.getElementById('email-ok');
+        var valido = document.getElementById('email-ok-register');
 
-        $("#email-ok").removeClass("span-green");
-        $("#email-ok").removeClass("span-red");
+        $("#email-ok-register").removeClass("span-green");
+        $("#email-ok-register").removeClass("span-red");
 
         var emailRegex = /^[-\w.%+]{1,64}@(?:[A-Z0-9-]{1,63}\.){1,125}[A-Z]{2,63}$/i;
         //Se muestra un texto a modo de ejemplo, luego va a ser un icono
         if (emailRegex.test(campo.value)) {
-            $("#email-ok").addClass("span-green");
+            $("#email-ok-register").addClass("span-green");
 
             valido.innerText = "Email válido";
         }
         else {
-            $("#email-ok").addClass("span-red");
+            $("#email-ok-register").addClass("span-red");
 
             valido.innerText = "Email inválido";
         }

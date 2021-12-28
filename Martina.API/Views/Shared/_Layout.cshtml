@@ -3,16 +3,16 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - Cuidarlos-AM</title>
+    <title>@ViewData["Title"] - Cuidarlos</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
-
+    <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
 </head>
 <body>
     <header>
         <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white border-bottom box-shadow mb-3">
             <div class="container">
-                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">Cuidarlos-AM</a>
+                <a class="navbar-brand" asp-area="" asp-controller="Home" asp-action="Index">App</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
                         aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
@@ -42,25 +42,20 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
-                        </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="Logout">Cerrar Sesión</a>
+                            </li>
 
                         }
                         else
                         {
-
-                            <button type="button" class="btn btn-outline-primary">Iniciar sesión</button>
-
-                        @*<a asp-action="Login"><button class="btn btn-outline-primary">Iniciar sesión</button></a>*@
-
-
-                        @*<button type="button" id="btn-login" class="btn btn-outline-primary">Ingresar</button>*@
-
-                        @*<li><a asp-area="" asp-controller="Account" asp-action="Login">Ingresar a Cuidarlos-AM</a></li>*@
+                            <li class="nav-item">
+                                <a  asp-area="" asp-controller="Account" asp-action="Login">Iniciar sesión </a>
+                            </li>
+                           
                         }
                     </ul>
 
@@ -82,8 +77,5 @@
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-    @* Notificaciones Toast Backend *@
-    @await Component.InvokeAsync("Notyf")
-    @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>
