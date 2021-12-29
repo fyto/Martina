@@ -34,7 +34,8 @@ $(document).ready(async function () {
         }
     });
 
-    document.getElementById('photo').addEventListener('input', function () {
+    document.getElementById('photo').addEventListener('input', function ()
+    {
         var campo = event.target;
         var valido = document.getElementById('photo-ok');
 
@@ -45,18 +46,19 @@ $(document).ready(async function () {
 
         // Carga la imagen en el src
         const [file] = campo.files
-        if (file) {
+        if (file)
+        {
             imagetarget.src = URL.createObjectURL(file)
         }
 
-        if (campo.value) {
+        if (campo.value)
+        {
             $("#photo-ok").addClass("span-green");
-
             valido.innerText = "Imagen cargada";
         }
-        else {
+        else
+        {
             $("#photo-ok").addClass("span-red");
-
             valido.innerText = "Imagen no cargada";
         }
 
@@ -118,7 +120,7 @@ $(document).ready(async function () {
         }
 
         var typeUser = valorRadio;
-        var email = $("#email").val();
+        var email = $("#email-register").val();
         var name = $("#name").val();
         var lastName = $("#last-name").val();
         var address = $("#address").val();
@@ -130,9 +132,9 @@ $(document).ready(async function () {
         if (email == null || email == '' || email == undefined) {
             toastr.error('Debe introducir un email', "Error");
 
-            $("#email").addClass("input-red");
+            $("#email-register").addClass("input-red");
             setTimeout(function () {
-                $("#email").removeClass('input-red');
+                $("#email-register").removeClass('input-red');
             }, 2000)
 
             validator = true;

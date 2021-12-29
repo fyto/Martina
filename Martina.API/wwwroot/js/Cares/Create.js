@@ -25,7 +25,7 @@ $(document).ready(async function ()
             { "data": "fullName", "autoWidth": true },
             { "data": "creationDate", "autoWidth": true, render: formatDate },
             {
-                "defaultContent": "<div class='tr-operation'> <button type='button' class='edit-button btn btn-warning'><i class='fa fa-pencil-square-o'></i></button> 	<button type='button' class='delete-button btn btn-danger'><i class='fa fa-trash-o'></i></button> </div>"
+                "defaultContent": "<div class='tr-operation'> <button type='button' class='edit-button btn btn-warning'><i class='fa fa-edit'></i></button> 	<button type='button' class='delete-button btn btn-danger'><i class='fas fa-trash'></i></button> </div>"
             }           
         ],
         fixedColumns: {

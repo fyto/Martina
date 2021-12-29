@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" />
     <link href="~/lib/font-awesome/css/all.css" rel="stylesheet" />
+    @*<script src="~/lib/font-awesome/js/all.js"></script>*@
 </head>
 <body>
     <header>
@@ -42,6 +43,26 @@
                     <ul class="nav navbar-nav navbar-right">
                         @if (User.Identity.IsAuthenticated)
                         {
+
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item">
+                                    <button type="button" class="btn btn-primary"><i class="fas fa-user-tie"></i> Administrador</button>
+                                </li>
+                            }
+                            @if (User.IsInRole("Cuidador"))
+                            {
+                            <li class="nav-item">
+                                <button type="button" class="btn btn-secondary"><i class="fas fa-user-nurse"></i> Soy cuidador</button>                       
+                            </li>
+                            }
+                            @if (User.IsInRole("Cuidado"))
+                            {
+                                <li class="nav-item">
+                                    <button type="button" class="btn btn-success"><i class="fas fa-user-injured"></i> Busco cuidador</button>
+                                </li>
+                            }
+
                             <li class="nav-item">
                                 <a class="nav-link text-dark" asp-area="" asp-controller="Account" asp-action="ChangeUser">@User.Identity.Name</a>
                             </li>
@@ -52,10 +73,12 @@
                         }
                         else
                         {
-                            <li class="nav-item">
-                                <a  asp-area="" asp-controller="Account" asp-action="Login">Iniciar sesión </a>
+                            <li class="nav-item">                    
+                                <a asp-area="" asp-controller="Account" asp-action="Login">
+                                    <button type="button" class="btn btn-outline-primary"><i class="fas fa-sign-in-alt"></i> Iniciar sesión</button>
+                                </a>           
                             </li>
-                           
+
                         }
                     </ul>
 
