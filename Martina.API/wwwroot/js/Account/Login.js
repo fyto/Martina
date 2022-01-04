@@ -37,32 +37,68 @@ $(document).ready(async function () {
     document.getElementById('photo').addEventListener('input', function ()
     {
         var campo = event.target;
-        var valido = document.getElementById('photo-ok');
+       /* var valido = document.getElementById('photo-ok');*/
 
         var imagetarget = document.getElementById('target-image');
+        var imageName = document.getElementById('name-photo');
 
-        $("#photo-ok").removeClass("span-green");
-        $("#photo-ok").removeClass("span-red");
+       /* let input = $(this);*/
+        let extencion = campo.value.split(".").pop().toLowerCase();
 
-        // Carga la imagen en el src
-        const [file] = campo.files
-        if (file)
+        console.log(campo);
+     /*   console.log(input);*/
+        console.log(extencion);
+      /*  console.log(input.val());*/
+
+     
+        if (campo.value != "")
         {
-            imagetarget.src = URL.createObjectURL(file)
+            console.log("en primer if");
+
+            if (extencion != "jpg" && extencion != "png")
+            {
+                console.log("en segundo if");
+
+                //let input = $(this);
+
+                //input.replaceWith(input.val('').clone(true));
+
+                toastr.error('Solo se aceptan formatos de imagenes', "Imagen no válida");
+
+                $("#photo").val('');
+                $("#target-image").attr("src", "../images/noimage.png");
+            }
+            else
+            {
+                console.log("en else");
+
+                //Carga la imagen en el src
+                const [file] = campo.files
+
+                if (file)
+                {
+                    imagetarget.src = URL.createObjectURL(file)
+                }
+
+                if (campo.value)
+                {
+                    toastr.success('Imagen correctamente adjuntada', "Imagen válida");
+                }
+                else
+                {
+
+
+                }
+            }
         }
 
-        if (campo.value)
-        {
-            $("#photo-ok").addClass("span-green");
-            valido.innerText = "Imagen cargada";
-        }
-        else
-        {
-            $("#photo-ok").addClass("span-red");
-            valido.innerText = "Imagen no cargada";
-        }
+     
+    });
 
-
+    $("#btnRemoveImageButton").click(function ()
+    {
+        $("#photo").val('');
+        $("#target-image").attr("src", "../images/noimage.png");
     });
 
     jQuery("#phone-number").on('input', function (evt) {
@@ -100,12 +136,20 @@ $(document).ready(async function () {
         $("#password-register").val('');
         $("#password-confirm-register").val('');
         $("#photo").val('');
+
+        $("#btnRemoveImage").hide();
     });
 
     /* SUBMIT REGISTER USER */
     $('#register-user').on('submit', (function (e)
     {
         e.preventDefault();
+
+        $('#btnRegisterModal').prop('disabled', true);
+        $('#btnLogin').prop('disabled', true);
+
+        $('#btnRegisterUser').prop('disabled', true);
+        $('#btnCloseRegister').prop('disabled', true);
         
         var formData = new FormData(this);
         var selector = document.getElementsByName('selector');
@@ -138,6 +182,12 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+            $('#btnRegisterUser').prop('disabled', false);
+            $('#btnCloseRegister').prop('disabled', false);
+
         }
 
         if (name == null || name == '' || name == undefined) {
@@ -149,6 +199,11 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+            $('#btnRegisterUser').prop('disabled', false);
+            $('#btnCloseRegister').prop('disabled', false);
         }
 
         if (lastName == null || lastName == '' || lastName == undefined) {
@@ -160,6 +215,11 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+            $('#btnRegisterUser').prop('disabled', false);
+            $('#btnCloseRegister').prop('disabled', false);
         }
 
         if (password != passwordConfirm)
@@ -175,6 +235,11 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+            $('#btnRegisterUser').prop('disabled', false);
+            $('#btnCloseRegister').prop('disabled', false);
         }
 
         if (password.length < 6) {
@@ -189,12 +254,20 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+            $('#btnRegisterUser').prop('disabled', false);
+            $('#btnCloseRegister').prop('disabled', false);
         }
+
+        console.log(photo.files[0]);
 
         if (validator == false) {
             /* ActionCreateUser(typeUser, email, name, lastName, address, phoneNumber, photo);*/
 
             formData.append('ImageFile', photo.files[0]);
+            formData.append('ImageName', photo.files[0].name);
             formData.append('FirstName', name);
             formData.append('LastName', lastName);
             formData.append('Email', email);
@@ -219,17 +292,37 @@ $(document).ready(async function () {
                         toastr.success('se ha enviado un correo de confirmación a: ' + email + '.', "Correo enviado");
 
                         $("#register-modal").modal('hide');
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
+                        $('#btnRegisterUser').prop('disabled', false);
+                        $('#btnCloseRegister').prop('disabled', false);
                     }
                     if (data == 'Email repeat')
                     {
                         toastr.error('el correo ' + email + ' esta siendo usado por otro usuario', "Email inválido");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
+                        $('#btnRegisterUser').prop('disabled', false);
+                        $('#btnCloseRegister').prop('disabled', false);
                     }
                     if (data == 'Model invalid') {
                         toastr.error('Ha ocurrido un problema, intente más tarde.', "Error");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
+                        $('#btnRegisterUser').prop('disabled', false)
+                        $('#btnCloseRegister').prop('disabled', false);
                     }                   
                 },
                 error: function (xhr, status, error) {
                     toastr.error(error, "Error");
+
+                    $('#btnRegisterModal').prop('disabled', false);
+                    $('#btnLogin').prop('disabled', false);
+                    $('#btnRegisterUser').prop('disabled', false);
+                    $('#btnCloseRegister').prop('disabled', false);
                 }
             });
 
@@ -237,9 +330,13 @@ $(document).ready(async function () {
 
     }));
 
+    /* SUBMIT LOGIN */
     $('#login').on('submit', (function (e)
     {      
         e.preventDefault();
+
+        $('#btnRegisterModal').prop('disabled', true);
+        $('#btnLogin').prop('disabled', true);      
 
         var validator = false;
 
@@ -256,6 +353,9 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
         }
 
         if (password == null || password == '' || password == undefined)
@@ -268,6 +368,10 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
+
         }
 
         if (password.length < 6)
@@ -280,6 +384,9 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
         }
 
         if (!validator)
@@ -330,14 +437,23 @@ $(document).ready(async function () {
                                 }
                             }
                         );
+
+                        $('#btnRegisterModal').prop('disabled', true);
+                        $('#btnLogin').prop('disabled', true);
                     }
                     if (data == 'Email o contraseña incorrectos')
                     {
                         toastr.error('Email o contraseña incorrectos.', "Error");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
                     }
                     if (data == 'Model invalid')
                     {
                         toastr.error('Ocurrio un problema, intente más tarde.', "Error");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
                     }
                 },
                 error: function (xhr, status, error)
@@ -363,6 +479,9 @@ $(document).ready(async function () {
     {
         e.preventDefault();
 
+        $('#btnRegisterModal').prop('disabled', true);
+        $('#btnLogin').prop('disabled', true);
+
         var validator = false;
         var formData = new FormData(this);
       
@@ -378,6 +497,9 @@ $(document).ready(async function () {
             }, 2000)
 
             validator = true;
+
+            $('#btnRegisterModal').prop('disabled', false);
+            $('#btnLogin').prop('disabled', false);
         }
 
       
@@ -399,19 +521,31 @@ $(document).ready(async function () {
                         toastr.success('Las instrucciones para el cambio de contraseña han sido enviadas al email:  ' + email + '.', "Correo enviado");
 
                         $("#recover-password-modal").modal('hide');
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
                     }
                     if (data == "Email invalid")
                     {
                         toastr.error('El correo ingresado no corresponde a ningún usuario.', "Email inválido");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
                     }
                     if (data == 'Model invalid')
                     {
                         toastr.error('Ha ocurrido un problema, intente más tarde.', "Error");
+
+                        $('#btnRegisterModal').prop('disabled', false);
+                        $('#btnLogin').prop('disabled', false);
                     }
                   
                 },
                 error: function (xhr, status, error) {
                     toastr.error(error, "Error");
+
+                    $('#btnRegisterModal').prop('disabled', false);
+                    $('#btnLogin').prop('disabled', false);
                 }
             });
 

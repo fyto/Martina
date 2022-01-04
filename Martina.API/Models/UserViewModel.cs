@@ -36,7 +36,10 @@ namespace Martina.API.Models
         public string PhoneNumber { get; set; }
 
         [Display(Name = "Foto")]
-        public Guid ImageId { get; set; }      
+        public Guid ImageId { get; set; }
+
+        [Display(Name = "Nombre foto")]
+        public string ImageName { get; set; }
 
         [Display(Name = "Foto")]
         public IFormFile ImageFile { get; set; }

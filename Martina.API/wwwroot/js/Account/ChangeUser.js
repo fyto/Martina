@@ -9,8 +9,10 @@ $(document).ready(async function () {
         contentType: 'application/json; charset=utf-8',
         dataType: 'json',
         success: function (data)
-        {       
-            if (data.userType == 'Apoderado')
+        {
+            console.log(data.userType);
+
+            if (data.userType == 'Administrador')
             {
                 $("#f-option").attr('checked', 'checked');
                 $("#f-option").prop('disabled', true);
@@ -23,13 +25,17 @@ $(document).ready(async function () {
                 $("#f-option").prop('disabled', true);
                 $("#s-option").prop('disabled', true);
                 $("#t-option").prop('disabled', true);
+
+                $("#label-visible").hide();
             }
-            if (data.userType == 'Adulto mayor')
+            if (data.userType == 'Cuidado')
             {
                 $("#t-option").attr('checked', 'checked');
                 $("#f-option").prop('disabled', true);
                 $("#s-option").prop('disabled', true);
                 $("#t-option").prop('disabled', true);
+
+                $("#label-visible").hide();
             }
 
             $('#name').val(data.firstName);

@@ -38,6 +38,7 @@ namespace Martina.API.Helpers
                 FirstName = model.FirstName,
                 LastName = model.LastName,
                 ImageId = imageId,
+                ImageName = model.ImageName,
                 PhoneNumber = model.PhoneNumber,
                 UserName = model.Username,
                 UserType = model.UserType

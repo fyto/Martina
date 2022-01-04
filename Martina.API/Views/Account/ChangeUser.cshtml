@@ -40,17 +40,17 @@
                     <div class="form-group">
                         <label>Tipo de usuario</label>
                         <div>
-                            <label for="f-option" class="l-radio">
-                                <input type="radio" id="f-option" name="selector" tabindex="1" value="Apoderado">
-                                <span>Apoderado</span>
+                            <label for="f-option" class="l-radio" id="label-visible">
+                                <input type="radio" id="f-option" name="selector" tabindex="1" value="Administrador">
+                                <span>Administrador</span>
                             </label>
                             <label for="s-option" class="l-radio">
                                 <input type="radio" id="s-option" name="selector" tabindex="2" value="Cuidador">
-                                <span>Cuidador</span>
+                                <span>Soy cuidador</span>
                             </label>
                             <label for="t-option" class="l-radio">
-                                <input type="radio" id="t-option" name="selector" tabindex="3" value="Adulto mayor">
-                                <span>Adulto mayor</span>
+                                <input type="radio" id="t-option" name="selector" tabindex="3" value="Cuidado">
+                                <span>Busco cuidador</span>
                             </label>
                         </div>
                     </div>
@@ -84,7 +84,16 @@
                     </div>
                     <span id="phone-number-ok"></span>
                 </div>
-            </div>          
+            </div>
+
+            <div class="row">
+                <div class="col-12">
+                    <div class="form-group div-margin-top">
+                        <label>Certificado de antecedenetes</label>
+                        <input type="file" class="form-control" id="certificate" />
+                    </div>
+                </div>
+            </div>
 
             <div class="row">
                 <div class="col-8">

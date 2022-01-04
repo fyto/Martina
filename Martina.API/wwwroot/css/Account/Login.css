@@ -1,4 +1,9 @@
-﻿.btn-register
+﻿.btn-border {
+    border-bottom-left-radius:0%;
+    border-top-left-radius:0%;
+}
+
+.btn-register
 {
     float:right;
 }

@@ -48,7 +48,7 @@
                 </label>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success"> <i class="fa fa-sign-in-alt"></i> Iniciar sesión</button>
+                    <button type="submit" id="btnLogin" class="btn btn-success"> <i class="fa fa-sign-in-alt"></i> Iniciar sesión</button>
                     <button type="button" id="btnRegisterModal" class="btn btn-primary btn-register"> <i class="fa fa-user-plus"></i> Registrarme</button>
                     <hr />
                     <a id="btnCallModalRecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
@@ -132,27 +132,29 @@
                         </div>
 
 
-                        <div class="row" id="certificado">
+                        <div class="row div-modal-margin-top" id="certificado">
+                           
                             <div class="col-12">
-                                <div class="form-group div-modal-margin-top">
-
-                                    <label>Certificado de antecedentes</label>
-                                    <input type="file" class="form-control" id="certificado" />
-                                    <span id="certificado-ok"></span>
+                                <label>Certificado de antecedentes</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="certificate" placeholder="Ingrese certificado">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-danger"  data-toggle="tooltip" data-placement="top" title="Crear un cuidado"><i class="fas fa-trash"></i> Borrar</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
 
-                        <div class="row">
+                        <div class="row div-modal-margin-top">
                             <div class="col-8">
-                                <div class="form-group div-modal-margin-top">
-
-                                    <label>Imagen</label>
-                                    <input type="file" class="form-control" id="photo" />
-                                    <span id="photo-ok"></span>
+                                <label>Imagen</label>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="photo" accept="image/x-png,image/gif,image/jpeg" placeholder="Ingrese imagen">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-outline-danger" id="btnRemoveImageButton" data-toggle="tooltip" data-placement="top" title="Crear un cuidado"><i class="fas fa-trash"></i> Borrar</button>
+                                    </div>
                                 </div>
                             </div>
-
                             <div class="col-4">
                                 <div class="text-center">
                                     <img src="#" class="rounded image-user" alt="Imagen usuario" id="target-image">
@@ -160,11 +162,12 @@
                             </div>
                         </div>
 
-                        <div class="modal-footer">
-                          
-                            <button type="submit" class="btn btn-primary"><i class="fas fa-save"></i> Registrar usuario</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
-                        </div>
+
+                            <div class="modal-footer">
+
+                                <button type="submit" id="btnRegisterUser" class="btn btn-primary"><i class="fas fa-save"></i> Registrar usuario</button>
+                                <button type="button" id="btnCloseRegister" class="btn btn-secondary" data-dismiss="modal"><i class="fa fa-times"></i> Cerrar</button>
+                            </div>
                     </form>
                 </div>
 
