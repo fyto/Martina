@@ -18,6 +18,8 @@ namespace Martina.API.Helpers
 
         Task<UserStatus> GetUserStatusByNameAsync(string name);
 
+        //Task<UserStatus> GetUserStatusAsync(int id);
+
         Task<User> GetUserAsync(Guid id);
 
         Task<IdentityResult> UpdateUserAsync(User user);

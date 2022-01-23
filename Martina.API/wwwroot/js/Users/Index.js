@@ -62,19 +62,23 @@ $(document).ready(async function ()
 
     function selectUserStatus(userStatusId) {
 
+        var userStatus = $("#user-status");
        
         var param = { "userStatusId": userStatusId };
 
         $.ajax({
             type: "POST",
-            url: "/UserStatus/GetUserStatusByStatus",
+            url: "/UserStatus/GetPossibleStatusByStatus",
             contentType: 'application/x-www-form-urlencoded',
             data: param,
             success: function (data) {
+
+                console.log(data);
+
                 var placeholderSelect = {};
 
                 placeholderSelect.id = 0;
-                placeholderSelect.description = '[Seleccione una enfermedad...]';
+                placeholderSelect.name = '[Seleccione un estado...]';
 
                 data.push(placeholderSelect);
 
@@ -82,17 +86,17 @@ $(document).ready(async function ()
                     return a.id - b.id || a.name.localeCompare(b.description);
                 });
 
-                diseaseTypes.html('');
+                userStatus.html('');
 
                 for (var i = 0; i < data.length; i++) {
-                    diseaseTypes.append('<option id="' + data[i].id + '">' + data[i].description + '</option>');
+                    userStatus.append('<option id="' + data[i].id + '">' + data[i].name + '</option>');
                 }
 
             },
             error: function (req, status, error) {
-                diseaseTypes.prop("disabled", true);
-                $("#disease-name").prop("disabled", true);
-                $("#btnCreate").prop("disabled", true);
+                //diseaseTypes.prop("disabled", true);
+                //$("#disease-name").prop("disabled", true);
+                //$("#btnCreate").prop("disabled", true);
 
                 toastr.error(error, "Error");
             }
