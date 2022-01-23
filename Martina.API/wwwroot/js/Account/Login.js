@@ -37,32 +37,14 @@ $(document).ready(async function () {
     document.getElementById('photo').addEventListener('input', function ()
     {
         var campo = event.target;
-       /* var valido = document.getElementById('photo-ok');*/
-
         var imagetarget = document.getElementById('target-image');
         var imageName = document.getElementById('name-photo');
-
-       /* let input = $(this);*/
         let extencion = campo.value.split(".").pop().toLowerCase();
-
-        console.log(campo);
-     /*   console.log(input);*/
-        console.log(extencion);
-      /*  console.log(input.val());*/
-
      
         if (campo.value != "")
         {
-            console.log("en primer if");
-
             if (extencion != "jpg" && extencion != "png")
             {
-                console.log("en segundo if");
-
-                //let input = $(this);
-
-                //input.replaceWith(input.val('').clone(true));
-
                 toastr.error('Solo se aceptan formatos de imagenes', "Imagen no válida");
 
                 $("#photo").val('');
@@ -70,8 +52,6 @@ $(document).ready(async function () {
             }
             else
             {
-                console.log("en else");
-
                 //Carga la imagen en el src
                 const [file] = campo.files
 
@@ -84,15 +64,8 @@ $(document).ready(async function () {
                 {
                     toastr.success('Imagen correctamente adjuntada', "Imagen válida");
                 }
-                else
-                {
-
-
-                }
             }
         }
-
-     
     });
 
     $("#btnRemoveImageButton").click(function ()
@@ -170,8 +143,21 @@ $(document).ready(async function () {
         var address = $("#address").val();
         var phoneNumber = $("#phone-number").val();
         var photo = $("#photo")[0];
+        var photoName = photo.files[0].name;
         var password = $("#password-register").val();
         var passwordConfirm = $("#password-confirm-register").val();
+
+        console.log(typeUser);
+        console.log(email);
+        console.log(name);
+        console.log(lastName);
+        console.log(address);
+        console.log(phoneNumber);
+        console.log(photo.files[0]);
+        console.log(photoName);
+        console.log(password);
+        console.log(passwordConfirm);
+
 
         if (email == null || email == '' || email == undefined) {
             toastr.error('Debe introducir un email', "Error");
@@ -261,13 +247,13 @@ $(document).ready(async function () {
             $('#btnCloseRegister').prop('disabled', false);
         }
 
-        console.log(photo.files[0]);
+      
 
         if (validator == false) {
             /* ActionCreateUser(typeUser, email, name, lastName, address, phoneNumber, photo);*/
 
             formData.append('ImageFile', photo.files[0]);
-            formData.append('ImageName', photo.files[0].name);
+            formData.append('ImageName', photoName);
             formData.append('FirstName', name);
             formData.append('LastName', lastName);
             formData.append('Email', email);

@@ -39,7 +39,8 @@ namespace Martina.API.Helpers
 
                 using (SmtpClient client = new SmtpClient())
                 {
-                    client.Connect(smtp, int.Parse(port), false);
+                    client.CheckCertificateRevocation = false;
+                    client.Connect(smtp, int.Parse(port), false);                   
                     client.Authenticate(from, password);
                     client.Send(message);
                     client.Disconnect(true);

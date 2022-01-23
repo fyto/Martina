@@ -100,8 +100,6 @@ namespace Martina.API.Controllers
 
                 if (user == null)
                 {
-                    //ModelState.AddModelError(string.Empty, "Este correo ya está siendo usado por otro usuario.");
-                    //return View(model);
                     return Json("Email repeat");
                 }
 
@@ -118,17 +116,14 @@ namespace Martina.API.Controllers
 
                 if (response.IsSuccess)
                 {
-                    //ViewBag.Message = "Las instrucciones para habilitar su cuenta han sido enviadas al correo.";
-                    //return View(model);
                     return Json("Email send");
                 }
-
-                //ModelState.AddModelError(string.Empty, response.Message);
-
+              
+                string message = response.Message;
+                return Json(message);
                
             }
 
-            //model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
             return Json("Model invalid");
         }
 

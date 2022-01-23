@@ -16,14 +16,10 @@ namespace Martina.API.Data
         }
 
         public DbSet<Care> Cares { get; set; }
-
         public DbSet<Disease> Deseases { get; set; }
-
         public DbSet<DiseaseType> DeseaseTypes { get; set; }
-
         public DbSet<UserDisease> UsersDiseases { get; set; }
-
-
+        public DbSet<UserStatus> UserStatus { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

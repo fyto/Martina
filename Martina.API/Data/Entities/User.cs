@@ -40,6 +40,15 @@ namespace Martina.API.Data.Entities
         [Display(Name = "Tipo de usuario")]
         public string UserType { get; set; }
 
+        [Display(Name = "Id tipo usuario")]
+        public string UserTypeId { get; set; }
+
+        [Display(Name = "Id estado de usuario")]
+        public int  UserStatusId { get; set; }
+
+        [Display(Name = "Estado de usuario")]
+        public string UserStatus { get; set; }
+
         [Display(Name = "Usuario")]
         public string FullName => $"{FirstName} {LastName}";
 

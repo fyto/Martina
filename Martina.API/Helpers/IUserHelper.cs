@@ -12,7 +12,11 @@ namespace Martina.API.Helpers
     {
         Task<User> GetUserAsync(string email);
 
-        Task<IdentityRole> GetUserTypeAsync(string description);
+        Task<IdentityRole> GetUserTypeAsync(string id);
+
+        Task<IdentityRole> GetUserTypeByNameAsync(string description);
+
+        Task<UserStatus> GetUserStatusByNameAsync(string name);
 
         Task<User> GetUserAsync(Guid id);
 

@@ -28,6 +28,7 @@ $(document).ready(async function ()
             { "data": "email", "autoWidth": true },
             { "data": "phoneNumber", "autoWidth": true },
             { "data": "userType", "autoWidth": true },
+            { "data": "userStatus", "autoWidth": true, render: getAlert },
             { "data": null, "autoWidth": true },
 
             //{
@@ -37,20 +38,13 @@ $(document).ready(async function ()
         columnDefs: [{
             // adiciona los botones en la última columna
             targets: [-1], render: function (a, b, data, d) {
+
                 var buttons = "";
 
-                /* console.log(data);*/
-
-                //if (data.userType == 0)
-                //{
-                //    return "<button type='button'>Go</button>";
-                //}
-
-                buttons = "<div class='tr-operation'>" +
-                    "<button type='button' class= 'disease-button btn btn-info'> <i class='fa fa-heartbeat'></i></button>" +
-                    "</div>";
-
-
+                buttons = "<div class='tr-operation'> <button type='button' class= 'disease-button btn btn-info' btn-column> <i class='fa fa-heartbeat'></i></button>" +
+                                                     "<button type='button' class= 'flow-user-button btn btn-primary btn-column'> <i class='fas fa-sitemap'></i></button>" +
+                           "</div>";
+                            
                 return buttons;
             }
         }],
@@ -64,7 +58,48 @@ $(document).ready(async function ()
             [25, 50, 100, 200, -1],
             [25, 50, 100, 200, "Todos"]
         ]
-    });    
+    });
+
+    function selectUserStatus(userStatusId) {
+
+       
+        var param = { "userStatusId": userStatusId };
+
+        $.ajax({
+            type: "POST",
+            url: "/UserStatus/GetUserStatusByStatus",
+            contentType: 'application/x-www-form-urlencoded',
+            data: param,
+            success: function (data) {
+                var placeholderSelect = {};
+
+                placeholderSelect.id = 0;
+                placeholderSelect.description = '[Seleccione una enfermedad...]';
+
+                data.push(placeholderSelect);
+
+                data.sort(function (a, b) {
+                    return a.id - b.id || a.name.localeCompare(b.description);
+                });
+
+                diseaseTypes.html('');
+
+                for (var i = 0; i < data.length; i++) {
+                    diseaseTypes.append('<option id="' + data[i].id + '">' + data[i].description + '</option>');
+                }
+
+            },
+            error: function (req, status, error) {
+                diseaseTypes.prop("disabled", true);
+                $("#disease-name").prop("disabled", true);
+                $("#btnCreate").prop("disabled", true);
+
+                toastr.error(error, "Error");
+            }
+        });
+    }
+
+    
 
     var getDataDiseases = function (tbody, table)
     {
@@ -91,7 +126,56 @@ $(document).ready(async function ()
         });
 
      
-    }    
+    }
+
+    var getDataFlow = function (tbody, table)
+    {
+        $(tbody).on("click", "button.flow-user-button", function ()
+        {
+            var data = table.row($(this).parents("tr")).data();
+
+            console.log(data);
+
+            var status = data.userStatus;
+
+            var element = document.getElementById("status-div");
+
+            var alert = '';
+            element.innerHTML = '';
+
+            if (status == 'Registrado'){
+                alert = '<span class="badge bg-secondary alert-column"> Registrado </span>';
+                element.innerHTML += alert;
+
+                selectUserStatus(data.userStatusId);
+            }
+            if (status == 'Revision') {
+                alert = '<span class="badge bg-warning text-dark alert-column"> En Revisión </span>';
+                element.innerHTML += alert;
+
+                selectUserStatus(data.userStatusId);
+            }
+            if (status == 'Aprobado') {
+                alert = '<span class="badge bg-success alert-column"> Aprobado </span>';
+                element.innerHTML += alert;
+
+                selectUserStatus(data.userStatusId);
+            }
+            if (status == 'Rechazado') {
+                alert = '<span class="badge bg-danger alert-column"> Rechazado </span>';
+                element.innerHTML += alert;
+
+                selectUserStatus(data.userStatusId);
+            }
+
+            $("#flow-modal").modal();
+           
+        });
+
+
+    }
+
+    getDataFlow("#TableUsers tbody", table);
 
     getDataDiseases("#TableUsers tbody", table);
 
@@ -100,6 +184,24 @@ $(document).ready(async function ()
         var imagen = data;
 
         return '<img src="' + imagen + '" style="width: 100px; height: 100px; border-radius: 150px;" />';
+    }
+
+    function getAlert(data, type, full, meta)
+    {
+        var status = data;
+
+        if (status == 'Registrado'){
+            return '<span class="badge bg-secondary alert-column"> Registrado </span>';
+        }
+        if (status == 'Revision') {
+            return '<span class="badge bg-warning text-dark alert-column"> En Revisión </span>';
+        }
+        if (status == 'Aprobado') {
+            return '<span class="badge bg-success alert-column"> Aprobado </span>';
+        }
+        if (status == 'Rechazado') {
+            return '<span class="badge bg-danger alert-column"> Rechazado </span>';
+        }
     }
 
     function getToggleSwitch(data, type, full, meta)

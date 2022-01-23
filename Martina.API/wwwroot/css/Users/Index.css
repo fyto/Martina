@@ -1,4 +1,13 @@
-﻿.switch {
+﻿.alert-column {
+    padding: 7px;
+}
+
+.btn-column {
+    margin-left: 2px;
+    margin-right: 2px;
+}
+
+.switch {
     position: relative;
     display: inline-block;
     width: 60px;

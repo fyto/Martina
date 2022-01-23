@@ -79,6 +79,7 @@ namespace Martina.API.Helpers
         {
             return await _userManager.DeleteAsync(user);
         }
+
         public async Task<User> GetUserAsync(string email)
         {
             return await _context.Users
@@ -91,10 +92,22 @@ namespace Martina.API.Helpers
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
-        public async Task<IdentityRole> GetUserTypeAsync(string description)
+        public async Task<IdentityRole> GetUserTypeAsync(string id)
         {
             return await _context.Roles
-                                 .FirstOrDefaultAsync(x => x.Name == description);
+                                 .FirstOrDefaultAsync(x => x.Id == id);
+        }
+
+        public async Task<IdentityRole> GetUserTypeByNameAsync(string userTypeName)
+        {
+            return await _context.Roles
+                                 .FirstOrDefaultAsync(x => x.Name == userTypeName);
+        }
+
+        public async Task<UserStatus> GetUserStatusByNameAsync(string name)
+        {
+            return await _context.UserStatus
+                                 .FirstOrDefaultAsync(x => x.Name == name);
         }
 
         public async Task<bool> IsUserInRoleAsync(User user, string roleName)

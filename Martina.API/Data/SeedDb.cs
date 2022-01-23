@@ -24,18 +24,31 @@ namespace Martina.API.Data
             // Verifica que la BD exista
             await _context.Database.EnsureCreatedAsync();
 
+            await CheckStatusUserAsync();
             await CheckCaresAsync();
             await CheckDiseaseTypeAsync();
             await CheckDiseasesAsync();
-            await CheckRolesAsync();       
-           
-            await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", "Administrador");
-            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", "Cuidado");
-            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", "Cuidador");
-            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", "Cuidado");
-            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", "Cuidado");
-            await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", "Cuidador");
-            await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", "Cuidador");
+            await CheckRolesAsync();
+
+            // Roles
+            var Admin = await _userHelper.GetUserTypeByNameAsync("Administrador");
+            var Cuidado = await _userHelper.GetUserTypeByNameAsync("Cuidado");
+            var Cuidador = await _userHelper.GetUserTypeByNameAsync("Cuidador");
+
+            // Users status
+            var Registrado = await _userHelper.GetUserStatusByNameAsync("Registrado");
+            var Revision = await _userHelper.GetUserStatusByNameAsync("Revision");
+            var Aprobado = await _userHelper.GetUserStatusByNameAsync("Aprobado");
+            var Rechazado = await _userHelper.GetUserStatusByNameAsync("Rechazado");
+
+
+            await CheckUserAsync("Cristofher", "Ambiado", "cristofher.ambiado@valoralabs.com", "58987975", "Latorre 1117, Concepción", Admin.Id , Admin.Name, Aprobado.Id, Aprobado.Name);
+            await CheckUserAsync("Yohanna", "Ambiado", "yambiado@gmail.com", "8975298", "Venado 736, San pedro", Cuidador.Id, Cuidador.Name, Revision.Id, Revision.Name );
+            await CheckUserAsync("Walter", "Ambiado", "walter@gmail.com", "8288484", "Andalue 8455, San pedro", Cuidador.Id, Cuidador.Name, Registrado.Id, Registrado.Name);
+            await CheckUserAsync("Osvaldo", "Ambiado", "osvaldo@gmail.com", "81273393", "Latorre 1117", Cuidado.Id, Cuidado.Name, Aprobado.Id, Aprobado.Name);
+            await CheckUserAsync("Hector", "Ambiado", "hector@gmail.com", "898546548", "Latorre 1117 interior", Cuidado.Id, Cuidado.Name, Rechazado.Id, Rechazado.Name);
+            await CheckUserAsync("Tegualda", "Rodriguez", "tegualda@gmail.com", "87984656", "Latorre 1117", Cuidado.Id, Cuidado.Name, Aprobado.Id, Aprobado.Name);
+            await CheckUserAsync("Yely", "Ambiado", "yambiado@gmail.com", "84151515", "Las princesas 5854", Cuidador.Id, Cuidado.Name, Aprobado.Id, Aprobado.Name);
 
             await CheckUsersDiseases();
 
@@ -72,11 +85,12 @@ namespace Martina.API.Data
             
         }
 
-        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, string userTypeDescription)
+        private async Task CheckUserAsync(string firstName, string lastName, string email, string phoneNumber, string address, 
+                                          string userTypeId, string userTypeDescription, int userStatusId, string userStatusName)
         {
             User user = await _userHelper.GetUserAsync(email);
 
-            IdentityRole userType = await _userHelper.GetUserTypeAsync(userTypeDescription);
+            //IdentityRole userType = await _userHelper.GetUserTypeAsync(userTypeDescription);
 
             if (user == null)
             {
@@ -88,7 +102,10 @@ namespace Martina.API.Data
                     LastName = lastName,
                     PhoneNumber = phoneNumber,
                     UserName = email,
-                    UserType = userTypeDescription
+                    UserType = userTypeDescription,
+                    UserTypeId = userTypeId,
+                    UserStatus = userStatusName,
+                    UserStatusId = userStatusId                    
                 };
 
                 await _userHelper.AddUserAsync(user, "123456");
@@ -276,6 +293,43 @@ namespace Martina.API.Data
                     DiseaseType = DeLaSangre,
                     DescriptionDeseaseType = DeLaSangre.Description,
                    
+                });
+
+                await _context.SaveChangesAsync();
+            }
+        }
+
+        private async Task CheckStatusUserAsync()
+        {
+            if (!_context.UserStatus.Any())
+            {
+
+                _context.UserStatus.Add(new UserStatus
+                {
+                    Name = "Registrado",
+                    Description = "Estado inicial.",
+                    Order = 1                    
+                });
+
+                _context.UserStatus.Add(new UserStatus
+                {
+                    Name = "Revision",
+                    Description = "Estado transitorio.",
+                    Order = 2
+                });
+
+                _context.UserStatus.Add(new UserStatus
+                {
+                    Name = "Aprobado",
+                    Description = "Estado que permite ejecutar las funcionalidades del sistema.",
+                    Order = 3
+                });
+
+                _context.UserStatus.Add(new UserStatus
+                {
+                    Name = "Rechazado",
+                    Description = "Estado denegado para el sistema.",
+                    Order = 3
                 });
 
                 await _context.SaveChangesAsync();
