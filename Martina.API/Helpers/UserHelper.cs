@@ -104,12 +104,6 @@ namespace Martina.API.Helpers
                                  .FirstOrDefaultAsync(x => x.Name == userTypeName);
         }
 
-        //public async Task<UserStatus> GetUserStatusAsync(int id)
-        //{
-        //    return await _context.UserStatus.ToListAsync();
-                                 
-        //}
-
         public async Task<UserStatus> GetUserStatusByNameAsync(string name)
         {
             return await _context.UserStatus

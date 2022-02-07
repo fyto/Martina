@@ -93,11 +93,8 @@ $(document).ready(async function ()
                 }
 
             },
-            error: function (req, status, error) {
-                //diseaseTypes.prop("disabled", true);
-                //$("#disease-name").prop("disabled", true);
-                //$("#btnCreate").prop("disabled", true);
-
+            error: function (req, status, error)
+            {
                 toastr.error(error, "Error");
             }
         });
@@ -139,6 +136,15 @@ $(document).ready(async function ()
             var data = table.row($(this).parents("tr")).data();
 
             console.log(data);
+
+            // Input type hidden in modal
+            $("#user-id").val(data.id)
+            $("#user-name").val(data.email)
+            $("#old-status").val(data.userStatus)
+            $("#old-status-id").val(data.userStatusId)
+
+            var userStrong = document.getElementById("strong-user");
+            userStrong.innerHTML = data.email;
 
             var status = data.userStatus;
 
@@ -309,6 +315,74 @@ $(document).ready(async function ()
      
         $("#create-modal").modal();
     });
+
+    $('#change-user-status').on('submit', (function (e)
+    {
+        e.preventDefault();
+
+        var formData = new FormData(this);
+
+        var userStatusId = $("#user-status").find('option:selected').attr('id');
+        var userStatus = $("#user-status").val()
+        var comment = $("#comment").val();
+        var userId = $("#user-id").val();
+        var userName = $("#user-name").val();
+        var oldStatus = $("#old-status").val();
+        var oldStatusId = $("#old-status-id").val();
+
+        formData.append('UserStatusId', userStatusId);
+        formData.append('UserStatus', userStatus);
+        formData.append('UserId', userId);
+        formData.append('Comment', comment);
+        formData.append('OldStatus', oldStatus);
+        formData.append('OldStatusId', oldStatusId);
+
+        var validator = false;
+
+        if (userStatusId == 0 || userStatusId == undefined)
+        {
+            $("#user-status").addClass("input-red");
+            setTimeout(function () {
+                $("#user-status").removeClass('input-red');
+            }, 2000)
+
+            validator = true;
+        }
+
+        if (validator == false)
+        {
+
+            $.ajax({
+                type: "POST",
+                url: "/UserStatus/ChangeUserStatus",
+                data: formData,
+                contentType: false,
+                processData: false,
+                success: function (response)
+                {
+                    if (response == 'Not found' || response != 'Success')
+                    {
+                        toastr.error('Ha ocurrido un problema, intente más tarde', "Error");
+
+                        $("#flow-modal").modal('hide');
+                    }
+
+                    if (response == 'Success')
+                    {
+                        toastr.success('se ha actualizado el estado del usuario ' + userName + '.', "Actualizado");
+
+                        $("#flow-modal").modal('hide');
+                        $('#TableUsers').DataTable().ajax.reload(); 
+                    }
+                },
+                error: function (xhr, status, error) {
+                    toastr.error(error, "Error");
+                }
+            });
+
+        }
+
+    }));
 
     $('#create-user').on('submit', (function (e)
     {

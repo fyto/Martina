@@ -60,7 +60,6 @@ namespace Martina.API.Controllers
                                 .ToListAsync());
         }
 
-
         [HttpPost]
         public async Task<JsonResult> Create(UserViewModel model)
         {
