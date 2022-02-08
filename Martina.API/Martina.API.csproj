@@ -20,12 +20,12 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Martina.Common\Martina.Common.csproj" />
+    <Folder Include="wwwroot\css\images\" />
+    <Folder Include="wwwroot\css\DiseaseTypes\" />
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="wwwroot\css\images\" />
-    <Folder Include="wwwroot\css\DiseaseTypes\" />
+    <ProjectReference Include="..\Common\Common.csproj" />
   </ItemGroup>
 
 </Project>

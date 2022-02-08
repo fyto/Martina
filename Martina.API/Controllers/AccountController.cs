@@ -1,8 +1,8 @@
-﻿using Martina.API.Data;
+﻿using Common.Models;
+using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
-using Martina.Common.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using System;

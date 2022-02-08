@@ -1,3 +1,4 @@
+using Common.Services;
 using Mobile.Prims.ViewModels;
 using Mobile.Prims.Views;
 using Prism;
@@ -5,6 +6,7 @@ using Prism.Ioc;
 using Xamarin.Essentials.Implementation;
 using Xamarin.Essentials.Interfaces;
 using Xamarin.Forms;
+
 
 namespace Mobile.Prims
 {
@@ -24,6 +26,9 @@ namespace Mobile.Prims
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.Register<IApiService, ApiService>();
+
+
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();

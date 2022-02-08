@@ -1,5 +1,5 @@
-﻿using MailKit.Net.Smtp;
-using Martina.Common.Models;
+﻿using Common.Models;
+using MailKit.Net.Smtp;
 using Microsoft.Extensions.Configuration;
 using MimeKit;
 using System;
