@@ -24,7 +24,7 @@ namespace Mobile.Prims
 
             InitializeComponent();
 
-            await NavigationService.NavigateAsync($"{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(MainPage)}");
+            await NavigationService.NavigateAsync($"{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
@@ -38,7 +38,10 @@ namespace Mobile.Prims
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
             containerRegistry.RegisterForNavigation<AppMasterDetailPage, AppMasterDetailPageViewModel>();
-            containerRegistry.RegisterForNavigation<EditUserPage, EditUserViewModel>();
+            containerRegistry.RegisterForNavigation<EditUserPage, EditUserPageViewModel>();
+            containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
+            containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
+            containerRegistry.RegisterForNavigation<AppTabbedPage, AppTabbedPageViewModel>();
         }
     }
 }

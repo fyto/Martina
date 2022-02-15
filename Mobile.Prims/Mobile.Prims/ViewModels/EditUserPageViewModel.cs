@@ -5,9 +5,9 @@ using System.Text;
 
 namespace Mobile.Prims.ViewModels
 {
-    public class EditUserViewModel : ViewModelBase
+    public class EditUserPageViewModel : ViewModelBase
     {
-        public EditUserViewModel(INavigationService navigationService) : base(navigationService)
+        public EditUserPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             Title = "Editar usuario";
         }
