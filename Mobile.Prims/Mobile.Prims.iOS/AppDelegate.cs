@@ -1,6 +1,8 @@
 ﻿using Foundation;
 using Prism;
 using Prism.Ioc;
+using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
 
@@ -22,7 +24,14 @@ namespace Mobile.Prims.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+
+            // Inicialización de SyncFusion.Xamarin.Core
+            SfTextInputLayoutRenderer.Init();
+
             LoadApplication(new App(new iOSInitializer()));
+
+            // Inicialización del sfBusyIndicator
+            new SfBusyIndicatorRenderer();
 
             return base.FinishedLaunching(app, options);
         }

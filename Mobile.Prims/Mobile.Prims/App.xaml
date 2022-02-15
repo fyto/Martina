@@ -5,7 +5,16 @@
              x:Class="Mobile.Prims.App">
   <Application.Resources>
 
-    <!-- Application resource dictionary -->
+        <ResourceDictionary>
 
-  </Application.Resources>
+            <!-- Parameters -->
+            <!-- Development Url API -->
+            <x:String x:Key="UrlAPI">https://onsaleprepweb.azurewebsites.net</x:String>
+            <!-- Production Url API -->
+            <!-- <x:String x:Key="UrlAPI">https://onsaleprepweb.azurewebsites.net</x:String> -->
+
+
+        </ResourceDictionary>
+
+    </Application.Resources>
 </prism:PrismApplication>
