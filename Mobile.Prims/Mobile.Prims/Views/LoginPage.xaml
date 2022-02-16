@@ -27,7 +27,7 @@
                        
                     </StackLayout>
 
-                    <Label FontAttributes="Bold"
+                    <!--<Label FontAttributes="Bold"
                            HorizontalOptions="Center" 
                            Text="ForgotPassword}"
                            TextColor="{StaticResource ColorAccent}"
@@ -35,7 +35,7 @@
                         <Label.GestureRecognizers>
                             <TapGestureRecognizer Command="{Binding ForgotPasswordCommand}"/>
                         </Label.GestureRecognizers>
-                    </Label>
+                    </Label>-->
 
                 </StackLayout>
             </ScrollView>

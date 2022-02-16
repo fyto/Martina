@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿using Common.Helpers;
+using Common.Models;
 using Mobile.Prims.Views;
 using Prism.Commands;
 using Prism.Navigation;
@@ -22,12 +23,12 @@ namespace Mobile.Prims.ItemsViewModels
         {
             await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
 
-            //if (PageName == nameof(LoginPage) && Settings.IsLogin)
-            //{
-            //    Settings.IsLogin = false;
-            //    Settings.Token = null;
-            //    Settings.OrderDetails = null;
-            //}
+            if (PageName == nameof(LoginPage) && Settings.IsLogin)
+            {
+                Settings.IsLogin = false;
+                Settings.Token = null;
+             
+            }
 
             //if (IsLoginRequired && !Settings.IsLogin)
             //{

@@ -1,6 +1,10 @@
-﻿using Common.Models;
+﻿using Common.Helpers;
+using Common.Models;
 using Common.Models.Request;
+using Common.Models.Responses;
 using Common.Services;
+using Mobile.Prims.Views;
+using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
 using Xamarin.Essentials;
@@ -22,6 +26,8 @@ namespace Mobile.Prims.ViewModels
         {
             _navigationService = navigationService;
             _apiService = apiService;
+
+            Title = "Login";
         }
 
         public string Email { get; set; }
@@ -71,20 +77,22 @@ namespace Mobile.Prims.ViewModels
             //IsRunning = false;
             //IsEnabled = true;
 
-            //if (!response.IsSuccess)
-            //{
-            //    await App.Current.MainPage.DisplayAlert("Error", "LoginError", "Accept");
-            //    Password = string.Empty;
-            //    return;
-            //}
+            if (!response.IsSuccess)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "LoginError", "Accept");
+                Password = string.Empty;
+                return;
+            }
 
-            //TokenResponse token = (TokenResponse)response.Result;
-            //Settings.Token = JsonConvert.SerializeObject(token);
-            //Settings.IsLogin = true;
-            //Password = string.Empty;
+            TokenResponse token = (TokenResponse)response.Result;
+            Settings.Token = JsonConvert.SerializeObject(token);
+            Settings.IsLogin = true;
+            Password = string.Empty;
 
-            ////IsRunning = false;
-            ////IsEnabled = true;
+            //IsRunning = false;
+            //IsEnabled = true;
+
+            await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
 
             //if (string.IsNullOrEmpty(_pageReturn))
             //{

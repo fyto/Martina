@@ -25,6 +25,8 @@ namespace Mobile.Prims
             InitializeComponent();
 
             await NavigationService.NavigateAsync($"{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
+            
+            //await NavigationService.NavigateAsync($"/NavigationPage/{nameof(LoginPage)}");
         }
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
