@@ -24,39 +24,42 @@
     <!-- Bootstrap Js-->
     <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
 
-    <div class="row container-login align-items-center">
-        <div class="col-md-6 offset-md-3">
-            <form method="post" id="login" action="Login">
+   
+    <div class="container-login">
+       
+        <form method="post" id="login" action="Login">
 
-                <h2 class="h2-title">Inicio de Sesión</h2>
+            <h2 class="h2-title">Inicio de Sesión</h2>
+            <hr />
+
+            <div class="form-group">
+                <label class="label-login">Usuario</label>
+                <input id="username" type="text" class="form-control" />
+            </div>
+
+            <div class="form-group">
+                <label class="label-login">Password</label>
+                <input id="password" type="password" class="form-control" />
+            </div>
+
+            <label class="custom-radio-checkbox">
+                <input class="custom-radio-checkbox__input" type="checkbox" name="remember" value="remember">
+                <span class="custom-radio-checkbox__show custom-radio-checkbox__show--checkbox"></span>
+                <span class="custom-radio-checkbox__text"> Recordarme</span>
+            </label>
+
+            <div class="form-group">
+                <button type="submit" id="btnLogin" class="btn btn-success"> <i class="fa fa-sign-in-alt"></i> Iniciar sesión</button>
+                <button type="button" id="btnRegisterModal" class="btn btn-primary btn-register"> <i class="fa fa-user-plus"></i> Registrarme</button>
                 <hr />
-
-                <div class="form-group">
-                    <label class="label-login">Usuario</label>
-                    <input id="username" type="text" class="form-control" />
-                </div>
-
-                <div class="form-group">
-                    <label class="label-login">Password</label>
-                    <input id="password" type="password" class="form-control" />
-                </div>
-
-                <label class="custom-radio-checkbox">
-                    <input class="custom-radio-checkbox__input" type="checkbox" name="remember" value="remember">
-                    <span class="custom-radio-checkbox__show custom-radio-checkbox__show--checkbox"></span>
-                    <span class="custom-radio-checkbox__text"> Recordarme</span>
-                </label>
-
-                <div class="form-group">
-                    <button type="submit" id="btnLogin" class="btn btn-success"> <i class="fa fa-sign-in-alt"></i> Iniciar sesión</button>
-                    <button type="button" id="btnRegisterModal" class="btn btn-primary btn-register"> <i class="fa fa-user-plus"></i> Registrarme</button>
-                    <hr />
-                    <a id="btnCallModalRecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
-                </div>
-            </form>
-        </div>
+                <a id="btnCallModalRecoverPassword" class="btn btn-link">¿Olvidaste tu contraseña?</a>
+            </div>
+        </form>
+      
     </div>
 
+  
+   
 
 
     <!-- MODAL DE REGISTRO USUARIO -->

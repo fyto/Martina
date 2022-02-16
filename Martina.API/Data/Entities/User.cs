@@ -59,10 +59,5 @@ namespace Martina.API.Data.Entities
         public ICollection<History> HistoryUsersStatus { get; set; }
 
 
-
-        //[Display(Name = "# Enfermedades")]
-        //public int DiseasesCount => Diseases == null ? 0 : Diseases.Count;
-
-
     }
 }

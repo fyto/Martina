@@ -1,4 +1,14 @@
-﻿.btn-border {
+﻿:root {
+    --primary: #2196f3;
+}
+
+body {
+    height: 100%;
+    background: url("../../images/mirada-s.jpg") 50% fixed;
+    background-size: cover;
+}
+
+.btn-border {
     border-bottom-left-radius:0%;
     border-top-left-radius:0%;
 }
@@ -15,8 +25,17 @@
 }
 
 .container-login {
-    margin-top: 80px;
+    margin: 70px auto;
+    background: #ffffff;
+    box-shadow: 0px 1px 5px rgba(0, 0, 0, 0.3);
+    border-radius: 2px 2px 5px 5px;
+    padding: 50px 20px 20px 20px;
+    width: 50%;
+
+    opacity: 0.9;
 }
+
+
 
 /* Scroll Modal Registro Inicio */
 
@@ -201,3 +220,7 @@
 }
 
 /* Shake input fin */
+
+
+
+
