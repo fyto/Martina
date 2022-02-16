@@ -26,14 +26,14 @@ namespace Martina.API.Models.Request
         public string Address { get; set; }
 
 
-        [MaxLength(20, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
+        //[MaxLength(20, ErrorMessage = "El campo {0} no puede tener más de {1} carácteres.")]
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string PhoneNumber { get; set; }
 
         public byte[] Image { get; set; }
 
-        //[Required(ErrorMessage = "El campo {0} es obligatorio.")]
-        //public string UserType { get; set; }
+        [Required(ErrorMessage = "El campo {0} es obligatorio.")]
+        public string UserType { get; set; }
 
         //[Display(Name = "Id tipo usuario")]
         //public string UserTypeId { get; set; }
@@ -41,8 +41,8 @@ namespace Martina.API.Models.Request
         //[Display(Name = "Id estado de usuario")]
         //public int UserStatusId { get; set; }
 
-        //[Display(Name = "Estado de usuario")]
-        //public string UserStatus { get; set; }
+        [Display(Name = "Estado de usuario")]
+        public string UserStatus { get; set; }
 
         //[Display(Name = "Usuario")]
         //public string FullName => $"{FirstName} {LastName}";

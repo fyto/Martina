@@ -8,10 +8,13 @@ namespace Martina.API.Helpers
 {
     public interface IBlobHelper
     {
+        // Interfaz de usuario
         Task<Guid> UploadBlobAsync(IFormFile file, string containerName);
 
+        // API
         Task<Guid> UploadBlobAsync(byte[] file, string containerName);
 
+        // Seeder
         Task<Guid> UploadBlobAsync(string image, string containerName);
 
         Task DeleteBlobAsync(Guid id, string containerName);

@@ -1,12 +1,17 @@
-﻿using Martina.API.Data.Entities;
+﻿using Common.Models;
+using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
 using Martina.API.Models.Request;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
 using System.IdentityModel.Tokens.Jwt;
+using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +83,7 @@ namespace Martina.API.Controllers.API
         }
 
         [HttpPost]
+        [Route("Register")]
         public async Task<ActionResult<User>> PostUser(RegisterRequest request)
         {
             if (!ModelState.IsValid)
@@ -105,17 +111,15 @@ namespace Martina.API.Controllers.API
 
             user = new User
             {
-                Address = request.Address,
-                //CountryCode = request.CountryCode,
-                //Document = request.Document,
-                //DocumentType = documentType,
-                Email = request.Email,
                 FirstName = request.FirstName,
-                ImageId = imageId,
                 LastName = request.LastName,
+                Email = request.Email,
+                Address = request.Address,
+                ImageId = imageId,
                 PhoneNumber = request.PhoneNumber,
                 UserName = request.Email,
-                //UserType = UserType.User,
+                UserType = request.UserType,
+                UserStatus = request.UserStatus
             };
 
             await _userHelper.AddUserAsync(user, request.Password);
@@ -135,6 +139,111 @@ namespace Martina.API.Controllers.API
             return Ok(user);
         }
 
+        [HttpPost]
+        [Route("RecoverPassword")]
+        public async Task<IActionResult> RecoverPassword(RecoverPasswordViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                User user = await _userHelper.GetUserAsync(model.Email);
+                if (user == null)
+                {
+                    return BadRequest("El correo ingresado no corresponde a ningún usuario.");
+                }
+
+                string myToken = await _userHelper.GeneratePasswordResetTokenAsync(user);
+                string link = Url.Action(
+                    "ResetPassword",
+                    "Account",
+                    new { token = myToken }, protocol: HttpContext.Request.Scheme);
+                _mailHelper.SendMail(model.Email, "Vehicles - Reseteo de contraseña", $"<h1>Vehicles - Reseteo de contraseña</h1>" +
+                    $"Para establecer una nueva contraseña haga clic en el siguiente enlace:</br></br>" +
+                    $"<a href = \"{link}\">Cambio de Contraseña</a>");
+                return Ok("Las instrucciones para el cambio de contraseña han sido enviadas a su email.");
+            }
+
+            return BadRequest(model);
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPut]
+        public async Task<IActionResult> PutUser([FromBody] UserRequest request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return NotFound("Error001");
+            }
+
+          
+            //Guid imageId = user.ImageId;
+
+            //if (request.ImageArray != null)
+            //{
+            //    imageId = await _blobHelper.UploadBlobAsync(request.ImageArray, "users");
+            //}
+
+            user.FirstName = request.FirstName;
+            user.LastName = request.LastName;
+            user.Address = request.Address;
+            user.PhoneNumber = request.PhoneNumber;
+           
+            //user.ImageId = imageId;
+            //user.Latitude = request.Latitude;
+            //user.Logitude = request.Logitude;
+
+            IdentityResult respose = await _userHelper.UpdateUserAsync(user);
+            if (!respose.Succeeded)
+            {
+                return BadRequest(respose.Errors.FirstOrDefault().Description);
+            }
+
+            User updatedUser = await _userHelper.GetUserAsync(email);
+            return Ok(updatedUser);
+        }
+
+
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpPost]
+        [Route("ChangePassword")]
+        public async Task<IActionResult> ChangePassword([FromBody] ChangePasswordViewModel request)
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Bad request",
+                    Result = ModelState
+                });
+            }
+
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return NotFound("Error001");
+            }
+
+            IdentityResult result = await _userHelper.ChangePasswordAsync(user, request.OldPassword, request.NewPassword);
+            if (!result.Succeeded)
+            {
+                return BadRequest(new Response
+                {
+                    IsSuccess = false,
+                    Message = "Error005"
+                });
+            }
+
+            return Ok(new Response { IsSuccess = true });
+        }
 
 
     }

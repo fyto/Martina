@@ -30,9 +30,15 @@ namespace Mobile.Prims.ViewModels
             {
                 new Menu
                 {
-                    Icon = "ic_person_circle",
+                    Icon = "ic_person",
                     PageName = $"{nameof(EditUserPage)}",
                     Title = "Editar usuario"
+                },
+                new Menu
+                {
+                    Icon = "ic_exit",
+                    PageName = $"{nameof(LoginPage)}",
+                    Title = "Cerrar sesión"
                 }
             };
 

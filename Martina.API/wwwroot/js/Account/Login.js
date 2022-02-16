@@ -250,8 +250,7 @@ $(document).ready(async function () {
       
 
         if (validator == false) {
-            /* ActionCreateUser(typeUser, email, name, lastName, address, phoneNumber, photo);*/
-
+          
             formData.append('ImageFile', photo.files[0]);
             formData.append('ImageName', photoName);
             formData.append('FirstName', name);
