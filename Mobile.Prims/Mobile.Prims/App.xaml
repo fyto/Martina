@@ -8,10 +8,12 @@
         <ResourceDictionary>
 
             <!-- Parameters -->
-            <!-- Development Url API -->
-            <x:String x:Key="UrlAPI">https://onsaleprepweb.azurewebsites.net</x:String>
+            <!-- Development Url localhost -->
+            <!-- <x:String x:Key="UrlAPI">https://localhost:44361</x:String> -->
+            <!-- Development Url IIS -->
+            <!-- <x:String x:Key="UrlAPI">http://localhost:5055</x:String> -->
             <!-- Production Url API -->
-            <!-- <x:String x:Key="UrlAPI">https://onsaleprepweb.azurewebsites.net</x:String> -->
+            <x:String x:Key="UrlAPI">http://cuidarlos.cl</x:String>
 
 
         </ResourceDictionary>

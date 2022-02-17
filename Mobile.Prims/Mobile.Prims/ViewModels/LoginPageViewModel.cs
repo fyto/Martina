@@ -16,6 +16,9 @@ namespace Mobile.Prims.ViewModels
         private readonly INavigationService _navigationService;
         private readonly IApiService _apiService;
 
+        private bool _isRunning;
+        private bool _isEnabled;
+
         private string _password;
         private string _pageReturn;
 
@@ -27,7 +30,19 @@ namespace Mobile.Prims.ViewModels
             _navigationService = navigationService;
             _apiService = apiService;
 
-            Title = "Login";
+            IsEnabled = true;
+        }
+
+        public bool IsRunning
+        {
+            get => _isRunning;
+            set => SetProperty(ref _isRunning, value);
+        }
+
+        public bool IsEnabled
+        {
+            get => _isEnabled;
+            set => SetProperty(ref _isEnabled, value);
         }
 
         public string Email { get; set; }
@@ -45,23 +60,23 @@ namespace Mobile.Prims.ViewModels
         {
             if (string.IsNullOrEmpty(Email))
             {
-                await App.Current.MainPage.DisplayAlert("Error", "EmailError", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", "Debe ingresar un usuario", "Aceptar");
                 return;
             }
 
             if (string.IsNullOrEmpty(Password))
             {
-                await App.Current.MainPage.DisplayAlert("Error", "PasswordError", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", "Debe ingresar una contraseña", "Aceptar");
                 return;
             }
 
-            //IsRunning = true;
-            //IsEnabled = false;
+            IsRunning = true;
+            IsEnabled = false;
 
             if (Connectivity.NetworkAccess != NetworkAccess.Internet)
             {
-                //IsRunning = false;
-                //IsEnabled = true;
+                IsRunning = false;
+                IsEnabled = true;
                 await App.Current.MainPage.DisplayAlert("Error", "ConnectionError", "Accept");
                 return;
             }
@@ -74,12 +89,13 @@ namespace Mobile.Prims.ViewModels
             };
 
             Response response = await _apiService.GetTokenAsync(url, "api", "/Account/CreateToken", request);
-            //IsRunning = false;
-            //IsEnabled = true;
+            
+            IsRunning = false;
+            IsEnabled = true;
 
             if (!response.IsSuccess)
             {
-                await App.Current.MainPage.DisplayAlert("Error", "LoginError", "Accept");
+                await App.Current.MainPage.DisplayAlert("Error", response.Message, "Aceptar");
                 Password = string.Empty;
                 return;
             }
@@ -89,8 +105,8 @@ namespace Mobile.Prims.ViewModels
             Settings.IsLogin = true;
             Password = string.Empty;
 
-            //IsRunning = false;
-            //IsEnabled = true;
+            IsRunning = false;
+            IsEnabled = true;
 
             await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
 

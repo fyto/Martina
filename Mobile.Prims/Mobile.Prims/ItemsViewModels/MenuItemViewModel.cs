@@ -21,14 +21,19 @@ namespace Mobile.Prims.ItemsViewModels
 
         private async void SelectMenuAsync()
         {
-            await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
-
-            if (PageName == nameof(LoginPage) && Settings.IsLogin)
+            if (PageName == nameof(LoginPage)/* && Settings.IsLogin*/)
             {
                 Settings.IsLogin = false;
                 Settings.Token = null;
-             
+
+                await _navigationService.NavigateAsync(nameof(LoginPage));
+
+                return;
             }
+
+            await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
+
+           
 
             //if (IsLoginRequired && !Settings.IsLogin)
             //{

@@ -76,6 +76,10 @@ namespace Martina.API.Controllers.API
 
                         return Created(string.Empty, results);
                     }
+                    else
+                    {
+                        return Unauthorized();
+                    }
                 }
             }
 

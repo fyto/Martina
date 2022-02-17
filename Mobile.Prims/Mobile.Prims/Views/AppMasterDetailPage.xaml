@@ -53,7 +53,7 @@
                                     </Grid.ColumnDefinitions>
                                     <Image Grid.Column="0"
                                     	   HeightRequest="32"
-                                           Margin="5"
+                                           Margin="5,5,15,5"
                                     	   Source="{Binding Icon}"
                                     	   WidthRequest="32"/>
                                     <Label Grid.Column="1"

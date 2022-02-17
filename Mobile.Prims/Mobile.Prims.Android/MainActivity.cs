@@ -17,11 +17,12 @@ namespace Mobile.Prims.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             base.OnCreate(savedInstanceState);
-            
-            // Inicialización del sfBusyIndicator
-            //new SfBusyIndicatorRenderer();
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            // Inicialización del sfBusyIndicator
+            new SfBusyIndicatorRenderer();
+
             LoadApplication(new App(new AndroidInitializer()));
         }
 

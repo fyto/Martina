@@ -4,6 +4,7 @@ using Common.Models.Responses;
 using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
+using System.Net;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -57,6 +58,7 @@ namespace Common.Services
             {
                 string requestString = JsonConvert.SerializeObject(request);
                 StringContent content = new StringContent(requestString, Encoding.UTF8, "application/json");
+               
                 HttpClient client = new HttpClient
                 {
                     BaseAddress = new Uri(urlBase)
@@ -68,11 +70,22 @@ namespace Common.Services
 
                 if (!response.IsSuccessStatusCode)
                 {
-                    return new Response
+                    if (response.StatusCode == HttpStatusCode.Unauthorized)
                     {
-                        IsSuccess = false,
-                        Message = result,
-                    };
+                        return new Response
+                        {
+                            IsSuccess = false,
+                            Message = "Usuario y/o contraseña no coinciden.",
+                        };
+                    }
+                    else
+                    {
+                        return new Response
+                        {
+                            IsSuccess = false,
+                            Message = result,
+                        };
+                    }                 
                 }
 
                 TokenResponse token = JsonConvert.DeserializeObject<TokenResponse>(result);
