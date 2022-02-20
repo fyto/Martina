@@ -47,14 +47,12 @@
 
                     <StackLayout
                         Margin="0,60,0,3"
-                        Grid.Row="1">
-                        
+                        Grid.Row="1">                        
                         <Label  FontSize="Large"
                                 FontAttributes="Bold"
                                 Text="Inicio de sesión"
                                 TextColor="White">
-                        </Label>
-                        
+                        </Label>                        
                     </StackLayout>
 
                     <StackLayout
@@ -72,7 +70,6 @@
                                    IsPassword="True"
                                    Text="{Binding Password}" />
                         </inputLayout:SfTextInputLayout> -->
-
                       
                         <controls:CustomEntry
                                     Margin="0,0,0,20"
@@ -127,7 +124,7 @@
                                 BackgroundColor="#77000000" 
                                 BorderRadius="4" 
                                 ImageSource="ic_register_white"
-                                Margin="3,0,0,5"
+                                Margin="3,5"
                                 BorderColor="#3944F7" 
                                 Command="{Binding RegisterCommand}"
                                 BorderWidth="2" 
@@ -150,7 +147,6 @@
                                        VerticalOptions="Center"
                                        ViewBoxWidth="80"
                                        ViewBoxHeight="80" />
-
 
         </AbsoluteLayout>
 
