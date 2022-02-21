@@ -131,7 +131,38 @@ namespace Martina.API.Controllers
         {
             return View();
         }
-    
+
+        [HttpPost]
+        public async Task<JsonResult> ChangeUser(UserViewModel model)
+        {
+            if (ModelState.IsValid)
+            {
+                Guid imageId = model.ImageId;
+
+                if (model.ImageFile != null)
+                {
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                }
+
+                User user = await _userHelper.GetUserAsync(User.Identity.Name);
+
+                user.FirstName = model.FirstName;
+                user.LastName = model.LastName;
+                user.Address = model.Address;
+                user.PhoneNumber = model.PhoneNumber;
+                user.ImageId = imageId;
+
+                await _userHelper.UpdateUserAsync(user);
+
+                //return RedirectToAction("Index", "Home");
+                return Json("Success");
+            }
+
+            //model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
+            //return View(model);
+            return Json("Model invalid");
+        }
+
         [HttpPost]
         public async Task<JsonResult> EditUser()
         {
@@ -154,38 +185,7 @@ namespace Martina.API.Controllers
             };
 
             return new JsonResult(model);
-        }
-
-        [HttpPost]
-        public async Task<JsonResult> ChangeUser(UserViewModel model)
-        {
-            if (ModelState.IsValid)
-            {
-                Guid imageId = model.ImageId;
-
-                if (model.ImageFile != null)
-                {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
-                }
-
-                User user = await _userHelper.GetUserAsync(User.Identity.Name);
-
-                user.FirstName = model.FirstName;
-                user.LastName = model.LastName;
-                user.Address = model.Address;
-                user.PhoneNumber = model.PhoneNumber;
-                user.ImageId = imageId;
-                
-                await _userHelper.UpdateUserAsync(user);
-
-                //return RedirectToAction("Index", "Home");
-                return Json("Success");
-            }
-
-            //model.DocumentTypes = _combosHelper.GetComboDocumentTypes();
-            //return View(model);
-            return Json("Model invalid");
-        }
+        }       
 
         [HttpPost]
         public async Task<JsonResult> ChangePassword(ChangePasswordViewModel model)

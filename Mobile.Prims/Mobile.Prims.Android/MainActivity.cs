@@ -20,6 +20,9 @@ namespace Mobile.Prims.Droid
 
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
 
+            // Inicialización del Xamarin.FFImageLoading.Forms
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init(true);
+
             // Inicialización del sfBusyIndicator
             new SfBusyIndicatorRenderer();
 

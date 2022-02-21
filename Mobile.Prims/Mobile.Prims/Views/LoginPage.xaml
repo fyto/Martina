@@ -79,6 +79,7 @@
                                     BorderColor="White"
                                     BorderThickness="1"
                                     CornerRadius="4"
+                                    Text="{Binding Email}"
                                     PlaceholderColor="White" 
                                     Placeholder="Ingrese usuario"/>
                        
@@ -90,6 +91,7 @@
                                     TextColor="White"
                                     BorderThickness="1"
                                     CornerRadius="4"
+                                    Text="{Binding Password}"
                                     IsPassword="True"
                                     PlaceholderColor="White" 
                                     Placeholder="Ingrese contraseña"/>     

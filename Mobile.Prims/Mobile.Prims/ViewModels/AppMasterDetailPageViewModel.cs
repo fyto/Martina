@@ -1,4 +1,5 @@
-﻿using Common.Models;
+﻿using Common.Helpers;
+using Common.Models;
 using Mobile.Prims.ItemsViewModels;
 using Mobile.Prims.Views;
 using Prism.Navigation;
@@ -38,7 +39,7 @@ namespace Mobile.Prims.ViewModels
                 {
                     Icon = "ic_exit",
                     PageName = $"{nameof(LoginPage)}",
-                    Title = "Cerrar sesión"
+                    Title = Settings.IsLogin ? "Cerrar sesión" : "Login"
                 }
             };
 

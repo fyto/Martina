@@ -39,7 +39,7 @@ namespace Common.Models.Responses
                 //    return ImageFacebook;
                 //}
 
-                return $"https://onsale.blob.core.windows.net/users/{ImageId}";
+                return $"https://martina.blob.core.windows.net/users/{ImageId}";
             }
         }
 

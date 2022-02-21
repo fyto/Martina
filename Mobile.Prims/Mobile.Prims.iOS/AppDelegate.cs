@@ -28,6 +28,9 @@ namespace Mobile.Prims.iOS
             // Inicialización de SyncFusion.Xamarin.Core
             SfTextInputLayoutRenderer.Init();
 
+            // Inicialización del Xamarin.FFImageLoading.Forms
+            FFImageLoading.Forms.Platform.CachedImageRenderer.Init();
+
             LoadApplication(new App(new iOSInitializer()));
 
             // Inicialización del sfBusyIndicator
