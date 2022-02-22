@@ -69,7 +69,7 @@ namespace Martina.API.Controllers
 
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
                 User user = await _converterHelper.ToUserAsync(model, imageId, true);
@@ -124,7 +124,7 @@ namespace Martina.API.Controllers
                 Guid imageId = model.ImageId;
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
                 User user = await _converterHelper.ToUserAsync(model, imageId, false);

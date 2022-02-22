@@ -5,6 +5,7 @@ using Martina.API.Helpers;
 using Martina.API.Models;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Configuration;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,16 +19,19 @@ namespace Martina.API.Controllers
         private readonly DataContext _context;
         private readonly IBlobHelper _blobHelper;  
         private readonly IMailHelper _mailHelper;
+        private readonly IConfiguration _configuration;
 
         public AccountController(IUserHelper userHelper, 
                                  DataContext context, 
                                  IBlobHelper blobHelper,
-                                 IMailHelper mailHelper)
+                                 IMailHelper mailHelper,
+                                 IConfiguration configuration)
         {
             _userHelper = userHelper;
             _context = context;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
+            _configuration = configuration;
         }
 
 
@@ -93,7 +97,7 @@ namespace Martina.API.Controllers
 
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
                 }
 
                 User user = await _userHelper.AddUserAsync(model, imageId);
@@ -139,9 +143,11 @@ namespace Martina.API.Controllers
             {
                 Guid imageId = model.ImageId;
 
+                string keys = _configuration["Blob:ConnectionString"];
+
                 if (model.ImageFile != null)
                 {
-                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users", keys);
                 }
 
                 User user = await _userHelper.GetUserAsync(User.Identity.Name);

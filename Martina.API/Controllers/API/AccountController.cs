@@ -95,12 +95,6 @@ namespace Martina.API.Controllers.API
                 return BadRequest(ModelState);
             }
 
-            //DocumentType documentType = await _context.DocumentTypes.FindAsync(request.DocumentTypeId);
-            //if (documentType == null)
-            //{
-            //    return BadRequest("El tipo de documento no existe.");
-            //}
-
             User user = await _userHelper.GetUserAsync(request.Email);
             if (user != null)
             {

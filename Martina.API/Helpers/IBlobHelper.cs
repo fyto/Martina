@@ -9,7 +9,7 @@ namespace Martina.API.Helpers
     public interface IBlobHelper
     {
         // Interfaz de usuario
-        Task<Guid> UploadBlobAsync(IFormFile file, string containerName);
+        Task<Guid> UploadBlobAsync(IFormFile file, string containerName, string keys);
 
         // API
         Task<Guid> UploadBlobAsync(byte[] file, string containerName);
