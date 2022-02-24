@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text.Json.Serialization;
@@ -57,6 +58,15 @@ namespace Martina.API.Data.Entities
 
         [JsonIgnore]
         public ICollection<History> HistoryUsersStatus { get; set; }
+
+        [JsonIgnore]
+        public ICollection<Qualification> Qualifications { get; set; }
+
+        [DisplayName("Calificación usuario")]
+        public int UsersQualifications => Qualifications == null ? 0 : Qualifications.Count;
+
+        [DisplayFormat(DataFormatString = "{0:N2}")]
+        public float Qualification => Qualifications == null || Qualifications.Count == 0 ? 0 : Qualifications.Average(q => q.Score);
 
 
     }

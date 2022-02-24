@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Text;
 
 namespace Common.Models.Responses
@@ -20,7 +21,7 @@ namespace Common.Models.Responses
 
         public Guid ImageId { get; set; }
 
-        public string ImageFacebook { get; set; }
+        //public string ImageFacebook { get; set; }
 
         //public LoginType LoginType { get; set; }
 
@@ -49,7 +50,13 @@ namespace Common.Models.Responses
 
         public string FullName => $"{FirstName} {LastName}";
 
-      
+        //public ICollection<QualificationResponse> Qualifications { get; set; }
+
+        //public int ProductQualifications => Qualifications == null ? 0 : Qualifications.Count;
+
+        //public float Qualification => Qualifications == null || Qualifications.Count == 0 ? 0 : Qualifications.Average(q => q.Score);
+
+
         //public double Latitude { get; set; }
 
         //public double Logitude { get; set; }

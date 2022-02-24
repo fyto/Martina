@@ -67,9 +67,6 @@ namespace Martina.API.Helpers
             BlobClient blobClient = containerClient.GetBlobClient($"{name}");
             await blobClient.UploadAsync(stream, blobHttpHeader);
 
-            //BlobContainerClient container = _blobClient.GetBlobContainerClient(containerName);
-            //BlockBlobClient blockBlob = container.GetBlockBlobClient($"{name}");
-            //await blockBlob.UploadAsync(stream);
             return name;
         }
 

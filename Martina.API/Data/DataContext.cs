@@ -21,6 +21,7 @@ namespace Martina.API.Data
         public DbSet<UserDisease> UsersDiseases { get; set; }
         public DbSet<UserStatus> UserStatus { get; set; }
         public DbSet<HistoryUserStatus> HistoryUsersStatus { get; set; }
+        public DbSet<Qualification> Qualifications { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
