@@ -21,19 +21,37 @@ namespace Mobile.Prims.ItemsViewModels
 
         private async void SelectMenuAsync()
         {
-            if (PageName == nameof(LoginPage)/* && Settings.IsLogin*/)
+            if (PageName == nameof(LoginPage) && Settings.IsLogin)
             {
                 Settings.IsLogin = false;
                 Settings.Token = null;
-
-                await _navigationService.NavigateAsync(nameof(LoginPage));
-
-                return;
             }
 
-            await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
+            if (IsLoginRequired && !Settings.IsLogin)
+            {
+                await App.Current.MainPage.DisplayAlert("Error", "Debe iniciar sesión para completar esta acción.", "Aceptar");
+                NavigationParameters parameters = new NavigationParameters
+                {
+                    { "pageReturn", PageName }
+                };
 
-           
+                await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(LoginPage)}", parameters);
+            }
+            else
+            {
+                await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
+            }
+
+
+            //if (PageName == nameof(LoginPage) && Settings.IsLogin)
+            //{
+            //    Settings.IsLogin = false;
+            //    Settings.Token = null;
+            //}
+
+            //await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{PageName}");
+
+
 
             //if (IsLoginRequired && !Settings.IsLogin)
             //{

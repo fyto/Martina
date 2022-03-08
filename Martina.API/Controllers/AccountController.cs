@@ -97,7 +97,9 @@ namespace Martina.API.Controllers
 
                 if (model.ImageFile != null)
                 {
-                    //imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users");
+                    string keys = _configuration["Blob:ConnectionString"];
+
+                    imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users", keys);
                 }
 
                 User user = await _userHelper.AddUserAsync(model, imageId);
@@ -143,10 +145,11 @@ namespace Martina.API.Controllers
             {
                 Guid imageId = model.ImageId;
 
-                string keys = _configuration["Blob:ConnectionString"];
-
+             
                 if (model.ImageFile != null)
                 {
+                    string keys = _configuration["Blob:ConnectionString"];
+
                     imageId = await _blobHelper.UploadBlobAsync(model.ImageFile, "users", keys);
                 }
 

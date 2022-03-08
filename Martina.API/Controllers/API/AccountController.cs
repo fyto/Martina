@@ -1,4 +1,5 @@
 ﻿using Common.Models;
+using Martina.API.Data;
 using Martina.API.Data.Entities;
 using Martina.API.Helpers;
 using Martina.API.Models;
@@ -7,9 +8,11 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.IdentityModel.Tokens;
 using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
@@ -26,19 +29,40 @@ namespace Martina.API.Controllers.API
         private readonly IConfiguration _configuration;
         private readonly IBlobHelper _blobHelper;
         private readonly IMailHelper _mailHelper;
+        private readonly DataContext _context;
 
 
         public AccountController(IUserHelper userHelper,
                                 IConfiguration configuration,
                                 IBlobHelper blobHelper,
-                                IMailHelper mailHelper)
+                                IMailHelper mailHelper,
+                                DataContext context)
         {
             _userHelper = userHelper;
             _configuration = configuration;
             _blobHelper = blobHelper;
             _mailHelper = mailHelper;
+            _context = context;
         }
 
+        [Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
+        [HttpGet]
+        public async Task<IActionResult> GetUser()
+        {
+            if (!ModelState.IsValid)
+            {
+                return BadRequest();
+            }
+
+            string email = User.Claims.FirstOrDefault(c => c.Type == ClaimTypes.NameIdentifier).Value;
+            User user = await _userHelper.GetUserAsync(email);
+            if (user == null)
+            {
+                return NotFound("Error001");
+            }
+
+            return Ok(user);
+        }
 
         [HttpPost]
         [Route("CreateToken")]
@@ -98,14 +122,21 @@ namespace Martina.API.Controllers.API
             User user = await _userHelper.GetUserAsync(request.Email);
             if (user != null)
             {
-                return BadRequest("Ya existe un usuario registrado con  ese email.");
+                return BadRequest("Ya existe un usuario registrado con este email.");
             }
+
 
             Guid imageId = Guid.Empty;
             if (request.Image != null && request.Image.Length > 0)
             {
-                imageId = await _blobHelper.UploadBlobAsync(request.Image, "users");
+                string keys = _configuration["Blob:ConnectionString"];
+
+                imageId = await _blobHelper.UploadBlobAsync(request.Image, "users", keys);
             }
+
+            var userType = await _userHelper.GetUserTypeAsync(request.UserType);
+
+            var userStatus = await _userHelper.GetUserStatusByNameAsync(request.UserStatus);
 
             user = new User
             {
@@ -116,8 +147,10 @@ namespace Martina.API.Controllers.API
                 ImageId = imageId,
                 PhoneNumber = request.PhoneNumber,
                 UserName = request.Email,
+                UserTypeId = userType.Id,
                 UserType = request.UserType,
-                UserStatus = request.UserStatus
+                UserStatusId = userStatus.Id,
+                UserStatus = request.UserStatus              
             };
 
             await _userHelper.AddUserAsync(user, request.Password);
@@ -130,7 +163,7 @@ namespace Martina.API.Controllers.API
                 token = myToken
             }, protocol: HttpContext.Request.Scheme);
 
-            _mailHelper.SendMail(user.Email, "Vehicles - Confirmación de cuenta", $"<h1>Vehicles - Confirmación de cuenta</h1>" +
+            _mailHelper.SendMail(user.Email, "App - Confirmación de cuenta", $"<h1>App - Confirmación de cuenta</h1>" +
                 $"Para habilitar el usuario, " +
                 $"por favor hacer clic en el siguiente enlace: </br></br><a href = \"{tokenLink}\">Confirmar Email</a>");
 

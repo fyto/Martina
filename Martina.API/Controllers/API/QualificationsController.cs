@@ -40,7 +40,7 @@ namespace Martina.API.Controllers.API
             User user = await _userHelper.GetUserAsync(email);
             if (user == null)
             {
-                return NotFound("Error001");
+                return NotFound("No existe el usuario calificador");
             }
 
             User userQualification = await _context.Users
@@ -49,7 +49,7 @@ namespace Martina.API.Controllers.API
 
             if (userQualification == null)
             {
-                return NotFound("Error002");
+                return NotFound("No existe el usuario a calificar");
             }
 
             if (userQualification.Qualifications == null)
@@ -60,11 +60,9 @@ namespace Martina.API.Controllers.API
             userQualification.Qualifications.Add(new Qualification
             {
                 Date = DateTime.UtcNow,
-                UserQualified = userQualification,
                 UserQualifyingId = user.Id,           
                 Remarks = request.Remarks,
-                Score = request.Score,
-                //UserQualifications = userQualification
+                Score = request.Score, 
             });
 
             _context.Users.Update(userQualification);

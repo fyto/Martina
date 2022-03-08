@@ -2,6 +2,7 @@
 using Prism;
 using Prism.Ioc;
 using Syncfusion.SfBusyIndicator.XForms.iOS;
+using Syncfusion.SfRating.XForms.iOS;
 using Syncfusion.XForms.iOS.TextInputLayout;
 using UIKit;
 
@@ -35,6 +36,8 @@ namespace Mobile.Prims.iOS
 
             // Inicialización del sfBusyIndicator
             new SfBusyIndicatorRenderer();
+            // Inicialización del sfRating
+            SfRatingRenderer.Init();
 
             return base.FinishedLaunching(app, options);
         }

@@ -27,14 +27,37 @@ namespace Martina.API.Helpers
             //_blobClient = storageAccount.CreateCloudBlobClient();        
         }
 
-        public async Task<Guid> UploadBlobAsync(byte[] file, string containerName)
+        public async Task<Guid> UploadBlobAsync(byte[] file, string containerName, string keys)
         {
             MemoryStream stream = new MemoryStream(file);
             Guid name = Guid.NewGuid();
 
-            BlobContainerClient container = _blobClient.GetBlobContainerClient(containerName);
-            BlockBlobClient blockBlob = container.GetBlockBlobClient($"{name}");
-            await blockBlob.UploadAsync(stream);
+            var blobHttpHeader = new BlobHttpHeaders();
+            //string extension = Path.GetExtension(file);
+            //switch (extension.ToLower())
+            //{
+            //    case ".jpg":
+            //    case ".jpeg":
+            //        blobHttpHeader.ContentType = "image/jpeg";
+            //        break;
+            //    case ".png":
+            //        blobHttpHeader.ContentType = "image/png";
+            //        break;
+            //    case ".gif":
+            //        blobHttpHeader.ContentType = "image/gif";
+            //        break;
+            //    default:
+            //        break;
+            //}
+
+            BlobServiceClient blobServiceClient = new BlobServiceClient(keys);
+            BlobContainerClient containerClient = blobServiceClient.GetBlobContainerClient(containerName);
+            BlobClient blobClient = containerClient.GetBlobClient($"{name}");
+            await blobClient.UploadAsync(stream, blobHttpHeader);
+
+            //BlobContainerClient container = _blobClient.GetBlobContainerClient(containerName);
+            //BlockBlobClient blockBlob = container.GetBlockBlobClient($"{name}");
+            //await blockBlob.UploadAsync(stream);
 
             return name;
         }

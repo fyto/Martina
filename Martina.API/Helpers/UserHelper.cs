@@ -92,10 +92,10 @@ namespace Martina.API.Helpers
                 .FirstOrDefaultAsync(x => x.Id == id.ToString());
         }
 
-        public async Task<IdentityRole> GetUserTypeAsync(string id)
+        public async Task<IdentityRole> GetUserTypeAsync(string nameUserType)
         {
             return await _context.Roles
-                                 .FirstOrDefaultAsync(x => x.Id == id);
+                                 .FirstOrDefaultAsync(x => x.Name == nameUserType);
         }
 
         public async Task<IdentityRole> GetUserTypeByNameAsync(string userTypeName)

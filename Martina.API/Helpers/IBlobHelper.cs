@@ -12,7 +12,7 @@ namespace Martina.API.Helpers
         Task<Guid> UploadBlobAsync(IFormFile file, string containerName, string keys);
 
         // API
-        Task<Guid> UploadBlobAsync(byte[] file, string containerName);
+        Task<Guid> UploadBlobAsync(byte[] file, string containerName, string keys);
 
         // Seeder
         Task<Guid> UploadBlobAsync(string image, string containerName);

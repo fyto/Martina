@@ -11,9 +11,11 @@
             <!-- Development Url localhost -->
             <!-- <x:String x:Key="UrlAPI">https://localhost:44361</x:String> -->
             <!-- Development Url IIS -->
-            <!-- <x:String x:Key="UrlAPI">http://localhost:5055</x:String> -->
+             <!--<x:String x:Key="UrlAPI">http://localhost:5055</x:String>--> 
             <!-- Production Url API -->
             <x:String x:Key="UrlAPI">http://cuidarlos.cl</x:String>
+
+            <x:String x:Key="UrlNoImage">https://martina.blob.core.windows.net/users/noimage.png</x:String>
 
 
         </ResourceDictionary>

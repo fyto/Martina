@@ -23,6 +23,7 @@ namespace Mobile.Prims.ViewModels
         private string _pageReturn;
 
         private DelegateCommand _loginCommand;
+        private DelegateCommand _registerCommand;
 
         public LoginPageViewModel(INavigationService navigationService,
                                   IApiService apiService) : base(navigationService)
@@ -53,7 +54,18 @@ namespace Mobile.Prims.ViewModels
             set => SetProperty(ref _password, value);
         }
 
+        public override void OnNavigatedTo(INavigationParameters parameters)
+        {
+            base.OnNavigatedTo(parameters);
+            if (parameters.ContainsKey("pageReturn"))
+            {
+                _pageReturn = parameters.GetValue<string>("pageReturn");
+            }
+        }
+
+
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(LoginAsync));
+        public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand = new DelegateCommand(RegisterAsync));
 
 
         private async void LoginAsync()
@@ -108,16 +120,21 @@ namespace Mobile.Prims.ViewModels
             IsRunning = false;
             IsEnabled = true;
 
-            await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
+            //await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
 
-            //if (string.IsNullOrEmpty(_pageReturn))
-            //{
-            //    await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
-            //}
-            //else
-            //{
-            //    await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{_pageReturn}");
-            //}
+            if (string.IsNullOrEmpty(_pageReturn))
+            {
+                await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{nameof(AppTabbedPage)}");
+            }
+            else
+            {
+                await _navigationService.NavigateAsync($"/{nameof(AppMasterDetailPage)}/NavigationPage/{_pageReturn}");
+            }
+        }
+
+        private async void RegisterAsync()
+        {
+            await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
     }
 }

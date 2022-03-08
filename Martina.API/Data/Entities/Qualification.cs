@@ -21,9 +21,9 @@ namespace Martina.API.Data.Entities
         //[JsonIgnore]
         //public Product Product { get; set; }
 
-        //public User User { get; set; }
+        public User User { get; set; }
 
-        public User UserQualified { get; set; }
+        //public User UserQualified { get; set; }
 
         public string UserQualifyingId { get; set; }       
 

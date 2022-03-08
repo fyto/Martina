@@ -1,4 +1,5 @@
 using Common.Services;
+using Mobile.Prims.Helpers;
 using Mobile.Prims.ViewModels;
 using Mobile.Prims.Views;
 using Prism;
@@ -31,10 +32,10 @@ namespace Mobile.Prims
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
-            containerRegistry.Register<IApiService, ApiService>();
-
-
             containerRegistry.RegisterSingleton<IAppInfo, AppInfoImplementation>();
+
+            containerRegistry.Register<IApiService, ApiService>();
+            containerRegistry.Register<IRegexHelper, RegexHelper>();
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
@@ -44,6 +45,7 @@ namespace Mobile.Prims
             containerRegistry.RegisterForNavigation<HomePage, HomePageViewModel>();
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<AppTabbedPage, AppTabbedPageViewModel>();
+            containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
         }
     }
 }

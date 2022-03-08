@@ -44,6 +44,7 @@ namespace Martina.API.Controllers
         public async Task<JsonResult> GetUsers()
         {
             return Json(await _context.Users.ToListAsync());
+            
         }
 
         [HttpPost]

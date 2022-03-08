@@ -57,7 +57,8 @@ namespace Mobile.Prims.ViewModels
                 {
                     Icon = "ic_person",
                     PageName = $"{nameof(EditUserPage)}",
-                    Title = "Editar usuario"
+                    Title = "Editar usuario",
+                    IsLoginRequired = true                    
                 },
                 new Menu
                 {

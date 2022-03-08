@@ -45,7 +45,7 @@ namespace Martina.API.Data.Entities
         public string UserTypeId { get; set; }
 
         [Display(Name = "Id estado de usuario")]
-        public int  UserStatusId { get; set; }
+        public int UserStatusId { get; set; }
 
         [Display(Name = "Estado de usuario")]
         public string UserStatus { get; set; }
