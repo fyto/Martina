@@ -1,3 +1,4 @@
+using Common.Helpers;
 using Common.Services;
 using Mobile.Prims.Helpers;
 using Mobile.Prims.ViewModels;
@@ -36,6 +37,8 @@ namespace Mobile.Prims
 
             containerRegistry.Register<IApiService, ApiService>();
             containerRegistry.Register<IRegexHelper, RegexHelper>();
+            containerRegistry.Register<IFileHelper, FileHelper>();
+
 
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
