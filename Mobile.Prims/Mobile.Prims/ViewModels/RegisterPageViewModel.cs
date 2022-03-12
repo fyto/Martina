@@ -121,10 +121,10 @@ namespace Mobile.Prims.ViewModels
 
             // Tipo de usuario
             User.UserType = (UserTypes[0] == true && UserTypes[1] == false) ? "Cuidador" : "Cuidado";
-            
-
+        
             string url = App.Current.Resources["UrlAPI"].ToString();
             Response response = await _apiService.RegisterUserAsync(url, "/api", "/Account/Register", User);
+
             IsRunning = false;
             IsEnabled = true;
 

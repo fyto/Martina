@@ -137,9 +137,7 @@ namespace Common.Services
                         Message = "Error",
                         Result = null
                     };
-                }
-
-               
+                }               
             }
             catch (Exception ex)
             {

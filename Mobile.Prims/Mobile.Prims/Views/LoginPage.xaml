@@ -110,7 +110,7 @@
                     </StackLayout>
 
                     <Button     Text="Ingresar" 
-                                BackgroundColor="#77000000"                                 
+                                BackgroundColor="#03C6C7"                                 
                                 BorderRadius="4" 
                                 ImageSource="ic_login_white"
                                 Margin="3,0"
@@ -123,7 +123,7 @@
                                 Grid.Row="3"/>
 
                     <Button Text="Registrarme" 
-                                BackgroundColor="#77000000" 
+                                BackgroundColor="#3944F7" 
                                 BorderRadius="4" 
                                 ImageSource="ic_register_white"
                                 Margin="3,5"
