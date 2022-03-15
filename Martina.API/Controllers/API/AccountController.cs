@@ -150,7 +150,8 @@ namespace Martina.API.Controllers.API
                 UserTypeId = userType.Id,
                 UserType = request.UserType,
                 UserStatusId = userStatus.Id,
-                UserStatus = request.UserStatus              
+                UserStatus = request.UserStatus,
+               
             };
 
             await _userHelper.AddUserAsync(user, request.Password);

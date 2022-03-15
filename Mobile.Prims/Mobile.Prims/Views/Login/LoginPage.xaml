@@ -1,0 +1,157 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+             xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
+             xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
+             xmlns:controls="clr-namespace:Mobile.Prims.Controls"
+             x:Class="Mobile.Prims.Views.LoginPage"
+             Title="Login">
+
+<StackLayout Padding="2"
+                 BackgroundColor="White">
+
+        <AbsoluteLayout>
+
+            <Image Source="manosapp"  
+                   Aspect="AspectFill" 
+                   VerticalOptions="FillAndExpand"
+                   HorizontalOptions="FillAndExpand"
+                   AbsoluteLayout.LayoutFlags="All" 
+                   AbsoluteLayout.LayoutBounds="0,0,1,1"/>
+
+            <StackLayout Orientation="Vertical" 
+                             Margin="10,10,10,10" 
+                             HorizontalOptions="Start"
+                             VerticalOptions="EndAndExpand"
+                             BackgroundColor="Transparent" 
+                             AbsoluteLayout.LayoutFlags="All" 
+                             AbsoluteLayout.LayoutBounds="1,1,1,1">
+
+                <Grid Margin="1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="Auto" />
+                    </Grid.RowDefinitions>
+
+                    <Image
+                        Source="logoexample"
+                        HorizontalOptions="FillAndExpand"
+                        HeightRequest="140"
+                        WidthRequest="200"
+                        Grid.Row="0"
+                        Margin="0,10,0,10">
+                    </Image>
+
+                    <StackLayout
+                        Margin="0,60,0,3"
+                        Grid.Row="1">                        
+                        <Label  FontSize="Large"
+                                FontAttributes="Bold"
+                                Text="Inicio de sesión"
+                                TextColor="White">
+                        </Label>                        
+                    </StackLayout>
+
+                    <StackLayout
+                        Grid.Row="2"
+                        Margin="0,0,0,170">                    
+
+                        <!-- Control Entry de SyncFusion -->
+                        <!-- <inputLayout:SfTextInputLayout 
+                                                   Hint="Password"                                                        
+                                                   EnablePasswordVisibilityToggle="true"
+                                                   ContainerType="Outlined">
+                            <Entry 
+                                   BackgroundColor="#31FFFFFF"
+                                   Placeholder="Ingrese password"
+                                   IsPassword="True"
+                                   Text="{Binding Password}" />
+                        </inputLayout:SfTextInputLayout> -->
+                      
+                        <controls:CustomEntry
+                                    Margin="0,0,0,20"
+                                    Padding="13"
+                                    TextColor="White"
+                                    BackgroundColor="#77000000"
+                                    BorderColor="White"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Text="{Binding Email}"
+                                    PlaceholderColor="White" 
+                                    Placeholder="Ingrese usuario"/>
+                       
+                        <controls:CustomEntry
+                                    Margin="0,0,0,20"
+                                    Padding="13"
+                                    BackgroundColor="#77000000"
+                                    BorderColor="White"
+                                    TextColor="White"
+                                    BorderThickness="1"
+                                    CornerRadius="4"
+                                    Text="{Binding Password}"
+                                    IsPassword="True"
+                                    PlaceholderColor="White" 
+                                    Placeholder="Ingrese contraseña"/>     
+
+                        <Label FontAttributes="Bold"
+                           HorizontalOptions="Center" 
+                           Text="¿Olvidaste tu contraseña?"
+                           TextColor="White"
+                           Margin="20,0"
+                           VerticalOptions="CenterAndExpand">
+                            <Label.GestureRecognizers>
+                                <TapGestureRecognizer 
+                                    Command="{Binding ForgotPasswordCommand}"/>
+                            </Label.GestureRecognizers>
+                        </Label>
+                    </StackLayout>
+
+                    <Button     Text="Ingresar" 
+                                BackgroundColor="#03C6C7"                                 
+                                BorderRadius="4" 
+                                ImageSource="ic_login_white"
+                                Margin="3,0"
+                                BorderColor="#03C6C7" 
+                                Command="{Binding LoginCommand}"
+                                BorderWidth="2" 
+                                TextColor="White"
+                                HorizontalOptions="FillAndExpand" 
+                                IsEnabled="{Binding IsEnabled}"
+                                Grid.Row="3"/>
+
+                    <Button Text="Registrarme" 
+                                BackgroundColor="#3944F7" 
+                                BorderRadius="4" 
+                                ImageSource="ic_register_white"
+                                Margin="3,5"
+                                BorderColor="#3944F7" 
+                                Command="{Binding RegisterCommand}"
+                                BorderWidth="2" 
+                                TextColor="White" 
+                                HorizontalOptions="FillAndExpand"
+                                IsEnabled="{Binding IsEnabled}"
+                                Grid.Row="4" />
+                </Grid>
+            </StackLayout>
+
+            <busyindicator:SfBusyIndicator 
+                                       AnimationType="ECG" 
+                                       AbsoluteLayout.LayoutBounds=".5,.5,.5,.5"
+                                       AbsoluteLayout.LayoutFlags="All"
+                                       BackgroundColor="Silver"
+                                       HorizontalOptions="Center"
+                                       TextColor="White"
+                                       IsBusy="{Binding IsRunning}"
+                                       Title="Cargando..."
+                                       VerticalOptions="Center"
+                                       ViewBoxWidth="80"
+                                       ViewBoxHeight="80" />
+
+        </AbsoluteLayout>
+
+</StackLayout>
+    
+</ContentPage>
