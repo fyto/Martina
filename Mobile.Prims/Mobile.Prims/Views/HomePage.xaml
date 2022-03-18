@@ -3,6 +3,7 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="Mobile.Prims.Views.HomePage"
              IconImageSource="ic_home"
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="Principal">
     
     <ContentPage.Content>

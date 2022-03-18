@@ -3,6 +3,7 @@ using Common.Services;
 using Mobile.Prims.Helpers;
 using Mobile.Prims.ViewModels;
 using Mobile.Prims.Views;
+using Mobile.Prims.Views.Login;
 using Prism;
 using Prism.Ioc;
 using Syncfusion.Licensing;
@@ -39,7 +40,6 @@ namespace Mobile.Prims
             containerRegistry.Register<IRegexHelper, RegexHelper>();
             containerRegistry.Register<IFileHelper, FileHelper>();
 
-
             containerRegistry.RegisterForNavigation<NavigationPage>();
             containerRegistry.RegisterForNavigation<MainPage, MainPageViewModel>();
             containerRegistry.RegisterForNavigation<LoginPage, LoginPageViewModel>();
@@ -49,6 +49,7 @@ namespace Mobile.Prims
             containerRegistry.RegisterForNavigation<SearchPage, SearchPageViewModel>();
             containerRegistry.RegisterForNavigation<AppTabbedPage, AppTabbedPageViewModel>();
             containerRegistry.RegisterForNavigation<RegisterPage, RegisterPageViewModel>();
+            containerRegistry.RegisterForNavigation<RecoverPasswordPage, RecoverPasswordPageViewModel>();
         }
     }
 }

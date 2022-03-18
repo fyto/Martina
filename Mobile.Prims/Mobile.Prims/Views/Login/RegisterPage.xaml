@@ -5,12 +5,14 @@
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              xmlns:inputLayout="clr-namespace:Syncfusion.XForms.TextInputLayout;assembly=Syncfusion.Core.XForms"
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
-             x:Class="Mobile.Prims.Views.RegisterPage">
+             BackgroundColor="{StaticResource ColorBackground}"
+             x:Class="Mobile.Prims.Views.RegisterPage"
+             Title="Registrar usuario">
 
     <AbsoluteLayout>
         <StackLayout AbsoluteLayout.LayoutBounds="0,0,1,1"
                      AbsoluteLayout.LayoutFlags="All"
-                     Padding="5">
+                     Padding="8">
             <ScrollView>
                 <StackLayout Spacing="0">
                     <ffimageloading:CachedImage Aspect="AspectFit"
@@ -31,7 +33,7 @@
                     <StackLayout
                         Margin="5,10,5,10">
                         <Label
-                            TextColor="Black"
+                            TextColor="{StaticResource ColorFont}"
                             FontSize="Medium"
                             Margin="0,10">Tipo de usuario</Label>
                         <Grid
@@ -39,59 +41,96 @@
                         ColumnSpacing="5">
                             <RadioButton Grid.Column="0" 
                                      Content="Soy cuidador"
+                                     TextColor="{StaticResource ColorFont}"                                     
                                      IsChecked="{Binding UserTypes[0]}"/>
                             <RadioButton Grid.Column="1" 
-                                         Content="Busco cuidador"
+                                         Content="Busco cuidador"                                        
+                                         TextColor="{StaticResource ColorFont}"
                                          IsChecked="{Binding UserTypes[1]}"/>
                         </Grid>
                     </StackLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Email" 
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese email"
                                Keyboard="Email"
+                               TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.Email}" />
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Nombre" 
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese nombre" 
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.FirstName}" />
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Apellido" 
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese apellido" 
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.LastName}" />
                     </inputLayout:SfTextInputLayout>
 
 
                     <inputLayout:SfTextInputLayout Hint="Dirección" 
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese dirección" 
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.Address}" />
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Telefono" 
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese telefono" 
                                Keyboard="Telephone"
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.PhoneNumber}" />
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Contraseña" 
                                                    EnablePasswordVisibilityToggle="true"
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Ingrese contraseña" 
                                IsPassword="True"
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.Password}" />
                     </inputLayout:SfTextInputLayout>
 
                     <inputLayout:SfTextInputLayout Hint="Contraseña" 
                                                    EnablePasswordVisibilityToggle="true"
-                                                   ContainerType="Outlined">
+                                                   ContainerType="Outlined"
+                                                   FocusedColor="{StaticResource ColorFont}"
+                                                   UnfocusedColor="{StaticResource ColorFont}"
+                                                   ContainerBackgroundColor="Transparent">
                         <Entry Placeholder="Reingrese contraseña" 
                                IsPassword="True"
+                                TextColor="{StaticResource ColorFont}"
+                               PlaceholderColor="{StaticResource ColorFont}"
                                Text="{Binding User.PasswordConfirm}" />
                     </inputLayout:SfTextInputLayout>
 
@@ -104,14 +143,14 @@
                     VerticalOptions="EndAndExpand"/>-->
 
             <Button     Text="Registrarme" 
-                        BackgroundColor="#03C6C7"                                 
+                        BackgroundColor="{StaticResource ColorPrimary}"                               
                         BorderRadius="4" 
                         ImageSource="ic_register_white"
                         Margin="3,0"
-                        BorderColor="#03C6C7" 
+                        BorderColor="{StaticResource ColorFont}" 
                         Command="{Binding RegisterCommand}"
                         BorderWidth="2" 
-                        TextColor="White"
+                        TextColor="{StaticResource ColorFont}"
                         HorizontalOptions="FillAndExpand" 
                         IsEnabled="{Binding IsEnabled}"/>
 

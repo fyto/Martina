@@ -5,13 +5,12 @@
              xmlns:busyindicator="clr-namespace:Syncfusion.SfBusyIndicator.XForms;assembly=Syncfusion.SfBusyIndicator.XForms"
              xmlns:controls="clr-namespace:Mobile.Prims.Controls"
              x:Class="Mobile.Prims.Views.LoginPage"
+             BackgroundColor="{StaticResource ColorBackground}"
              Title="Login">
 
-<StackLayout Padding="2"
-                 BackgroundColor="White">
+<StackLayout Padding="2">
 
         <AbsoluteLayout>
-
             <Image Source="manosapp"  
                    Aspect="AspectFill" 
                    VerticalOptions="FillAndExpand"
@@ -88,18 +87,18 @@
                                     Padding="13"
                                     BackgroundColor="#77000000"
                                     BorderColor="White"
-                                    TextColor="White"
+                                    TextColor="{StaticResource ColorFont}"
                                     BorderThickness="1"
                                     CornerRadius="4"
                                     Text="{Binding Password}"
                                     IsPassword="True"
-                                    PlaceholderColor="White" 
+                                    PlaceholderColor="{StaticResource ColorFont}" 
                                     Placeholder="Ingrese contraseña"/>     
 
                         <Label FontAttributes="Bold"
                            HorizontalOptions="Center" 
                            Text="¿Olvidaste tu contraseña?"
-                           TextColor="White"
+                           TextColor="{StaticResource ColorFont}"
                            Margin="20,0"
                            VerticalOptions="CenterAndExpand">
                             <Label.GestureRecognizers>
@@ -110,27 +109,27 @@
                     </StackLayout>
 
                     <Button     Text="Ingresar" 
-                                BackgroundColor="#03C6C7"                                 
+                                BackgroundColor="{StaticResource ColorPrimary}"                                 
                                 BorderRadius="4" 
                                 ImageSource="ic_login_white"
                                 Margin="3,0"
-                                BorderColor="#03C6C7" 
+                                BorderColor="{StaticResource ColorFont}" 
                                 Command="{Binding LoginCommand}"
                                 BorderWidth="2" 
-                                TextColor="White"
+                                TextColor="{StaticResource ColorFont}"
                                 HorizontalOptions="FillAndExpand" 
                                 IsEnabled="{Binding IsEnabled}"
                                 Grid.Row="3"/>
 
                     <Button Text="Registrarme" 
-                                BackgroundColor="#3944F7" 
+                                BackgroundColor="{StaticResource ColorSecondary}" 
                                 BorderRadius="4" 
                                 ImageSource="ic_register_white"
                                 Margin="3,5"
-                                BorderColor="#3944F7" 
+                                BorderColor="{StaticResource ColorFont}" 
                                 Command="{Binding RegisterCommand}"
                                 BorderWidth="2" 
-                                TextColor="White" 
+                                TextColor="{StaticResource ColorFont}"
                                 HorizontalOptions="FillAndExpand"
                                 IsEnabled="{Binding IsEnabled}"
                                 Grid.Row="4" />

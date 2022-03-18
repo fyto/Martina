@@ -188,10 +188,18 @@ namespace Martina.API.Controllers.API
                     "ResetPassword",
                     "Account",
                     new { token = myToken }, protocol: HttpContext.Request.Scheme);
-                _mailHelper.SendMail(model.Email, "Vehicles - Reseteo de contraseña", $"<h1>Vehicles - Reseteo de contraseña</h1>" +
+                _mailHelper.SendMail(model.Email, "App - Reseteo de contraseña", $"<h1>App - Cambio de contraseña</h1>" +
                     $"Para establecer una nueva contraseña haga clic en el siguiente enlace:</br></br>" +
                     $"<a href = \"{link}\">Cambio de Contraseña</a>");
-                return Ok("Las instrucciones para el cambio de contraseña han sido enviadas a su email.");
+
+
+
+                return Ok(new Response 
+                {
+                    IsSuccess = true,
+                    Message = "Las instrucciones para el cambio de contraseña han sido enviadas a su email.",
+                    Result = ModelState
+                });
             }
 
             return BadRequest(model);

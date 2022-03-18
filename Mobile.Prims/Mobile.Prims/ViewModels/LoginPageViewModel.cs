@@ -4,6 +4,7 @@ using Common.Models.Request;
 using Common.Models.Responses;
 using Common.Services;
 using Mobile.Prims.Views;
+using Mobile.Prims.Views.Login;
 using Newtonsoft.Json;
 using Prism.Commands;
 using Prism.Navigation;
@@ -24,6 +25,7 @@ namespace Mobile.Prims.ViewModels
 
         private DelegateCommand _loginCommand;
         private DelegateCommand _registerCommand;
+        private DelegateCommand _forgotPasswordCommand;
 
         public LoginPageViewModel(INavigationService navigationService,
                                   IApiService apiService) : base(navigationService)
@@ -63,9 +65,9 @@ namespace Mobile.Prims.ViewModels
             }
         }
 
-
         public DelegateCommand LoginCommand => _loginCommand ?? (_loginCommand = new DelegateCommand(LoginAsync));
         public DelegateCommand RegisterCommand => _registerCommand ?? (_registerCommand = new DelegateCommand(RegisterAsync));
+        public DelegateCommand ForgotPasswordCommand => _forgotPasswordCommand ?? (_forgotPasswordCommand = new DelegateCommand(ForgotPasswordAsync));
 
 
         private async void LoginAsync()
@@ -136,5 +138,16 @@ namespace Mobile.Prims.ViewModels
         {
             await _navigationService.NavigateAsync(nameof(RegisterPage));
         }
+
+        private async void ForgotPasswordAsync()
+        {
+            NavigationParameters parameters = new NavigationParameters
+            {
+                { "email", Email }
+            };
+
+            await _navigationService.NavigateAsync(nameof(RecoverPasswordPage), parameters);
+        }
+
     }
 }
