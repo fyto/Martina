@@ -21,6 +21,7 @@ namespace Mobile.Prims.ViewModels
 
         private UserResponse _user;
 
+
         public AppMasterDetailPageViewModel(INavigationService navigationService) : base(navigationService)
         {
             _instance = this;
@@ -31,6 +32,12 @@ namespace Mobile.Prims.ViewModels
             LoadUser();
         }
 
+        public static AppMasterDetailPageViewModel GetInstance()
+        {
+            return _instance;
+        }
+
+
         public ObservableCollection<MenuItemViewModel> Menus { get; set; }
 
         public UserResponse User
@@ -40,7 +47,7 @@ namespace Mobile.Prims.ViewModels
         }
 
 
-        private void LoadUser()
+        public void LoadUser()
         {
             if (Settings.IsLogin)
             {
@@ -48,6 +55,8 @@ namespace Mobile.Prims.ViewModels
                 User = token.User;
             }
         }
+
+
 
         private void LoadMenus()
         {

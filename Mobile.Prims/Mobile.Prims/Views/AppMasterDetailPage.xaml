@@ -34,7 +34,7 @@
                         </ffimageloading:CachedImage.Transformations>
                     </ffimageloading:CachedImage>
                     <Image HeightRequest="80"
-                        Source="logoexample"/>
+                        Source="sillarueda"/>
                 </StackLayout>
                 <Label FontAttributes="Bold"
                        FontSize="Medium"

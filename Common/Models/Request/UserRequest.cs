@@ -25,7 +25,6 @@ namespace Common.Models.Request
         [Required(ErrorMessage = "El campo {0} es obligatorio.")]
         public string UserType { get; set; }
 
-
         [Display(Name = "Estado de usuario")]
         public string UserStatus { get; set; }
 

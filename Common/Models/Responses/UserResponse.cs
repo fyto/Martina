@@ -20,6 +20,13 @@ namespace Common.Models.Responses
         public string Address { get; set; }
 
         public Guid ImageId { get; set; }
+     
+        public string UserType { get; set; }
+
+        public string UserTypeId { get; set; }
+      
+        public int UserStatusId { get; set; }
+        public string UserStatus { get; set; }
 
         //public string ImageFacebook { get; set; }
 

@@ -27,7 +27,7 @@
     <EmbeddedResource Update="Views\AppTabbedPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Views\EditUserPage.xaml">
+    <EmbeddedResource Update="Views\Login\EditUserPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\HomePage.xaml">
