@@ -1,5 +1,5 @@
-﻿.button-carousel-item 
+﻿.carousel-div
 {
-    background-color: transparent !important;
-    border: none !important;
+    height:fit-content;
+    width: fit-content;
 }
